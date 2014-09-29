@@ -1,0 +1,53 @@
+extends layout
+
+block content
+  h1.title Unhypem - Popular Hype Machine Tracks
+  h3.title Salted with some fine additional features
+
+  div.container
+      table.table.table-hover
+        thead
+          tr.white
+            th
+            th
+            th
+            th Artist
+            th Title
+            th Love
+        tbody#popular
+          each song, i in songs
+            if !song.s_mp3
+              tr.warning(id="#{song.place}")
+                td.clickToPlay #{song.place}
+                td
+                  a(href="#{song.s_url}" target="_blank")
+                    img(src="/images/soundcloud-icon-32.png")
+                td
+                  a(href="#{song.s_mp3}")
+                    img(src="/images/download-icon-32.png")
+                td.clickToPlay #{song.artist}
+                td.clickToPlay #{song.title}
+                td.clickToPlay #{song.h_loved_count}
+            else
+              tr.white(id="#{song.place}")
+                td.clickToPlay #{song.place}
+                td
+                  a(href="#{song.s_url}" target="_blank")
+                    img(src="/images/soundcloud-icon-32.png")
+                td
+                  a(href="#{song.s_mp3}")
+                    img(src="/images/download-icon-32.png")
+                td.clickToPlay #{song.artist}
+                td.clickToPlay #{song.title}
+                td.clickToPlay #{song.h_loved_count}
+  div.bottom
+    div.container.player
+      ul.list-inline
+        li
+          img(src="/images/rewind-icon-32.png").player-rewind
+        li
+          img(src="/images/play-icon-32.png").player-play
+        li
+          img(src="/images/forward-icon-32.png").player-forward
+        li.player-artist
+        li.player-title

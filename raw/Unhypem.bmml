@@ -1,0 +1,9 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1508" measuredH="539" mockupW="1178" mockupH="514">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="330" y="25" w="1178" h="514" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>A%20Web%20Page%0Ahttp%3A//</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
