@@ -6,9 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var CronJob = require('cron').CronJob;
 var hypemAdapter = require('./hypemAdapter');
-var mongo = require('mongodb');
-var monk = require('monk');
-var db = monk('localhost:27017/unhypem');
+var dbAdapter = require('./dbAdapter');
 
 var routes = require('./routes/index');
 var popular = require('./routes/popular');
@@ -29,7 +27,6 @@ app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
-    req.db = db;
     req.hypemAdapter = hypemAdapter;
     next();
 });

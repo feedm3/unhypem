@@ -15,39 +15,63 @@ block content
             th Title
             th Love
         tbody#popular
-          each song, i in songs
+          each song in popularSongsDTO
             if !song.s_mp3
-              tr.warning(id="#{song.place}")
-                td.clickToPlay #{song.place}
+              tr.warning(id="#{song.position}")
+                td.clickToPlay #{song.position}
                 td
                   a(href="#{song.s_url}" target="_blank")
                     img(src="/images/soundcloud-icon-32.png")
                 td
                   a(href="#{song.s_mp3}")
-                    img(src="/images/download-icon-32.png")
+                    img(src="/images/download-icon-32.png" data-toggle="tooltip" data-placement="top" title="Right click -> Save Target As...").s_mp3
                 td.clickToPlay #{song.artist}
                 td.clickToPlay #{song.title}
                 td.clickToPlay #{song.h_loved_count}
             else
-              tr.white(id="#{song.place}")
-                td.clickToPlay #{song.place}
+              tr.white(id="#{song.position}")
+                td.clickToPlay #{song.position}
                 td
-                  a(href="#{song.s_url}" target="_blank")
+                  a(href="#{song.s_url}" target="_blank").soundcloud_url
                     img(src="/images/soundcloud-icon-32.png")
                 td
                   a(href="#{song.s_mp3}")
-                    img(src="/images/download-icon-32.png")
+                    img(src="/images/download-icon-32.png" data-toggle="tooltip" data-placement="top" title="Right click -> Save Target As...").s_mp3
                 td.clickToPlay #{song.artist}
                 td.clickToPlay #{song.title}
                 td.clickToPlay #{song.h_loved_count}
   div.bottom
-    div.container.player
-      ul.list-inline
-        li
-          img(src="/images/rewind-icon-32.png").player-rewind
-        li
-          img(src="/images/play-icon-32.png").player-play
-        li
-          img(src="/images/forward-icon-32.png").player-forward
-        li.player-artist
-        li.player-title
+    table.container.player-container
+      tr(style="height:20px;")
+        td.player-container-left
+          ul.list-inline.margin_padding_reset
+            li
+              img(src="/images/rewind-icon-32.png" style="opacity: 0.7").player-rewind
+            li
+              img(src="/images/play-icon-32.png").player-play
+            li
+              img(src="/images/forward-icon-32.png" style="opacity: 0.7").player-forward
+        td.player-container-right
+          ul.list-inline.margin_padding_reset
+            li.player-artist
+            li -
+            li.player-title
+      tr
+        td.player-container-left
+          ul.list-inline.margin_padding_reset
+            li
+              img(src="/images/volume-minus-icon-16.png")
+            li(style="width: 73px;")
+              div(id="player-progressVolume").slider_bar
+                div.follow_bar
+            li
+              img(src="/images/volume-plus-icon-16.png")
+        td.player-container-right
+          ul.list-inline.margin_padding_reset
+            li.player-currentSongPosition
+            li(style="width: 950px")
+              div.progress(style="height:5px; margin:0; border-radius:0px")
+                div.progress-bar(id="player-progressLoading" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 0%; border-radius:0px")
+              div(id="player-progressPlaying").slider_bar
+                div.follow_bar
+            li.player-currentSongDuration

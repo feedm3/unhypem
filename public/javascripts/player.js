@@ -1,79 +1,164 @@
 var soundManager,
-    soundPlayer,
-    isPlaying = false,
-    currentSongId,
-    popularSongs;
+    soundPlayer;
 
-$(document).ready(function () {
-    getPopularSongs();
+Player = function () {
+    _soundManager = soundManager;
+    _soundPlayer = soundPlayer;
+    _isPlaying = false;
+    _volume = 100;
+    _currentPlayId = "";
+    _callbackOnPlay = null;
+    _callbackOnPause = null;
+    _callbackNextSong = null;
+    _callbackDurationInSeconds = null;
+    _callbackWhileLoading = null;
+    _callbackWhilePlaying = null;
+};
 
-    soundManager.url = '/swfs/';
-    soundManager.flashVersion = 9;
-    soundManager.useFlashBlock = false;
-    soundManager.useHighPerformance = true;
-    soundManager.wmode = 'transparent';
-    soundManager.useFastPolling = true;
+Player.prototype.init = function () {
+    _soundManager.url = '/swfs/';
+    _soundManager.flashVersion = 9;
+    _soundManager.useFlashBlock = false;
+    _soundManager.useHighPerformance = true;
+    _soundManager.wmode = 'transparent';
+    _soundManager.useFastPolling = true;
+    _soundManager.waitForWindowLoad = true;
+    _soundManager.volume = _volume;
+};
 
-    $("tr .clickToPlay").click(function () {
-        var currentRow = $(this).closest("tr");
-        currentRow.addClass("info");
-        playSong(currentRow.attr('id'));
-    });
-    $(".player-play").click(function () {
-        console.log($(this).attr("src"));
-        if (isPlaying) {
-            $(this).attr("src", "../images/play-icon-32.png");
-            if (soundPlayer) {
-                soundPlayer.pause();
-            }
-        } else {
-            $(this).attr("src", "../images/pause-icon-32.png");
-            if (soundPlayer) {
-                soundPlayer.play();
-            } else {
-                playSong(1);
-            }
-        }
-    });
-});
+Player.prototype.isPlaying = function () {
+    return _isPlaying;
+};
 
-function getPopularSongs() {
-    $.get("http://localhost:3000/popular", function (data) {
-        popularSongs = data;
-        preloadSongsInSoundManager();
-    });
-}
-
-function preloadSongsInSoundManager() {
-    $.each(popularSongs, function (i, song) {
-        soundManager.createSound({
-            url: song.s_mp3,
+Player.prototype.preloadSong = function (popularSongsDTO) {
+    $.each(popularSongsDTO, function (i, song) {
+        _soundManager.createSound({
+            url: song.s_stream,
             id: song.h_mediaid,
             onplay: function () {
-                isPlaying = true
+                _isPlaying = true;
+                if (_callbackOnPlay) {
+                    _callbackOnPlay();
+                }
+                if (this.readyState == 3 && _callbackDurationInSeconds) {
+                    _callbackDurationInSeconds(parseInt(this.duration / 1000));
+                }
             },
             onpause: function () {
-                isPlaying = false
+                _isPlaying = false;
+                if (_callbackOnPause) {
+                    _callbackOnPause();
+                }
             },
             onresume: function () {
-                isPlaying = true
+                _isPlaying = true;
+                if (_callbackOnPlay) {
+                    _callbackOnPlay();
+                }
+            },
+            onfinish: function () {
+                if (_callbackNextSong) {
+                    _callbackNextSong();
+                }
+            },
+            whileloading: function () {
+                if (_callbackWhileLoading) {
+                    _callbackWhileLoading((this.bytesLoaded / this.bytesTotal) * 100);
+                }
+                if (this.duration) {
+                    _callbackDurationInSeconds(parseInt(this.duration / 1000));
+                }
+            },
+            whileplaying: function () {
+                if (_callbackWhilePlaying) {
+                    // return song progress in hundred percent
+                    _callbackWhilePlaying(this.position / 1000, parseInt(this.duration / 1000));
+                }
             }
+
         });
-    })
-}
+        _soundManager.ontimeout(function(status) {
+            console.log("erererererer");
+        });
+    });
+};
 
-function playSong(placeInPopularList) {
-    //var streamTrack = "/tracks/" + popularSongs[parseInt(placeInPopularList) - 1].soundcloud_id;
-    var h_mediaid = popularSongs[parseInt(placeInPopularList) - 1].h_mediaid;
-    console.log("playing: " + isPlaying);
-    if (isPlaying && currentSongId == h_mediaid) {
-        soundPlayer.pause();
-    } else {
-        currentSongId = h_mediaid;
-        if (soundPlayer)
-            soundPlayer.pause();
-        soundPlayer = soundManager.getSoundById(h_mediaid);
-        soundPlayer.play();
+Player.prototype.play = function (id) {
+    if (_isPlaying) {
+        _soundPlayer.pause();
     }
+    // If same ID wants to be played, just pause the song
+    if (_currentPlayId == id) {
+        _soundPlayer.play();
+        _soundPlayer.setVolume(_volume)
+    } else {
+        // If new song wants to be played
+        // reset the previous so it doesn't start
+        // playing in the last position if restarted
+        _currentPlayId = id;
+        if (_soundPlayer) {
+            _soundPlayer.stop();
+        }
+        _soundPlayer = _soundManager.getSoundById(_currentPlayId);
+        _soundPlayer.play();
+        _soundPlayer.setVolume(_volume)
+    }
+};
 
+/**
+ * Pause current song
+ */
+Player.prototype.pause = function () {
+    _soundPlayer.pause();
+};
+
+/**
+ * Jump to given position in song
+ *
+ * @param hundredPercent position in the song between 0-100
+ */
+Player.prototype.setPosition = function (hundredPercent) {
+    if (_soundPlayer) {
+        _soundPlayer.setPosition((_soundPlayer.duration / 100) * hundredPercent);
+    }
+};
+
+/**
+ * Set new volume
+ *
+ * @param volume: number between 0-100
+ */
+Player.prototype.setVolume = function (volume) {
+    _volume = volume;
+    if (_soundPlayer) {
+        _soundPlayer.setVolume(_volume);
+    }
 }
+/**
+ * Fires when song starts playing
+ *
+ * @param callback
+ */
+Player.prototype.setCallbackOnPlay = function (callback) {
+    _callbackOnPlay = callback;
+};
+
+Player.prototype.setCallbackOnPause = function (callback) {
+    _callbackOnPause = callback;
+};
+
+Player.prototype.setCallbackNextSong = function (callback) {
+    _callbackNextSong = callback;
+};
+
+Player.prototype.setCallbackWhileLoading = function (callback) {
+    _callbackWhileLoading = callback;
+};
+
+Player.prototype.setCallbackDurationInSeconds = function (callback) {
+    _callbackDurationInSeconds = callback;
+};
+
+Player.prototype.setCallbackWhilePlaying = function (callback) {
+    _callbackWhilePlaying = callback;
+};

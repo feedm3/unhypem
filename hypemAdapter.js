@@ -40,13 +40,14 @@ function getSongsFromHypem(urlToJSON, offsetInList) {
             var hypemSongList = JSON.parse(body);
             for (var key in hypemSongList) {
                 if (!isNaN(key)) {
+                    var position = parseInt(key) + offsetInList + 1;
                     var song = {};
-                    song.position = parseInt(key) + offsetInList + 1;
+                    song.position = position;
                     song.artist = hypemSongList[key].artist;
                     song.title = hypemSongList[key].title;
                     song.h_mediaid = hypemSongList[key].mediaid;
                     song.h_loved_count = hypemSongList[key].loved_count;
-                    popularSongsDTO[position-1] = song;
+                    popularSongsDTO[position - 1] = song;
                     getSoundcloudURL(song);
                 }
             }
@@ -73,13 +74,17 @@ function resolveSoundcloudURL(song) {
     var url = "http://api.soundcloud.com/resolve.json?url=" + song.s_url + "&client_id=" + CLIENT_ID,
         options = {method: "GET", url: url};
     request(options, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            var soundcloudInfo = JSON.parse(body);
-            song.s_stream = soundcloudInfo.uri + "/stream?client_id=" + CLIENT_ID;
-            song.s_id = soundcloudInfo.id;
-            getSoundcloudMP3(song);
+        if (!error) {
+            if (response.statusCode == 200) {
+                var soundcloudInfo = JSON.parse(body);
+                song.s_stream = soundcloudInfo.uri + "/stream?client_id=" + CLIENT_ID;
+                song.s_id = soundcloudInfo.id;
+                getSoundcloudMP3(song);
+            } else {
+                console.log("Error resolve soundcloud Stream: " + song.s_url + " StatusCode: " + response.statusCode);
+            }
         } else {
-            console.log("Error resolve soundcloud Stream: " + song.s_url);
+            console.log("Error resolve soundcloud Stream: " + song.s_url + " Message: " + error.message);
         }
     })
 }
@@ -88,10 +93,14 @@ function getSoundcloudMP3(song) {
     var url = song.s_stream,
         options = {method: "HEAD", followRedirect: false, url: url};
     request(options, function (error, response, body) {
-        if (!error && response.statusCode == 302) {
-            song.s_mp3 = response.headers.location;
+        if (!error) {
+            if (response.statusCode == 302) {
+                song.s_mp3 = response.headers.location;
+            } else {
+                console.log("Error resolve soundcloud MP3: " + song.s_url + " StatusCode: " + response.statusCode);
+            }
         } else {
-            console.log("Error resolve soundcloud MP3: " + song.s_url);
+            console.log("Error resolve soundcloud MP3: " + song.s_url + " Message: " + error.message);
         }
     })
 }
