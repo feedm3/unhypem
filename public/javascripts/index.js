@@ -36,7 +36,6 @@ $(document).ready(function () {
 
     $(".s_mp3").tooltip();
 
-
     isUpdateProgressPlaying = false;
     progressPlaying.sGlide({
         startAt: 0,
