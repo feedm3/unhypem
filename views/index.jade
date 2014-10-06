@@ -67,11 +67,11 @@ block content
             li
               img(src="/images/volume-plus-icon-16.png")
         td.player-container-right
-          ul.list-inline.margin_padding_reset
-            li.player-currentSongPosition
-            li(style="width: 950px")
+          div.wrapper(style="position:relative; float:left; width:100%; padding-left:50px; padding-right: 70px")
+            div.progress-wrapper(style="float:left; position: relative; width: 100%;")
               div.progress(style="height:5px; margin:0; border-radius:0px")
                 div.progress-bar(id="player-progressLoading" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 0%; border-radius:0px")
               div(id="player-progressPlaying").slider_bar
                 div.follow_bar
-            li.player-currentSongDuration
+            div.player-currentSongPosition(style="float:left; position: relative; width:50px; right:50px; margin-left:-100%")
+            div.player-currentSongDuration(style="float:left; position: relative; width:50px; margin-right: -70px; padding-left:15px")
