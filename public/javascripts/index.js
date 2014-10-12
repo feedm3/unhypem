@@ -34,7 +34,7 @@ $(document).ready(function () {
     progressPlaying = $("#player-progressPlaying");
     progressVolume = $("#player-progressVolume");
 
-    $(".s_mp3").tooltip();
+    $("[data-toggle=\"tooltip\"]").tooltip();
 
     isUpdateProgressPlaying = false;
     progressPlaying.sGlide({
