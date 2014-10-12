@@ -154,6 +154,9 @@ function getSoundcloudMP3(song) {
                 song.s_mp3 = response.headers.location;
             } else {
                 console.error("Error getting MP3 from soundcloud: " + song.s_url + " StatusCode: " + response.statusCode);
+                console.log("Now trying to get link via hypem api key...");
+                song.s_stream = "http://api.soundcloud.com/tracks/" + song.s_id + "/stream?consumer_key=nH8p0jYOkoVEZgJukRlG6w";
+                getSoundcloudMP3(song);
             }
         } else {
             console.error("Error getting MP3 from soundcloud: " + song.s_url + " Message: " + error.message);
