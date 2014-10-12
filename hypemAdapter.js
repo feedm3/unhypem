@@ -110,10 +110,9 @@ function getMP3(hypemLink, song) {
     request(options, function (error, response, body) {
         if (!error) {
             if (response.statusCode == 200) {
-                // the request got n json from hypem
+                // the request got a json from hypem
                 // where the link to the mp3 file is saved
                 var jsonBody = JSON.parse(body);
-                console.log(jsonBody);
                 song.s_mp3 = jsonBody.url;
             } else {
                 console.error("Error resolve MP3 for " + hypemLink + " StatusCode: " + response.statusCode);
