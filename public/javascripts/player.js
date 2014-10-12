@@ -32,8 +32,14 @@ Player.prototype.isPlaying = function () {
 
 Player.prototype.preloadSong = function (popularSongsDTO) {
     $.each(popularSongsDTO, function (i, song) {
+        var urlToStream;
+        if (song.s_stream)
+            urlToStream = song.s_stream;
+        else
+            urlToStream = song.s_mp3;
+
         _soundManager.createSound({
-            url: song.s_mp3,
+            url: urlToStream,
             id: song.h_mediaid,
             onplay: function () {
                 _isPlaying = true;
@@ -75,10 +81,6 @@ Player.prototype.preloadSong = function (popularSongsDTO) {
                     _callbackWhilePlaying(this.position / 1000, parseInt(this.duration / 1000));
                 }
             }
-
-        });
-        _soundManager.ontimeout(function(status) {
-            console.log("erererererer");
         });
     });
 };
