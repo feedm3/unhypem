@@ -33,7 +33,7 @@ Player.prototype.isPlaying = function () {
 Player.prototype.preloadSong = function (popularSongsDTO) {
     $.each(popularSongsDTO, function (i, song) {
         _soundManager.createSound({
-            url: song.s_stream,
+            url: song.s_mp3,
             id: song.h_mediaid,
             onplay: function () {
                 _isPlaying = true;
