@@ -8,6 +8,30 @@
 var monk = require('monk');
 var db = monk('localhost:27017/unhypem');
 
-exports.storePopularSongs = function (popularSongsDTO) {
+exports.savePopularSongs = function (popularSongsDTO) {
+    // save popular songs + date
 
+};
+
+exports.getPopularSongs = function (date) {
+    var popularSongsDTO;
+    var date = new Date().getTime();
+
+
+    return popularSongsDTO
+    // get popular songs from the nearest given date
+};
+
+exports.getSong = function(mediaId) {
+    // get a single song
+};
+
+exports.inserStong = function(song){
+    // insert a single song
 }
+
+exports.isSongInDb = function(mediaId) {
+    // check if song exisits in database
+    return false;
+}
+

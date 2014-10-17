@@ -20,6 +20,10 @@ var popularSongsDTO,
 exports.updatePopularSongs = function () {
     popularSongsDTO = [];
 
+    // for detecting when finished
+    var total = 50;
+    var count = 0;
+
     getSongsFromHypem("http://hypem.com/playlist/popular/3day/json/1/data.js", 0);
     getSongsFromHypem("http://hypem.com/playlist/popular/3day/json/2/data.js", 20);
     getSongsFromHypem("http://hypem.com/playlist/popular/3day/json/3/data.js", 40);
