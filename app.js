@@ -4,9 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var CronJob = require('cron').CronJob;
 var hypemCrawler = require('./hypemCrawler');
-var dbAdapter = require('./dbAdapter');
+var hypemService = require('./hypemService');
 
 var routes = require('./routes/index');
 var popular = require('./routes/popular');
@@ -31,13 +30,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-// CronJob for automatic data crawling the songs from hypem
-var job = new CronJob('0 */1 * * * *', function() {
-    var d = new Date();
-    var currentDate = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
-    console.log(currentDate + ": Updating songs...");
-    hypemCrawler.updatePopularSongs();
-}).start();
+hypemService.start();
 
 app.use('/', routes);
 app.use('/popular', popular);

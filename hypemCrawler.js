@@ -7,23 +7,22 @@
  */
 
 var request = require('request');
+var dbAdapter = require('./dbAdapter');
 var q = require('q');
 var queryString = require('querystring');
 
 var popularSongsDTO,
     CLIENT_ID = "a20ebcaf4c7fc8931bfcba9c7557864a", // Soundcloud Client ID
-    count = 0, // +1 for every crawled song; if 50 then crawling is finished
+    songsCrawled = 0, // +1 for every crawled song; if 50 then crawling is finished
+    SONGS_TO_CRAWL = 50,
     lock = false;
-
+//FIXME error get not caught with finish()
 /**
  * Requests popular songs JSON from hypem then parses and
  * safes every song into an array object popularSongsDTO
  */
 exports.updatePopularSongs = function () {
     popularSongsDTO = [];
-
-    // for detecting when finished
-    count = 0;
 
     if (lock) {
         return "locked"; // TODO if cronjob detects a long running lock, do something
@@ -181,10 +180,12 @@ function getSoundcloudMP3(song) {
 }
 
 function finish() {
-    count++;
-    console.log("Finished number " + count + ". Lock " + lock);
-    if (count == 50) {
+    songsCrawled++;
+    //console.log("Finished number " + songsCrawled + ". Lock " + lock + " \r");
+    if (songsCrawled == SONGS_TO_CRAWL) {
         lock = false;
-        console.log("All songs updated. Lock " + lock);
+        songsCrawled = 0;
+        console.log("Songs updated.");
+        dbAdapter.savePopularSongs(popularSongsDTO);
     }
 }

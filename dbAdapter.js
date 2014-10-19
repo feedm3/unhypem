@@ -18,7 +18,7 @@ exports.getPopularSongs = function (date) {
     var date = new Date().getTime();
 
 
-    return popularSongsDTO
+    return popularSongsDTO;
     // get popular songs from the nearest given date
 };
 
@@ -26,12 +26,12 @@ exports.getSong = function(mediaId) {
     // get a single song
 };
 
-exports.inserStong = function(song){
+exports.insertSong = function(song){
     // insert a single song
-}
+};
 
 exports.isSongInDb = function(mediaId) {
     // check if song exisits in database
     return false;
-}
+};
 
