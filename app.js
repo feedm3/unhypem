@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var CronJob = require('cron').CronJob;
-var hypemAdapter = require('./hypemAdapter');
+var hypemCrawler = require('./hypemCrawler');
 var dbAdapter = require('./dbAdapter');
 
 var routes = require('./routes/index');
@@ -27,7 +27,7 @@ app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
-    req.hypemAdapter = hypemAdapter;
+    req.hypemAdapter = hypemCrawler;
     next();
 });
 
@@ -36,7 +36,7 @@ var job = new CronJob('0 */1 * * * *', function() {
     var d = new Date();
     var currentDate = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
     console.log(currentDate + ": Updating songs...");
-    hypemAdapter.updatePopularSongs();
+    hypemCrawler.updatePopularSongs();
 }).start();
 
 app.use('/', routes);
