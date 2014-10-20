@@ -8,18 +8,36 @@
 var monk = require('monk');
 var db = monk('localhost:27017/unhypem');
 
+
 exports.savePopularSongs = function (popularSongsDTO) {
-    // save popular songs + date
+    var popularSongCollection = db.get('popularSongs');
+    var newDBEntry = {"songs": popularSongsDTO};
+
+    popularSongCollection.insert(newDBEntry, function(err, doc) {
+        if (err) {
+            console.error("Popular songs not inserted into database. " + err);
+        } else {
+            console.log("Popular songs inserted into database.");
+        }
+    });
 
 };
 
-exports.getPopularSongs = function (date) {
-    var popularSongsDTO;
-    var date = new Date().getTime();
-
-
-    return popularSongsDTO;
-    // get popular songs from the nearest given date
+exports.getPopularSongs = function (callback) {
+    var popularSongCollection = db.get('popularSongs');
+    // get the latest entry
+    popularSongCollection.find(
+        {},
+        {limit: 1, sort: {_id:-1}},
+        function (err, doc) {
+            if (err) {
+                console.error("Latest record not found. " + err);
+                callback(null);;
+            } else {
+                console.log("Latest record found");
+                callback(doc[0]);
+            }
+    });
 };
 
 exports.getSong = function(mediaId) {

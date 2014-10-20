@@ -4,7 +4,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var hypemCrawler = require('./hypemCrawler');
 var hypemService = require('./hypemService');
 
 var routes = require('./routes/index');
@@ -24,11 +23,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(function(req, res, next) {
-    req.hypemAdapter = hypemCrawler;
-    next();
-});
 
 hypemService.start();
 

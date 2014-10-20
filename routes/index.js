@@ -1,32 +1,28 @@
 var express = require('express');
 var router = express.Router();
+var dbAdapter = require('./../dbAdapter');
 
 /* GET home page. */
 router.get('/', function (req, res) {
-
-    var hypemAdapter = req.hypemAdapter;
-    var popularSongsDTO = hypemAdapter.getPopularSongs();
-
-    /*var popular = db.get('popular');
-    popular.insert({
-            "date": new Date(),
-            "songs": songs
-        }, function (err, doc) {
-            if (err) {
-                res.send("Problem with db");
-            } else {
-                console.log("New DB entry.");
-            }
-        }
-    );
-
-    popular.find({}, {}, function (e, docs) {
-        console.log(docs[0].songs);
-        res.render('index', {"songs": docs[0].songs});
-    });*/
-    res.render('index', {"popularSongsDTO": popularSongsDTO});
+    dbAdapter.getPopularSongs(function(latestEntry) {
+        var date = getTimestampById(latestEntry._id);
+        res.render('index', {"popularSongsDTO": latestEntry.songs, "date":date});
+    });
 });
 
+function getTimestampById(id) {
+    id = id.toString();
+    // first 4 bytes are the timestamp portion (8 hex chars)
+    var timehex = id.substring(0, 8);
+    console.log(timehex); // gives: 4f94c2a1
 
+    // convert to a number... base 16
+    var secondsSinceEpoch = parseInt(timehex, 16);
+    console.log(secondsSinceEpoch); // gives: 1335149217
+
+    // convert to milliseconds, and create a new date
+    var dt = new Date(secondsSinceEpoch * 1000);
+    return dt;
+}
 
 module.exports = router;

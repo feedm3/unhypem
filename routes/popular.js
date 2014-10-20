@@ -1,10 +1,12 @@
 var express = require('express');
-var hypemCrawler = require('../hypemCrawler');
+var dbAdapter = require('./../dbAdapter');
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/', function(req, res) {
-  res.send(hypemCrawler.getPopularSongs());
+router.get('/', function (req, res) {
+    dbAdapter.getPopularSongs(function (latestEntry) {
+        res.json(latestEntry.songs);
+    });
 });
 
 module.exports = router;

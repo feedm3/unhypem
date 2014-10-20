@@ -15,13 +15,15 @@ var popularSongsDTO,
     CLIENT_ID = "a20ebcaf4c7fc8931bfcba9c7557864a", // Soundcloud Client ID
     songsCrawled = 0, // +1 for every crawled song; if 50 then crawling is finished
     SONGS_TO_CRAWL = 50,
-    lock = false;
+    lock = false,
+    onFinishCallback;
 //FIXME error get not caught with finish()
 /**
  * Requests popular songs JSON from hypem then parses and
  * safes every song into an array object popularSongsDTO
  */
-exports.updatePopularSongs = function () {
+exports.updatePopularSongs = function (callback) {
+    onFinishCallback = callback;
     popularSongsDTO = [];
 
     if (lock) {
@@ -130,6 +132,8 @@ function getMP3(hypemLink, song) {
                 finish();
             } else {
                 console.error("Error resolve MP3 for " + hypemLink + " StatusCode: " + response.statusCode);
+                // TODO überlegen was in so einem Fall gemacht wird
+                finish();
             }
         } else {
             console.error("Error resolve MP3 for " + hypemLink + " Message: " + error.message);
@@ -181,11 +185,12 @@ function getSoundcloudMP3(song) {
 
 function finish() {
     songsCrawled++;
+    // TODO wenn crawler mehrfach nicht fertig crawlt, im debug modus crawlen und diese ausgabe aktivieren
     //console.log("Finished number " + songsCrawled + ". Lock " + lock + " \r");
     if (songsCrawled == SONGS_TO_CRAWL) {
         lock = false;
         songsCrawled = 0;
-        console.log("Songs updated.");
-        dbAdapter.savePopularSongs(popularSongsDTO);
+        console.info("Songs updated.");
+        onFinishCallback(popularSongsDTO);
     }
 }
