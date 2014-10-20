@@ -6,16 +6,22 @@
 
 var hypemCrawler = require('./hypemCrawler');
 var CronJob = require('cron').CronJob;
+var dbAdapter = require('./dbAdapter');
 
 var job;
+var lockedInARow;
 
 exports.start = function() {
+    lockedInARow = 0;
+
     // seconds minutes hours dayOfMonth months dayOfWeek
     job = new CronJob('0 */1 * * * *', function() {
-        var d = new Date();
-        var currentDate = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
-        console.log(currentDate + ": Updating songs...");
-        hypemCrawler.updatePopularSongs();
+        if (hypemCrawler.isLocked()) {
+            lockedInARow++;
+            console.log("Could not start crawling job " + lockedInARow + " times in a row.");
+        } else {
+            startCrawler();
+        }
     });
     job.start();
 };
@@ -23,3 +29,15 @@ exports.start = function() {
 exports.stop = function() {
     job.stop();
 };
+
+function startCrawler() {
+    var d = new Date();
+    var currentDate = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+    console.log("Start updating songs...");
+    hypemCrawler.updatePopularSongs(callbackSongsUpdated);
+}
+
+function callbackSongsUpdated(popularSongsDTO) {
+    console.log("Updating finished callback. Songs total:" + popularSongsDTO.length);
+    dbAdapter.savePopularSongs(popularSongsDTO);
+}
