@@ -16,6 +16,8 @@ var currentSongRow,
 var eventProgress;
 $(document).ready(function () {
     getPopularSongs();
+
+    //TODO skip song if it can not be loaded
     player = new Player();
     player.init();
     player.setCallbackOnPlay(onPlayUIUpdate);
@@ -34,6 +36,7 @@ $(document).ready(function () {
     progressPlaying = $("#player-progressPlaying");
     progressVolume = $("#player-progressVolume");
 
+    // enable bootstrap tooltop for all "data-toggle" elements
     $("[data-toggle=\"tooltip\"]").tooltip();
 
     isUpdateProgressPlaying = false;
