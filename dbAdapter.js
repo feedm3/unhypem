@@ -34,7 +34,7 @@ exports.getPopularSongs = function (callback) {
                 console.error("Latest record not found. " + err);
                 callback(null);;
             } else {
-                console.log("Latest record found");
+                console.info("Latest record found");
                 callback(doc[0]);
             }
     });

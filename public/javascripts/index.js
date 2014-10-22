@@ -126,7 +126,10 @@ function updateArtistAndTitleText() {
 
 function getPopularSongs() {
     $.get("/popular", function (data) {
-        popularSongsDTO = data;
+        popularSongsDTO = [];
+        data.forEach(function(entry) {
+            popularSongsDTO.push(entry.song);
+        });
         player.preloadSong(popularSongsDTO);
         selectCurrentRow(0);
     });

@@ -10,33 +10,25 @@ block content
           tr.white
             th
             th
-            th
             th Artist
             th Title
             th Love
         tbody#popular
-          each song in popularSongsDTO
-            tr.white(id="#{song.position}")
-              td.clickToPlay #{song.position}
-              if song.s_url
-                td
-                  a(href="#{song.s_url}" target="_blank")
+          each entry in popularSongsDTO
+            - var streamableSong = (entry.song.stream ? "white" : "warning")
+            tr(class=streamableSong id="#{entry.position}")
+              td(class="vertical-center").clickToPlay #{entry.position}
+              if entry.song.s_url
+                td(class="horizontal-center")
+                  a(href="#{entry.song.s_url}" target="_blank")
                     img(src="/images/soundcloud-icon-32.png")
               else
-                td.warning
+                td(class="horizontal-center")
                   a(href="" target="_blank")
-                    img(src="/images/soundcloud-icon-32.png" style="opacity: 0.7" data-toggle="tooltip" data-placement="top" title="Song is not hosted on soundcloud.")
-              if song.s_mp3
-                td
-                  a(href="#{song.s_mp3}")
-                    img(src="/images/download-icon-32.png" data-toggle="tooltip" data-placement="top" title="Right click -> Save Target As...").s_mp3
-              else
-                td.warning
-                  a(href="#{song.s_mp3}")
-                    img(src="/images/download-icon-32.png" style="opacity: 0.7" data-toggle="tooltip" data-placement="top" title="Sorry, but this song provided no direct mp3 file.").s_mp3
-              td.clickToPlay #{song.artist}
-              td.clickToPlay #{song.title}
-              td.clickToPlay #{song.h_loved_count}
+                    img(class="center" src="/images/soundcloud-icon-32.png" style="opacity: 0.2" data-toggle="tooltip" data-placement="top" title="Song is not hosted on soundcloud.")
+              td(class="vertical-center").clickToPlay #{entry.song.artist}
+              td(class="vertical-center").clickToPlay #{entry.song.title}
+              td(class="vertical-center").clickToPlay #{entry.song.h_loved_count}
   div.text-center Last update: #{date}
 
   div.bottom

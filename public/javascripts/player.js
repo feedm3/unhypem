@@ -32,14 +32,8 @@ Player.prototype.isPlaying = function () {
 
 Player.prototype.preloadSong = function (popularSongsDTO) {
     $.each(popularSongsDTO, function (i, song) {
-        var urlToStream;
-        if (song.s_stream)
-            urlToStream = song.s_stream;
-        else
-            urlToStream = song.s_mp3;
-
         _soundManager.createSound({
-            url: urlToStream,
+            url: song.stream,
             id: song.h_mediaid,
             onplay: function () {
                 _isPlaying = true;

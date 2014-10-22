@@ -38,6 +38,6 @@ function startCrawler() {
 }
 
 function callbackSongsUpdated(popularSongsDTO) {
-    console.log("Updating finished callback. Songs total:" + popularSongsDTO.length);
+    console.log("Updating finished.");
     dbAdapter.savePopularSongs(popularSongsDTO);
 }

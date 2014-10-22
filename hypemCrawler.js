@@ -16,14 +16,14 @@ var popularSongsDTO,
     songsCrawled = 0, // +1 for every crawled song; if 50 then crawling is finished
     SONGS_TO_CRAWL = 50,
     lock = false,
-    onFinishCallback;
+    onCrawlingFinishedCallback;
 //FIXME error get not caught with finish()
 /**
  * Requests popular songs JSON from hypem then parses and
  * safes every song into an array object popularSongsDTO
  */
 exports.updatePopularSongs = function (callback) {
-    onFinishCallback = callback;
+    onCrawlingFinishedCallback = callback;
     popularSongsDTO = [];
 
     if (lock) {
@@ -46,7 +46,7 @@ exports.getPopularSongs = function () {
     return popularSongsDTO;
 };
 
-exports.isLocked = function() {
+exports.isLocked = function () {
     return lock;
 };
 
@@ -57,19 +57,24 @@ function getSongsFromHypem(urlToJSON, offsetInList) {
             var hypemSongList = JSON.parse(body);
             for (var num in hypemSongList) {
                 if (!isNaN(num)) {
+                    // TODO hier überprüfen ob Song schon in DB
                     var position = parseInt(num) + offsetInList + 1;
                     var song = {};
-                    song.position = position;
                     song.artist = hypemSongList[num].artist;
                     song.title = hypemSongList[num].title;
                     song.h_mediaid = hypemSongList[num].mediaid;
                     song.h_loved_count = hypemSongList[num].loved_count;
-                    popularSongsDTO[position - 1] = song;
+                    popularSongsDTO[position - 1] = {
+                        position: position,
+                        song: song
+                    };
                     getSoundcloudURL(song);
                 }
             }
         } else {
             console.error("Error while loading JSON from hypem: " + urlToJSON);
+            songsCrawled = songsCrawled + 20;
+            finish();
         }
     });
 }
@@ -88,11 +93,12 @@ function getSoundcloudURL(song) {
             }
         } else {
             console.error("Error with head request to:" + url);
+            finish();
         }
     })
 }
 
-var cookie = "__utma=1717032.393072307.1385723530.1413031295.1413042377.130; __utmz=1717032.1411373803.101.4.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); __qca=P0-1192099176-1385723530317; hblid=fYaYEQ1S27S34nfX2t6JN4W3JOFC0CDj; olfsk=olfsk00024760656742828235; __gads=ID=f437c883a9450f76:T=1398362427:S=ALNI_MZpJh3KfFJKxg7lAgkIujTTrdzhYA; __utmc=1717032; AUTH=03%3A406b2fe38a1ab80a2953869a475ff110%3A1412624464%3A1469267065%3A01-DE; wcsid=AVCmxVsZgg50spdM2t6JNhQQNMDFDPDp; _oklv=1413046019807%2CAVCmxVsZgg50spdM2t6JNhQQNMDFDPDp; _ok=8642-858-10-6552; __utmb=1717032.4.10.1413042377; _okbk=cd4%3Dtrue%2Cvi5%3D0%2Cvi4%3D1413042399509%2Cvi3%3Dactive%2Cvi2%3Dfalse%2Cvi1%3Dfalse%2Ccd8%3Dchat%2Ccd6%3D0%2Ccd5%3Daway%2Ccd3%3Dfalse%2Ccd2%3D0%2Ccd1%3D0%2C; __utmt=1 Connection: keep-alive";
+var cookie = "__utma=1717032.393072307.1385723530.1413915594.1413918197.143; __utmz=1717032.1411373803.101.4.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); __qca=P0-1192099176-1385723530317; hblid=fYaYEQ1S27S34nfX2t6JN4W3JOFC0CDj; olfsk=olfsk00024760656742828235; __gads=ID=f437c883a9450f76:T=1398362427:S=ALNI_MZpJh3KfFJKxg7lAgkIujTTrdzhYA; AUTH=03%3A406b2fe38a1ab80a2953869a475ff110%3A1412624464%3A1469266248%3A01-DE; __utmb=1717032.3.10.1413918197; __utmc=1717032; __utmt=1";
 function getHypemKey(song) {
     var options = {method: "GET", url: "", headers: {"Cookie": cookie}};
     var url = "http://hypem.com/track/" + song.h_mediaid;
@@ -110,12 +116,14 @@ function getHypemKey(song) {
                         var hypemUrl = "http://hypem.com/serve/source/" + song.h_mediaid + "/" + key;
                         getMP3(hypemUrl, song);
                     } catch(e) {
-
+                        // if error happens here, first check the cookie value (maybe refresh)
+                        // if this is not helping, manually check the body of the request for the key value
                     }
                 }
             }
         } else {
             console.error("Getting key not worked for track http://hypem.com/track/" + song.h_mediaid);
+            finish();
         }
     })
 }
@@ -128,15 +136,17 @@ function getMP3(hypemLink, song) {
                 // the request got a json from hypem
                 // where the link to the mp3 file is saved
                 var jsonBody = JSON.parse(body);
-                song.s_mp3 = jsonBody.url;
+                song.stream = jsonBody.url;
+                song.mp3 = jsonBody.url;
                 finish();
             } else {
-                console.error("Error resolve MP3 for " + hypemLink + " StatusCode: " + response.statusCode);
+                console.error("Error resolve MP3 for " + song.artist + " (" + hypemLink + ") StatusCode: " + response.statusCode);
                 // TODO überlegen was in so einem Fall gemacht wird
                 finish();
             }
         } else {
-            console.error("Error resolve MP3 for " + hypemLink + " Message: " + error.message);
+            console.error("Error resolve MP3 for " + song.artist + "(" + hypemLink + ") Message: " + error.message);
+            finish();
         }
     })
 
@@ -149,36 +159,38 @@ function resolveSoundcloudURL(song) {
         if (!error) {
             if (response.statusCode == 200) {
                 var soundcloudInfo = JSON.parse(body);
-                song.s_stream = soundcloudInfo.uri + "/stream?client_id=" + CLIENT_ID;
+                song.stream = soundcloudInfo.uri + "/stream?client_id=" + CLIENT_ID;
                 song.s_id = soundcloudInfo.id;
                 getSoundcloudMP3(song);
             } else {
                 console.error("Error resolve soundcloud Stream: " + song.s_url + " StatusCode: " + response.statusCode);
+                finish();
             }
         } else {
             console.error("Error resolve soundcloud Stream: " + song.s_url + " Message: " + error.message);
+            finish();
         }
     })
 }
 
 function getSoundcloudMP3(song) {
-    var url = song.s_stream,
+    var url = song.stream,
         options = {method: "HEAD", followRedirect: false, url: url};
     request(options, function (error, response, body) {
         if (!error) {
             // if you request the stream url
             // you get the redirected to the mp3 file
             if (response.statusCode == 302) {
-                song.s_mp3 = response.headers.location;
+                song.mp3 = response.headers.location;
                 finish();
             } else {
-                console.error("Error getting MP3 from soundcloud: " + song.s_url + " StatusCode: " + response.statusCode);
-                console.log("Now trying to get link via hypem api key...");
-                song.s_stream = "http://api.soundcloud.com/tracks/" + song.s_id + "/stream?consumer_key=nH8p0jYOkoVEZgJukRlG6w";
+                // get stream url with hypem api key
+                song.stream = "http://api.soundcloud.com/tracks/" + song.s_id + "/stream?consumer_key=nH8p0jYOkoVEZgJukRlG6w";
                 getSoundcloudMP3(song);
             }
         } else {
             console.error("Error getting MP3 from soundcloud: " + song.s_url + " Message: " + error.message);
+            finish();
         }
     })
 }
@@ -190,7 +202,6 @@ function finish() {
     if (songsCrawled == SONGS_TO_CRAWL) {
         lock = false;
         songsCrawled = 0;
-        console.info("Songs updated.");
-        onFinishCallback(popularSongsDTO);
+        onCrawlingFinishedCallback(popularSongsDTO);
     }
 }
