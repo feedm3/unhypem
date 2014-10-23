@@ -8,6 +8,7 @@
 var monk = require('monk');
 var db = monk('localhost:27017/unhypem');
 
+// TODO abfangen wenn kein eintrag gefunden wird
 
 exports.savePopularSongs = function (popularSongsDTO) {
     var popularSongCollection = db.get('popularSongs');
