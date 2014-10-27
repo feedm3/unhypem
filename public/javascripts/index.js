@@ -37,7 +37,7 @@ $(document).ready(function () {
     progressVolume = $("#player-progressVolume");
 
     // enable bootstrap tooltop for all "data-toggle" elements
-    $("[data-toggle=\"tooltip\"]").tooltip();
+    $('[data-toggle="tooltip"]').tooltip();
 
     isUpdateProgressPlaying = false;
     progressPlaying.sGlide({
@@ -121,9 +121,9 @@ function selectCurrentRow(position) {
 
 function updateArtistAndTitleText() {
     var currentArtist = $(".player-artist");
-    currentArtist.text(currentSongRow.children("td").eq(3).text());
+    currentArtist.text(currentSongRow.children("td").eq(2).text());
     var currentTitle = $(".player-title");
-    currentTitle.text(currentSongRow.children("td").eq(4).text());
+    currentTitle.text(currentSongRow.children("td").eq(3).text());
     isUpdateProgressPlaying = false;
 }
 

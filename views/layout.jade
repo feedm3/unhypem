@@ -3,13 +3,8 @@ html
   head
     title Unhypem
     meta(name="viewport" content="width=device-width, initial-scale=1")
-    link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
-    script(src='/javascripts/libs/jquery.min.js')
-    script(src='/javascripts/libs/bootstrap.min.js')
-    script(src='/javascripts/libs/soundmanager2-nodebug-jsmin.js')
-    script(src='/javascripts/libs/sGlide-1.10.0.min.js')
-    script(src='/javascripts/player.js')
-    script(src='/javascripts/index.js')
+
   body
+    include header
     block content
+    include footer
