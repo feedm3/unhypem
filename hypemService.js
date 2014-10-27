@@ -15,7 +15,7 @@ exports.start = function() {
     lockedInARow = 0;
 
     // seconds minutes hours dayOfMonth months dayOfWeek
-    job = new CronJob('0 */1 * * * *', function() {
+    job = new CronJob('0 */5 * * * *', function() {
         if (hypemCrawler.isLocked()) {
             lockedInARow++;
             console.log("Could not start crawling job " + lockedInARow + " times in a row.");
