@@ -6,6 +6,10 @@
 ## Directory-based project format:
 .idea/
 
+### Unhypem ###
+# Local config, heroku config is "heroku config"
+.env
+
 ### Node ###
 # Logs
 logs
