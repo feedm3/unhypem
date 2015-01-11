@@ -23,11 +23,11 @@ block content
               if entry.song.s_url
                 td(class="horizontal-center")
                   a(href="#{entry.song.s_url}" target="_blank")
-                    img(src="/images/soundcloud-icon-32.png")
+                    img(src="/img/soundcloud-icon-32.png")
               else
                 td(class="horizontal-center")
                   a(href="" target="_blank")
-                    img(class="center" src="/images/soundcloud-icon-32.png" style="opacity: 0.2" data-toggle="tooltip" data-placement="top" title="Song is not hosted on soundcloud.")
+                    img(class="center" src="/img/soundcloud-icon-32.png" style="opacity: 0.2" data-toggle="tooltip" data-placement="top" title="Song is not hosted on soundcloud.")
               td(class="vertical-center").clickToPlay #{entry.song.artist}
               td(class="vertical-center").clickToPlay #{entry.song.title}
               td(class="vertical-center").clickToPlay #{entry.song.h_loved_count}
@@ -39,11 +39,11 @@ block content
         td.player-container-left
           ul.list-inline.margin_padding_reset
             li
-              img(src="/images/rewind-icon-32.png" style="opacity: 0.7").player-rewind
+              img(src="/img/rewind-icon-32.png" style="opacity: 0.7").player-rewind
             li
-              img(src="/images/play-icon-32.png").player-play
+              img(src="/img/play-icon-32.png").player-play
             li
-              img(src="/images/forward-icon-32.png" style="opacity: 0.7").player-forward
+              img(src="/img/forward-icon-32.png" style="opacity: 0.7").player-forward
         td.player-container-right
           ul.list-inline.margin_padding_reset
             li.player-artist
@@ -53,12 +53,12 @@ block content
         td.player-container-left
           ul.list-inline.margin_padding_reset
             li
-              img(src="/images/volume-minus-icon-16.png")
+              img(src="/img/volume-minus-icon-16.png")
             li(style="width: 73px;")
               div(id="player-progressVolume").slider_bar
                 div.follow_bar
             li
-              img(src="/images/volume-plus-icon-16.png")
+              img(src="/img/volume-plus-icon-16.png")
         td.player-container-right
           div.wrapper(style="position:relative; float:left; width:100%; padding-left:50px; padding-right: 70px")
             div.progress-wrapper(style="float:left; position: relative; width: 100%;")

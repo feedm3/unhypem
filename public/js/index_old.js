@@ -139,11 +139,11 @@ function getPopularSongs() {
 }
 
 function onPlayUIUpdate() {
-    playButton.attr("src", "../images/pause-icon-32.png");
+    playButton.attr("src", "../img/pause-icon-32.png");
 }
 
 function onPauseUIUpdate() {
-    playButton.attr("src", "../images/play-icon-32.png");
+    playButton.attr("src", "../img/play-icon-32.png");
 }
 
 function onSongFinished() {

@@ -7,8 +7,8 @@
 var dotenv = require('dotenv');
 dotenv.load();
 
-var db = require('monk')(process.env.MONGOLAB_URI);
-//var db = require('monk')('localhost:27017/unhypem');
+//var db = require('monk')(process.env.MONGOLAB_URI);
+var db = require('monk')('localhost:27017/unhypem');
 
 // TODO abfangen wenn kein eintrag gefunden wird
 

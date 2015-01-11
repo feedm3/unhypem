@@ -1,0 +1,25 @@
+<div class="container">
+    <table class="table table-hover">
+        <thead>
+        <tr class="white">
+            <th></th>
+            <th></th>
+            <th>Artist</th>
+            <th>Title</th>
+            <th>Love</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="white" ng-repeat="entry in popularSongs" ng-click="songCtrl.setSelectedPosition(entry.position)" ng-class="{info: songCtrl.isSelected(entry.position)}">
+            <td class="vertical-center">{{entry.position}}</td>
+            <td class="vertical-center">
+                <a href="{{entry.song.s_url}}" ng-class="{'no-soundcloud-url': !songCtrl.hasSoundcloudUrl(entry.song.s_url)}"><img src="img/soundcloud-icon-32.png"></a>
+            </td>
+            <td class="vertical-center">{{entry.song.artist}}</td>
+            <td class="vertical-center">{{entry.song.title}}</td>
+            <td class="vertical-center">{{entry.song.h_loved_count}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="text-center">Last update {{date}}</div>
+</div>

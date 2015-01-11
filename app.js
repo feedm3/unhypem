@@ -1,13 +1,13 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var hypemService = require('./hypemService');
+var express = require('express'),
+    path = require('path'),
+    favicon = require('serve-favicon'),
+    logger = require('morgan'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    hypemService = require('./hypemService');
 
-var routes = require('./routes/index');
-var popular = require('./routes/popular');
+var indexRoute = require('./routes/index'),
+    popularRoute = require('./routes/popular');
 
 var app = express();
 
@@ -26,8 +26,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 hypemService.start();
 
-app.use('/', routes);
-app.use('/popular', popular);
+app.use('/', indexRoute);
+app.use('/popular', popularRoute);
+app.get('/song/:hypemId', function(req, res){
+    var hypemId = req.params.hypemId.toLowerCase();
+    res.send("You want to have song information to " + hypemId);
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
