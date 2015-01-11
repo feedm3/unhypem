@@ -13,7 +13,7 @@
         <tr class="white" ng-repeat="entry in popularSongs" ng-click="songCtrl.setSelectedPosition(entry.position)" ng-class="{info: songCtrl.isSelected(entry.position)}">
             <td class="vertical-center">{{entry.position}}</td>
             <td class="vertical-center">
-                <a href="{{entry.song.s_url}}" ng-class="{'no-soundcloud-url': !songCtrl.hasSoundcloudUrl(entry.song.s_url)}"><img src="img/soundcloud-icon-32.png"></a>
+                <a href="{{entry.song.s_url}}" ng-class="{'no-soundcloud-url': !songCtrl.hasSoundcloudUrl(entry.song.s_url)}" target="_blank" ><img src="../../../assets/img/soundcloud-icon-32.png"></a>
             </td>
             <td class="vertical-center">{{entry.song.artist}}</td>
             <td class="vertical-center">{{entry.song.title}}</td>
