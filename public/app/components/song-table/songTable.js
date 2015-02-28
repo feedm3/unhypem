@@ -3,13 +3,13 @@
 
     app.controller('SongController', ['$scope', '$http', 'sharedProperties', function ($scope, $http, sharedProperties) {
         var songCtrl = this;
-        $scope.popularSongs = [];
+        $scope.popularSongsList = {};
         $scope.selectedPosition = 1;
         $scope.date = new Date().getDate().toString();
 
         songCtrl.setSelectedPosition = function (selectedPosition) {
             $scope.selectedPosition = selectedPosition;
-            sharedProperties.setCurrentSong($scope.popularSongs[selectedPosition - 1].song);
+            sharedProperties.setCurrentSong($scope.popularSongsList[selectedPosition - 1]);
         };
 
         songCtrl.isSelected = function (selectedPosition) {
@@ -21,9 +21,9 @@
         };
 
         $http.get("/popular").
-            success(function (popularSongs) {
-                $scope.popularSongs = popularSongs;
-                sharedProperties.preloadSongs(popularSongs);
+            success(function (popularList) {
+                $scope.popularSongsList = popularList;
+                sharedProperties.preloadSongs(popularList);
                 songCtrl.setSelectedPosition(1);
             });
     }]);
