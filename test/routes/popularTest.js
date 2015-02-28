@@ -40,7 +40,7 @@ describe('Request the popular songs object', function (done) {
     it('should contain the timestamp in the header', function (done) {
         request(app)
             .get('/popular')
-            .expect('timestamp', /Fabi/, done)
+            .expect('timestamp', /\d{2}:\d{2}:\d{2}/, done)
     })
 });
 
