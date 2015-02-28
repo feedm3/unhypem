@@ -30,11 +30,11 @@ Player.prototype.isPlaying = function () {
     return _isPlaying;
 };
 
-Player.prototype.preloadSong = function (popularSongsDTO) {
-    $.each(popularSongsDTO, function (i, song) {
+Player.prototype.preloadSong = function (popularList) {
+    $.each(popularList, function (i, song) {
         _soundManager.createSound({
-            url: song.stream,
-            id: song.h_mediaid,
+            url: song.streamUrl,
+            id: song.hypemMediaId,
             onplay: function () {
                 _isPlaying = true;
                 if (_callbackOnPlay) {
@@ -130,6 +130,7 @@ Player.prototype.setVolume = function (volume) {
         _soundPlayer.setVolume(_volume);
     }
 }
+
 /**
  * Fires when song starts playing
  *
