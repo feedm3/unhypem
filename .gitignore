@@ -10,6 +10,9 @@
 # Local config, heroku config is "heroku config"
 .env
 
+# local mongodb data
+data
+
 ### Node ###
 # Logs
 logs
