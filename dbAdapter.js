@@ -28,6 +28,7 @@ exports.savePopularSongs = function (popularSongsDTO) {
 
 exports.getPopularSongs = function (callback) {
     var popularSongCollection = db.get('popularSongs');
+    console.log("Get popular songs");
     // get the latest entry
     popularSongCollection.find(
         {},
@@ -35,7 +36,7 @@ exports.getPopularSongs = function (callback) {
         function (err, doc) {
             if (err) {
                 console.error("Latest record not found. " + err);
-                callback(null);;
+                callback(null);
             } else {
                 console.info("Latest record found");
                 callback(doc[0]);
