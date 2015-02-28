@@ -30,8 +30,8 @@ Player.prototype.isPlaying = function () {
     return _isPlaying;
 };
 
-Player.prototype.preloadSong = function (popularList) {
-    $.each(popularList, function (i, song) {
+Player.prototype.preloadSong = function (songs) {
+    _.forEach(songs, function (song) {
         _soundManager.createSound({
             url: song.streamUrl,
             id: song.hypemMediaId,
@@ -65,7 +65,7 @@ Player.prototype.preloadSong = function (popularList) {
                 if (_callbackWhileLoading) {
                     _callbackWhileLoading((this.bytesLoaded / this.bytesTotal) * 100);
                 }
-                if (this.duration) {
+                if (this.duration && _callbackDurationInSeconds) {
                     _callbackDurationInSeconds(parseInt(this.duration / 1000));
                 }
             },
@@ -80,11 +80,13 @@ Player.prototype.preloadSong = function (popularList) {
 };
 
 Player.prototype.play = function (id) {
-    if (_isPlaying) {
-        _soundPlayer.pause();
-    }
     // If same ID wants to be played, just pause the song
     if (_currentPlayId == id) {
+        if (_isPlaying) {
+            _soundPlayer.pause();
+            return;
+        }
+
         _soundPlayer.play();
         _soundPlayer.setVolume(_volume)
     } else {
@@ -122,14 +124,14 @@ Player.prototype.setPosition = function (hundredPercent) {
 /**
  * Set new volume
  *
- * @param volume: number between 0-100
+ * @param volume number between 0-100
  */
 Player.prototype.setVolume = function (volume) {
     _volume = volume;
     if (_soundPlayer) {
         _soundPlayer.setVolume(_volume);
     }
-}
+};
 
 /**
  * Fires when song starts playing

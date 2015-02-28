@@ -2,31 +2,21 @@
     var app = angular.module('song-service', []);
 
     app.service('sharedProperties', function () {
-        var currentSong = {
-            artist: "",
-            title: "",
-            s_url: "",
-            stream: "",
-            h_mediaid: ""
-        };
+        var currentSong = {};
         var player = new Player();
         player.init();
 
         this.getCurrentSong = function () {
             return currentSong;
         };
-        this.setCurrentSong = function (value) {
-            currentSong.artist = value.artist;
-            currentSong.title = value.title;
-            currentSong.s_url = value.s_url;
-            currentSong.stream = value.stream;
-            currentSong.h_mediaid = value.h_mediaid;
+        this.setCurrentSong = function (song) {
+            _.assign(currentSong, song);
         };
-        this.preloadSongs = function (value) {
-            player.preloadSong(_.pluck(value, "song"));
+        this.preloadSongs = function (songArray) {
+            player.preloadSong(songArray);
         };
-        this.play = function (value) {
-            player.play(value);
+        this.play = function (hypemMediaId) {
+            player.play(hypemMediaId);
         };
     });
 })();

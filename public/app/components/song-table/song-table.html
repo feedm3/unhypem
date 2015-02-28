@@ -10,10 +10,10 @@
         </tr>
         </thead>
         <tbody>
-        <tr class="white" ng-repeat="song in popularSongsList" ng-click="songCtrl.setSelectedPosition($index)" ng-class="{info: songCtrl.isSelected($index)}">
-            <td class="vertical-center">{{entry.position}}</td>
+        <tr class="white" ng-repeat="(i, song) in songs" ng-click="setSelectedPosition(i)" ng-class="{info: isSelected(i)}">
+            <td class="vertical-center">{{i+1}}</td>
             <td class="vertical-center">
-                <a href="{{song.soundcloudUrl}}" ng-class="{'no-soundcloud-url': !songCtrl.hasSoundcloudUrl(song.soundcloudUrl)}" target="_blank" ><img src="../../../assets/img/soundcloud-icon-32.png"></a>
+                <a href="{{song.soundcloudUrl}}" ng-class="{'no-soundcloud-url': !hasSoundcloudUrl(song.soundcloudUrl)}" target="_blank" ><img src="../../../assets/img/soundcloud-icon-32.png"></a>
             </td>
             <td class="vertical-center">{{song.artist}}</td>
             <td class="vertical-center">{{song.title}}</td>

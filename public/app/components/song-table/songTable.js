@@ -2,29 +2,31 @@
     var app = angular.module('song-table', []);
 
     app.controller('SongController', ['$scope', '$http', 'sharedProperties', function ($scope, $http, sharedProperties) {
-        var songCtrl = this;
-        $scope.popularSongsList = {};
+        $scope.songs = [];
         $scope.selectedPosition = 1;
-        $scope.date = new Date().getDate().toString();
+        $scope.date = "";
 
-        songCtrl.setSelectedPosition = function (selectedPosition) {
+        $scope.setSelectedPosition = function (selectedPosition) {
             $scope.selectedPosition = selectedPosition;
-            sharedProperties.setCurrentSong($scope.popularSongsList[selectedPosition - 1]);
+            sharedProperties.setCurrentSong($scope.songs[selectedPosition]);
+            sharedProperties.play($scope.songs[selectedPosition].hypemMediaId)
         };
 
-        songCtrl.isSelected = function (selectedPosition) {
+        $scope.isSelected = function (selectedPosition) {
             return $scope.selectedPosition === selectedPosition;
         };
 
-        songCtrl.hasSoundcloudUrl = function (soundcloudUrl) {
+        $scope.hasSoundcloudUrl = function (soundcloudUrl) {
             return typeof soundcloudUrl == "string";
         };
 
         $http.get("/popular").
-            success(function (popularList) {
-                $scope.popularSongsList = popularList;
-                sharedProperties.preloadSongs(popularList);
-                songCtrl.setSelectedPosition(1);
+            success(function (songs, status, headers, config) {
+                $scope.songs = _.values(songs); // TODO reihenfolge nicht sichergestzellt
+                $scope.date = headers("timestamp");
+
+                sharedProperties.preloadSongs($scope.songs);
+                $scope.setSelectedPosition(0);
             });
     }]);
 
