@@ -19,8 +19,17 @@
         this.play = function (hypemMediaId) {
             player.play(hypemMediaId);
         };
-        this.setProgressCallback = function(callback) {
-            player.setCallbackWhilePlaying(callback);
+        this.setVolume = function (volume) {
+            player.setVolume(volume);
         };
+        this.setProgress = function (progress) {
+            player.setPosition(progress);
+        };
+        this.setProgressCallback = function(callback) {
+            player.setProgressInSecondsCallback(callback);
+        };
+        this.setDurationCallback = function (callback) {
+            player.setDurationInSecondsCallback(callback);
+        }
     });
 })();

@@ -28,9 +28,9 @@
                     <li>
                         <img src="../../../assets/img/volume-minus-icon-16.png">
                     </li>
-                    <li style="width: 73px">
-                        <div id="player-progressVolume" class="slider_bar">
-                            <div class="follow_bar"></div>
+                    <li>
+                        <div id="player-progressVolume" style="width: 50px">
+                            <progressbar id="volumebar" value="volumeInPercent" ng-click="onVolumebarClick($event)"></progressbar>
                         </div>
                     </li>
                     <li>
@@ -39,10 +39,10 @@
                 </ul>
             </td>
             <td class="player-container-right">
-                <div class="wrapper" style="position:relative; float:left; width:100%; padding-left:50px; padding-right: 70px">
-                    <progressbar id="progressbar" class="progress-striped active" value="progressValue" type="info" ng-click="showValue($event)"></progressbar>
-                    <div class="player-currentSongPosition" style="float:left; position: relative; width:50px; right:50px; margin-left:-100%"></div>
-                    <div class="player-currentSongDuration" style="float:left; position: relative; width:50px; margin-right: -70px; padding-left:15px"></div>
+                <div class="float-left" ng-bind="progressInSeconds"></div>
+                <div class="float-right" ng-bind="durationInSeconds"></div>
+                <div class="wrapper" style="position:relative; width:100%; padding-left:50px; padding-right: 70px">
+                    <progressbar id="progressbar" class="progress-striped active" value="progressInPercent" max="100" type="info" ng-click="onProgressbarClick($event)"></progressbar>
                 </div>
             </td>
         </tr>

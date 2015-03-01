@@ -12,7 +12,7 @@ Player = function () {
     _callbackNextSong = null;
     _callbackDurationInSeconds = null;
     _callbackWhileLoading = null;
-    _callbackWhilePlaying = null;
+    _callbackProgressInSeconds = null;
 };
 
 Player.prototype.init = function () {
@@ -70,9 +70,9 @@ Player.prototype.preloadSong = function (songs) {
                 }
             },
             whileplaying: function () {
-                if (_callbackWhilePlaying) {
-                    // return song progress in hundred percent
-                    _callbackWhilePlaying(this.position / 1000, parseInt(this.duration / 1000));
+                if (_callbackProgressInSeconds) {
+                    // return song progress in seconds
+                    _callbackProgressInSeconds(this.position / 1000, parseInt(this.duration / 1000));
                 }
             }
         });
@@ -138,31 +138,36 @@ Player.prototype.setVolume = function (volume) {
  *
  * @param callback
  */
-Player.prototype.setCallbackOnPlay = function (callback) {
+Player.prototype.setOnPlayCallback = function (callback) {
     _callbackOnPlay = callback;
 };
 
-Player.prototype.setCallbackOnPause = function (callback) {
+Player.prototype.setOnPauseCallback = function (callback) {
     _callbackOnPause = callback;
 };
 
-Player.prototype.setCallbackNextSong = function (callback) {
+Player.prototype.setNextSongCallback = function (callback) {
     _callbackNextSong = callback;
 };
 
-Player.prototype.setCallbackWhileLoading = function (callback) {
+Player.prototype.setWhileLoadingCallback = function (callback) {
     _callbackWhileLoading = callback;
 };
 
-Player.prototype.setCallbackDurationInSeconds = function (callback) {
+/**
+ * Returns the duration of the song in seconds.
+ *
+ * @param callback
+ */
+Player.prototype.setDurationInSecondsCallback = function (callback) {
     _callbackDurationInSeconds = callback;
 };
 
 /**
- * Return progress in percent.
+ * Return the progress in seconds.
  *
  * @param callback
  */
-Player.prototype.setCallbackWhilePlaying = function (callback) {
-    _callbackWhilePlaying = callback;
+Player.prototype.setProgressInSecondsCallback = function (callback) {
+    _callbackProgressInSeconds = callback;
 };

@@ -3,23 +3,41 @@
 
     app.controller('PlayerController', ['$scope', 'sharedProperties', function ($scope, sharedProperties) {
         $scope.currentSong = sharedProperties.getCurrentSong();
-        $scope.progressValue = 0;
+
+        $scope.volumeInPercent = 100;
+        $scope.progressInPercent = 0;
+        $scope.progressInSeconds = 0;
+        $scope.durationInSeconds = 0;
 
         $scope.play = function () {
             sharedProperties.play($scope.currentSong.hypemMediaId);
         };
 
-        $scope.showValue = function (event) {
+        $scope.onProgressbarClick = function (event) {
             var width = document.getElementById('progressbar').offsetWidth;
             var offset = event.layerX;
-            var progress = 100 / width * offset;
-
+            $scope.progressInPercent = 100 / width * offset;
+            sharedProperties.setProgress($scope.progressInPercent);
         };
 
-        sharedProperties.setProgressCallback(function (percent) {
+        $scope.onVolumebarClick = function (event) {
+            var width = document.getElementById('volumebar').offsetWidth;
+            var offset = event.layerX;
+            $scope.volumeInPercent = 100 / width * offset;
+            sharedProperties.setVolume($scope.volumeInPercent);
+        };
+
+        sharedProperties.setProgressCallback(function (seconds) {
             $scope.$apply(function () {
-                $scope.progressValue = percent;
+                $scope.progressInSeconds = Math.floor(seconds);
+                if ($scope.durationInSeconds != 0) {
+                    $scope.progressInPercent = 100 / $scope.durationInSeconds * seconds;
+                }
             });
+        });
+
+        sharedProperties.setDurationCallback(function (seconds) {
+            $scope.durationInSeconds = seconds;
         })
     }]);
 
