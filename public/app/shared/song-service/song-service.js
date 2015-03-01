@@ -6,6 +6,7 @@
         var player = new Player();
         player.init();
 
+
         this.getCurrentSong = function () {
             return currentSong;
         };
@@ -17,6 +18,9 @@
         };
         this.play = function (hypemMediaId) {
             player.play(hypemMediaId);
+        };
+        this.setProgressCallback = function(callback) {
+            player.setCallbackWhilePlaying(callback);
         };
     });
 })();

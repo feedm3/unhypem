@@ -158,6 +158,11 @@ Player.prototype.setCallbackDurationInSeconds = function (callback) {
     _callbackDurationInSeconds = callback;
 };
 
+/**
+ * Return progress in percent.
+ *
+ * @param callback
+ */
 Player.prototype.setCallbackWhilePlaying = function (callback) {
     _callbackWhilePlaying = callback;
 };

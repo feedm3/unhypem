@@ -40,14 +40,7 @@
             </td>
             <td class="player-container-right">
                 <div class="wrapper" style="position:relative; float:left; width:100%; padding-left:50px; padding-right: 70px">
-                    <div class="progress-wrapper" style="float:left; position: relative; width: 100%;">
-                        <div class="progress" style="height:5px; margin:0; border-radius:0px">
-                            <div class="progress-bar" id="player-progressLoading" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 0%; border-radius:0px"></div>
-                        </div>
-                        <div id="player-progressPlaying" class="slider_bar">
-                            <div class="follow_bar"></div>
-                        </div>
-                    </div>
+                    <progressbar id="progressbar" class="progress-striped active" value="progressValue" type="info" ng-click="showValue($event)"></progressbar>
                     <div class="player-currentSongPosition" style="float:left; position: relative; width:50px; right:50px; margin-left:-100%"></div>
                     <div class="player-currentSongDuration" style="float:left; position: relative; width:50px; margin-right: -70px; padding-left:15px"></div>
                 </div>
