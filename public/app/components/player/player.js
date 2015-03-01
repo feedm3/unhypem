@@ -5,8 +5,9 @@
         $scope.currentSong = sharedProperties.getCurrentSong();
 
         $scope.volumeInPercent = 100;
+        $scope.progress = '';
         $scope.progressInPercent = 0;
-        $scope.progressInSeconds = 0;
+        $scope.duration = '';
         $scope.durationInSeconds = 0;
 
         $scope.play = function () {
@@ -29,7 +30,7 @@
 
         sharedProperties.setProgressCallback(function (seconds) {
             $scope.$apply(function () {
-                $scope.progressInSeconds = secondFormatter(seconds);
+                $scope.progress = secondFormatter(seconds);
                 if ($scope.durationInSeconds != 0) {
                     $scope.progressInPercent = 100 / $scope.durationInSeconds * seconds;
                 }
@@ -37,7 +38,8 @@
         });
 
         sharedProperties.setDurationCallback(function (seconds) {
-            $scope.durationInSeconds = secondFormatter(seconds);
+            $scope.durationInSeconds = seconds;
+            $scope.duration = secondFormatter(seconds);
         })
     }]);
 

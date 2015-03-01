@@ -39,8 +39,8 @@
                 </ul>
             </td>
             <td class="player-container-right">
-                <div class="float-left" ng-bind="progressInSeconds"></div>
-                <div class="float-right" ng-bind="durationInSeconds"></div>
+                <div class="float-left" ng-bind="progress"></div>
+                <div class="float-right" ng-bind="duration"></div>
                 <div class="wrapper" style="position:relative; width:100%; padding-left:50px; padding-right: 70px">
                     <progressbar id="progressbar" class="progress-striped active" value="progressInPercent" max="100" type="info" ng-click="onProgressbarClick($event)"></progressbar>
                 </div>
