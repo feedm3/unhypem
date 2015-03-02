@@ -85,7 +85,7 @@ function getSongsFromHypem(urlToJSON, offsetInList) {
 }
 
 function getSoundcloudURL(song) {
-    var url = "http://hypem.com/go/sc/" + song.h_mediaid,
+    var url = "http://hypem.com/go/sc/" + song.hypemMediaId,
         options = {method: "HEAD", followRedirect: false, url: url};
     request(options, function (error, response, body) {
         if (!error && response.statusCode == 302) {
@@ -93,7 +93,8 @@ function getSoundcloudURL(song) {
             if (soundcloudUrl == "http://soundcloud.com/not/found" || soundcloudUrl == "https://soundcloud.com/not/found") {
                 getHypemKey(song);
             } else {
-                song.soundcloudStreamUrl = response.headers.location;
+                song.soundcloudUrl = soundcloudUrl;
+                song.streamUrl = response.headers.location;
                 resolveSoundcloudURL(song);
             }
         } else {
@@ -141,7 +142,7 @@ function getMP3(hypemLink, song) {
                 // where the link to the mp3 file is saved
                 var jsonBody = JSON.parse(body);
                 song.streamUrl = jsonBody.url;
-                song.mp3Url = jsonBody.url;
+                //song.mp3Url = jsonBody.url; // TODO not correct, mp3 url is always the same as stream url
                 finish();
             } else {
                 console.error("Error resolve MP3 for " + song.artist + " (" + hypemLink + ") StatusCode: " + response.statusCode);
@@ -185,7 +186,7 @@ function getSoundcloudMP3(song) {
             // if you request the stream url
             // you get the redirected to the mp3 file
             if (response.statusCode == 302) {
-                song.mp3Url = response.headers.location;
+                //song.mp3Url = response.headers.location;
                 finish();
             } else {
                 // get stream url with hypem api key
