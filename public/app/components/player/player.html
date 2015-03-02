@@ -1,50 +1,23 @@
 <div>
-    <table class="container player-container">
-        <tr style="height:20px">
-            <td class="player-container-left">
-                <ul class="list-inline margin_padding_reset">
-                    <li>
-                        <img src="../../../assets/img/rewind-icon-32.png" class="player-rewind" style="opacity: 0.7; width:20px">
-                    </li>
-                    <li ng-click="play()">
-                        <img src="../../../assets/img/play-icon-32.png" class="player-play">
-                    </li>
-                    <li>
-                        <img src="../../../assets/img/forward-icon-32.png" class="player-forward" style="opacity: 0.7">
-                    </li>
-                </ul>
-            </td>
-            <td class="player-container-right">
-                <ul class="list-inline margin_padding_reset">
-                    <li class="player-artist" ng-bind="currentSong.artist"></li>
-                    <li>-</li>
-                    <li class="player-title" ng-bind="currentSong.title"></li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td class="player-container-left">
-                <ul class="list-inline margin_padding_reset">
-                    <li>
-                        <img src="../../../assets/img/volume-minus-icon-16.png">
-                    </li>
-                    <li>
-                        <div id="player-progressVolume" style="width: 50px">
-                            <progressbar id="volumebar" value="volumeInPercent" ng-click="onVolumebarClick($event)"></progressbar>
-                        </div>
-                    </li>
-                    <li>
-                        <img src="../../../assets/img/volume-plus-icon-16.png">
-                    </li>
-                </ul>
-            </td>
-            <td class="player-container-right">
-                <div class="float-left" ng-bind="progress"></div>
-                <div class="float-right" ng-bind="duration"></div>
-                <div class="wrapper" style="position:relative; width:100%; padding-left:50px; padding-right: 70px">
-                    <progressbar id="progressbar" class="progress-striped active" value="progressInPercent" max="100" type="info" ng-click="onProgressbarClick($event)"></progressbar>
+    <div class="container">
+        <div class="player-flex-wrapper">
+            <div class="player-info">
+                <strong class="title" ng-bind="currentSong.title"></strong>
+                <span class="artist" ng-bind="currentSong.artist"></span>
+                <div class="duration">
+                    <span ng-bind="progress"></span>
+                    <span ng-bind="duration"></span>
                 </div>
-            </td>
-        </tr>
-    </table>
+            </div>
+            <div class="player-main">
+                <img src="../../../assets/img/rewind-icon-32.png">
+                <img src="../../../assets/img/play-icon-32.png" ng-click="play()">
+                <progressbar id="progressbar" class="progress-striped active player-soundcloud-wave" value="progressInPercent" max="100" type="info" ng-click="onProgressbarClick($event)"></progressbar>
+                <img src="../../../assets/img/forward-icon-32.png">
+            </div>
+            <div class="player-secondary">
+                Share
+            </div>
+        </div>
+    </div>
 </div>
