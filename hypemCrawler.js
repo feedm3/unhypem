@@ -207,7 +207,6 @@ function finish() {
     if (songsCrawled == SONGS_TO_CRAWL) {
         lock = false;
         songsCrawled = 0;
-        console.log(popularList);
         onCrawlingFinishedCallback(popularList);
     }
 }
