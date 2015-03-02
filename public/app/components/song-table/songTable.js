@@ -17,7 +17,7 @@
         };
 
         $scope.hasSoundcloudUrl = function (soundcloudUrl) {
-            return typeof soundcloudUrl == "string";
+            return (typeof soundcloudUrl == "string" && soundcloudUrl.length > 0)
         };
 
         $http.get("/popular").
