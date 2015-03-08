@@ -13,7 +13,6 @@
 
         $scope.play = function () {
             sharedProperties.play($scope.currentSong.hypemMediaId);
-            $scope.isPlaying = sharedProperties.isPlaying();
         };
 
         $scope.onProgressbarClick = function (event) {
@@ -42,7 +41,15 @@
         sharedProperties.setDurationCallback(function (seconds) {
             $scope.durationInSeconds = seconds;
             $scope.duration = secondFormatter(seconds);
-        })
+        });
+
+        sharedProperties.setOnPlayCallback(function () {
+            $scope.isPlaying = true;
+        });
+
+        sharedProperties.setOnPauseCallback(function () {
+            $scope.isPlaying = false;
+        });
     }]);
 
     app.directive('player', function () {

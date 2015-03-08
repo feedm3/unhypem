@@ -18,9 +18,6 @@
         this.play = function (hypemMediaId) {
             player.play(hypemMediaId);
         };
-        this.isPlaying = function () {
-            return player.isPlaying();
-        };
         this.setVolume = function (volume) {
             player.setVolume(volume);
         };
@@ -32,6 +29,12 @@
         };
         this.setDurationCallback = function (callback) {
             player.setDurationInSecondsCallback(callback);
-        }
+        };
+        this.setOnPlayCallback = function (callback) {
+            player.setOnPlayCallback(callback);
+        };
+        this.setOnPauseCallback = function (callback) {
+            player.setOnPauseCallback(callback);
+        };
     });
 })();
