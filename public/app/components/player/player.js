@@ -5,9 +5,9 @@
         $scope.currentSong = sharedProperties.getCurrentSong();
 
         $scope.volumeInPercent = 100;
-        $scope.progress = '';
+        $scope.progress = '00:00';
         $scope.progressInPercent = 0;
-        $scope.duration = '';
+        $scope.duration = '00:00';
         $scope.durationInSeconds = 0;
         $scope.isPlaying = false;
 

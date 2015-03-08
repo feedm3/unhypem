@@ -1,39 +1,54 @@
 .player-flex-wrapper {
   width: 100%;
+  min-width: 400px;
   height: 100px;
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   padding: 10px 0;
 }
 
 .player-info {
+  flex: 2 2 100px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.player-main {
-  line-height: 80px;
+.player-control {
+  flex: 0 0 100px;
   padding: 0 10px;
-}
-
-.player-main > * {
   line-height: 80px;
-  vertical-align: middle;
-  margin: 0;
-  display: inline-block;
 }
 
-.player-soundcloud-wave {
-  /*background-image: url("img/soundcloud-wave.png");*/
-  /*background-repeat: no-repeat;*/
-  /*background-size: contain;*/
-  /*background-position: center;*/
-  width: 450px;
-  /*height: 80px;*/
+//.player-control > * {
+//
+//  vertical-align: middle;
+//  margin: 0;
+//  display: inline-block;
+//}
+
+.player-progressbar {
+  flex: 3 3 250px;
+  height: 80px;
+  line-height: 80px;
 }
+
+.player-progressbar > * {
+  display: inline-block;
+  width: 100%;
+  margin: 0;
+  vertical-align: middle;
+}
+
+//.player-soundcloud-wave {
+//  /*background-image: url("img/soundcloud-wave.png");*/
+//  /*background-repeat: no-repeat;*/
+//  /*background-size: contain;*/
+//  /*background-position: center;*/
+//  width: 450px;
+//  /*height: 80px;*/
+//}
 
 .player-secondary {
-
+  flex: 1 1 100px;
 }
