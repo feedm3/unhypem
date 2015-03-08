@@ -6,10 +6,6 @@
 ## Directory-based project format:
 .idea/
 
-### Unhypem ###
-# Local config, heroku config is "heroku config"
-.env
-
 # local mongodb data
 data
 
@@ -40,5 +36,9 @@ build/Release
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git-
 node_modules
 
-# Users Environment Variables
+### Users Environment Variables ###
 .lock-wscript
+public/assets/css/style.css
+public/assets/css/player.css
+# Local config, heroku config is "heroku config"
+.env
