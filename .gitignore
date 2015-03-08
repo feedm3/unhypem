@@ -40,5 +40,6 @@ node_modules
 .lock-wscript
 public/assets/css/style.css
 public/assets/css/player.css
+public/assets/css/buttons.css
 # Local config, heroku config is "heroku config"
 .env
