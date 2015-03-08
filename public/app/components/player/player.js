@@ -50,10 +50,6 @@
         playerService.setOnPauseCallback(function () {
             $scope.isPlaying = false;
         });
-
-        playerService.setOnFinishCallback(function () {
-
-        });
     }]);
 
     app.directive('player', function () {

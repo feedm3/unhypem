@@ -3,7 +3,7 @@
 
     app.controller('SongController', ['$scope', '$http', 'playerService', function ($scope, $http, playerService) {
         $scope.songs = [];
-        $scope.selectedPosition = 1;
+        $scope.selectedPosition = 0;
         $scope.date = "";
         $scope.firstVisit = true;
 
@@ -26,6 +26,14 @@
         $scope.hasSoundcloudUrl = function (soundcloudUrl) {
             return (typeof soundcloudUrl == "string" && soundcloudUrl.length > 0)
         };
+
+        playerService.setOnFinishCallback(function () {
+            if ($scope.selectedPosition < 49) {
+                $scope.setSelectedPosition($scope.selectedPosition + 1);
+            } else {
+                $scope.setSelectedPosition(0);
+            }
+        });
 
         $http.get("/popular").
             success(function (songs, status, headers, config) {

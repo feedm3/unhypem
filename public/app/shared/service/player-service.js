@@ -37,7 +37,7 @@
             player.setOnPauseCallback(callback);
         };
         this.setOnFinishCallback = function (callback) {
-            player.setOnFinishCallback = callback;
+            player.setOnFinishCallback(callback);
         };
     });
 })();
