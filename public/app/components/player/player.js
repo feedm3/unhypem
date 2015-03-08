@@ -9,9 +9,11 @@
         $scope.progressInPercent = 0;
         $scope.duration = '';
         $scope.durationInSeconds = 0;
+        $scope.isPlaying = false;
 
         $scope.play = function () {
             sharedProperties.play($scope.currentSong.hypemMediaId);
+            $scope.isPlaying = sharedProperties.isPlaying();
         };
 
         $scope.onProgressbarClick = function (event) {

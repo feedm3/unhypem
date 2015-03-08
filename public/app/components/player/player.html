@@ -11,8 +11,7 @@
             </div>
             <div class="player-main">
                 <img src="../../../assets/img/rewind-icon-32.png">
-                <!--<img src="../../../assets/img/play-icon-32.png" ng-click="play()">-->
-                <button type="button" class="btn button-play" ng-click="play()">
+                <button type="button" class="btn button-play" ng-class="{'button-play': !isPlaying, 'button-stop': isPlaying}" ng-click="play()">
                     <span class="hide">Play</span>
                 </button>
                 <progressbar id="progressbar" class="progress-striped active player-soundcloud-wave" value="progressInPercent" max="100" type="info" ng-click="onProgressbarClick($event)"></progressbar>

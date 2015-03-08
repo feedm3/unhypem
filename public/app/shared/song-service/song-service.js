@@ -6,7 +6,6 @@
         var player = new Player();
         player.init();
 
-
         this.getCurrentSong = function () {
             return currentSong;
         };
@@ -18,6 +17,9 @@
         };
         this.play = function (hypemMediaId) {
             player.play(hypemMediaId);
+        };
+        this.isPlaying = function () {
+            return player.isPlaying();
         };
         this.setVolume = function (volume) {
             player.setVolume(volume);
