@@ -1,20 +1,28 @@
-.button-play {
+.button {
   background-size: contain;
-  background: url("../img/play-icon-32.png") no-repeat center;
+  background: no-repeat center;
   width: 32px;
   height: 32px;
+  opacity: 0.8;
+}
+
+.button:hover {
+  opacity: 1;
+}
+
+.button:focus {
+  outline: 0;
+}
+
+.button-play {
+  background-image: url("../img/play-icon-32.png");
 }
 
 .button-play:active {
   .button-play;
 }
 
-.button-play:focus {
-  outline: 0;
-}
-
 .button-stop {
-  .button-play;
   background-image: url("../img/pause-icon-32.png");
 }
 
@@ -22,6 +30,18 @@
   .button-stop;
 }
 
-.button-stop:focus {
-  outline: 0;
+.button-forward {
+  background-image: url("../img/forward-icon-32.png");
+}
+
+.button-forward:active {
+  .button-forward;
+}
+
+.button-rewind {
+  background-image: url("../img/rewind-icon-32.png");
+}
+
+.button-rewind:active {
+  .button-rewind;
 }
