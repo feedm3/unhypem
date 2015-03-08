@@ -50,6 +50,10 @@
         sharedProperties.setOnPauseCallback(function () {
             $scope.isPlaying = false;
         });
+
+        sharedProperties.setOnFinishCallback(function () {
+
+        });
     }]);
 
     app.directive('player', function () {

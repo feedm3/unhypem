@@ -9,7 +9,7 @@ Player = function () {
     _currentPlayId = "";
     _callbackOnPlay = null;
     _callbackOnPause = null;
-    _callbackNextSong = null;
+    _callbackFinish = null;
     _callbackDurationInSeconds = null;
     _callbackWhileLoading = null;
     _callbackProgressInSeconds = null;
@@ -57,8 +57,8 @@ Player.prototype.preloadSong = function (songs) {
                 }
             },
             onfinish: function () {
-                if (_callbackNextSong) {
-                    _callbackNextSong();
+                if (_callbackFinish) {
+                    _callbackFinish();
                 }
             },
             whileloading: function () {
@@ -146,8 +146,8 @@ Player.prototype.setOnPauseCallback = function (callback) {
     _callbackOnPause = callback;
 };
 
-Player.prototype.setNextSongCallback = function (callback) {
-    _callbackNextSong = callback;
+Player.prototype.setOnFinishCallback = function (callback) {
+    _callbackFinish = callback;
 };
 
 Player.prototype.setWhileLoadingCallback = function (callback) {

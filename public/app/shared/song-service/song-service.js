@@ -36,5 +36,8 @@
         this.setOnPauseCallback = function (callback) {
             player.setOnPauseCallback(callback);
         };
+        this.setOnFinishCallback = function (callback) {
+            player.setOnFinishCallback = callback;
+        };
     });
 })();
