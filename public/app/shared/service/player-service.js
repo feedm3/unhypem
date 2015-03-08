@@ -5,6 +5,8 @@
         var currentSong = {};
         var player = new Player();
         player.init();
+        var forwardCallback,
+            rewindCallback;
 
         this.getCurrentSong = function () {
             return currentSong;
@@ -18,11 +20,27 @@
         this.play = function (hypemMediaId) {
             player.play(hypemMediaId);
         };
+        this.forward = function () {
+            if (forwardCallback) {
+                forwardCallback();
+            }
+        };
+        this.rewind = function () {
+            if (rewindCallback) {
+                rewindCallback();
+            }
+        };
         this.setVolume = function (volume) {
             player.setVolume(volume);
         };
+        this.getProgressInSeconds = function () {
+            return player.getProgressInSeconds();
+        };
         this.setProgress = function (progress) {
             player.setPosition(progress);
+        };
+        this.isPlaying = function () {
+            return player.isPlaying();
         };
         this.setProgressCallback = function(callback) {
             player.setProgressInSecondsCallback(callback);
@@ -38,6 +56,12 @@
         };
         this.setOnFinishCallback = function (callback) {
             player.setOnFinishCallback(callback);
+        };
+        this.setOnForwardCallback = function (callback) {
+            forwardCallback = callback;
+        };
+        this.setOnRewindCallback = function(callback) {
+            rewindCallback = callback;
         };
     });
 })();

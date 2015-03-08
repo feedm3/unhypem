@@ -6,6 +6,7 @@ Player = function () {
     _soundPlayer = soundPlayer;
     _isPlaying = false;
     _volume = 100;
+    _progressInSeconds = 0;
     _currentPlayId = "";
     _callbackOnPlay = null;
     _callbackOnPause = null;
@@ -72,7 +73,8 @@ Player.prototype.preloadSong = function (songs) {
             whileplaying: function () {
                 if (_callbackProgressInSeconds) {
                     // return song progress in seconds
-                    _callbackProgressInSeconds(this.position / 1000, parseInt(this.duration / 1000));
+                    _progressInSeconds = this.position / 1000;
+                    _callbackProgressInSeconds(_progressInSeconds);
                 }
             }
         });
@@ -118,6 +120,9 @@ Player.prototype.pause = function () {
 Player.prototype.setPosition = function (hundredPercent) {
     if (_soundPlayer) {
         _soundPlayer.setPosition((_soundPlayer.duration / 100) * hundredPercent);
+        if (_callbackProgressInSeconds) {
+            _callbackProgressInSeconds((_soundPlayer.duration / 100) * hundredPercent);
+        }
     }
 };
 
@@ -131,6 +136,15 @@ Player.prototype.setVolume = function (volume) {
     if (_soundPlayer) {
         _soundPlayer.setVolume(_volume);
     }
+};
+
+/**
+ * Get the current position of the songs progress in seconds.
+ *
+ * @returns {number} seconds
+ */
+Player.prototype.getProgressInSeconds = function () {
+    return _progressInSeconds;
 };
 
 /**

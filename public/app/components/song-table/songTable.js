@@ -5,18 +5,15 @@
         $scope.songs = [];
         $scope.selectedPosition = 0;
         $scope.date = "";
-        $scope.firstVisit = true;
+
+        $scope.onClickSelectPosition = function (selectedPosition) {
+            $scope.setSelectedPosition(selectedPosition);
+            playerService.play($scope.songs[selectedPosition].hypemMediaId);
+        };
 
         $scope.setSelectedPosition = function (selectedPosition) {
             $scope.selectedPosition = selectedPosition;
             playerService.setCurrentSong($scope.songs[selectedPosition]);
-
-            if ($scope.firstVisit) {
-                $scope.firstVisit = false;
-                return;
-            }
-
-            playerService.play($scope.songs[selectedPosition].hypemMediaId)
         };
 
         $scope.isSelected = function (selectedPosition) {
@@ -32,6 +29,42 @@
                 $scope.setSelectedPosition($scope.selectedPosition + 1);
             } else {
                 $scope.setSelectedPosition(0);
+            }
+        });
+
+        playerService.setOnForwardCallback(function () {
+            if ($scope.selectedPosition < 49) {
+                if (playerService.isPlaying()) {
+                    $scope.onClickSelectPosition($scope.selectedPosition + 1);
+                } else {
+                    $scope.setSelectedPosition($scope.selectedPosition + 1);
+                }
+            } else {
+                if (playerService.isPlaying()) {
+                    $scope.onClickSelectPosition(0);
+                } else {
+                    $scope.setSelectedPosition(0);
+                }
+            }
+        });
+
+        playerService.setOnRewindCallback(function () {
+            if (playerService.getProgressInSeconds() < 3) {
+                if ($scope.selectedPosition > 1) {
+                    if (playerService.isPlaying()) {
+                        $scope.onClickSelectPosition($scope.selectedPosition - 1);
+                    } else {
+                        $scope.setSelectedPosition($scope.selectedPosition - 1);
+                    }
+                } else {
+                    if (playerService.isPlaying()) {
+                        $scope.onClickSelectPosition(49);
+                    } else {
+                        $scope.setSelectedPosition(49);
+                    }
+                }
+            } else {
+                playerService.setProgress(0);
             }
         });
 

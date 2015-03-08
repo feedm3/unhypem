@@ -15,6 +15,14 @@
             playerService.play($scope.currentSong.hypemMediaId);
         };
 
+        $scope.forward = function () {
+            playerService.forward();
+        };
+
+        $scope.rewind = function () {
+            playerService.rewind();
+        };
+
         $scope.onProgressbarClick = function (event) {
             var width = document.getElementById('progressbar').offsetWidth;
             var offset = event.layerX;
