@@ -33,6 +33,11 @@
         });
 
         playerService.setOnForwardCallback(function () {
+            // make call async because of 'apply' inside the function
+            $timeout(function() {
+                playerService.setProgress(0);
+            }, 0);
+
             if ($scope.selectedPosition < 49) {
                 if (playerService.isPlaying()) {
                     $scope.onClickSelectPosition($scope.selectedPosition + 1);
@@ -49,6 +54,11 @@
         });
 
         playerService.setOnRewindCallback(function () {
+            // make call async because of 'apply' inside the function
+            $timeout(function() {
+                playerService.setProgress(0);
+            }, 0);
+
             if (playerService.getProgressInSeconds() < 3) {
                 if ($scope.selectedPosition > 1) {
                     if (playerService.isPlaying()) {
@@ -63,12 +73,6 @@
                         $scope.setSelectedPosition(49);
                     }
                 }
-            } else {
-                // make call async because of 'apply' inside the function
-                $timeout(function() {
-                    playerService.setProgress(0);
-                }, 0);
-
             }
         });
 
