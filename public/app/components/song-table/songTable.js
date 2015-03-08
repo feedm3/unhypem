@@ -5,10 +5,17 @@
         $scope.songs = [];
         $scope.selectedPosition = 1;
         $scope.date = "";
+        $scope.firstVisit = true;
 
         $scope.setSelectedPosition = function (selectedPosition) {
             $scope.selectedPosition = selectedPosition;
             sharedProperties.setCurrentSong($scope.songs[selectedPosition]);
+
+            if ($scope.firstVisit) {
+                $scope.firstVisit = false;
+                return;
+            }
+
             sharedProperties.play($scope.songs[selectedPosition].hypemMediaId)
         };
 
