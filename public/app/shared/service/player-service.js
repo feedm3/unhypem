@@ -1,7 +1,7 @@
 (function(){
-    var app = angular.module('song-service', []);
+    var app = angular.module('player-service', []);
 
-    app.service('sharedProperties', function () {
+    app.service('playerService', function () {
         var currentSong = {};
         var player = new Player();
         player.init();

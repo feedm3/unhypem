@@ -1,8 +1,8 @@
 (function () {
     var app = angular.module('player', []);
 
-    app.controller('PlayerController', ['$scope', 'sharedProperties', function ($scope, sharedProperties) {
-        $scope.currentSong = sharedProperties.getCurrentSong();
+    app.controller('PlayerController', ['$scope', 'playerService', function ($scope, playerService) {
+        $scope.currentSong = playerService.getCurrentSong();
 
         $scope.volumeInPercent = 100;
         $scope.progress = '00:00';
@@ -12,24 +12,24 @@
         $scope.isPlaying = false;
 
         $scope.play = function () {
-            sharedProperties.play($scope.currentSong.hypemMediaId);
+            playerService.play($scope.currentSong.hypemMediaId);
         };
 
         $scope.onProgressbarClick = function (event) {
             var width = document.getElementById('progressbar').offsetWidth;
             var offset = event.layerX;
             $scope.progressInPercent = 100 / width * offset;
-            sharedProperties.setProgress($scope.progressInPercent);
+            playerService.setProgress($scope.progressInPercent);
         };
 
         $scope.onVolumebarClick = function (event) {
             var width = document.getElementById('volumebar').offsetWidth;
             var offset = event.layerX;
             $scope.volumeInPercent = 100 / width * offset;
-            sharedProperties.setVolume($scope.volumeInPercent);
+            playerService.setVolume($scope.volumeInPercent);
         };
 
-        sharedProperties.setProgressCallback(function (seconds) {
+        playerService.setProgressCallback(function (seconds) {
             $scope.$apply(function () {
                 $scope.progress = secondFormatter(seconds);
                 if ($scope.durationInSeconds != 0) {
@@ -38,20 +38,20 @@
             });
         });
 
-        sharedProperties.setDurationCallback(function (seconds) {
+        playerService.setDurationCallback(function (seconds) {
             $scope.durationInSeconds = seconds;
             $scope.duration = secondFormatter(seconds);
         });
 
-        sharedProperties.setOnPlayCallback(function () {
+        playerService.setOnPlayCallback(function () {
             $scope.isPlaying = true;
         });
 
-        sharedProperties.setOnPauseCallback(function () {
+        playerService.setOnPauseCallback(function () {
             $scope.isPlaying = false;
         });
 
-        sharedProperties.setOnFinishCallback(function () {
+        playerService.setOnFinishCallback(function () {
 
         });
     }]);
