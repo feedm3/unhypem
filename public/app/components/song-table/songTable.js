@@ -1,7 +1,7 @@
 (function () {
     var app = angular.module('song-table', []);
 
-    app.controller('SongController', ['$scope', '$http', 'playerService', function ($scope, $http, playerService) {
+    app.controller('SongController', ['$scope', '$http', '$timeout', 'playerService', function ($scope, $http, $timeout, playerService) {
         $scope.songs = [];
         $scope.selectedPosition = 0;
         $scope.date = "";
@@ -64,7 +64,11 @@
                     }
                 }
             } else {
-                playerService.setProgress(0);
+                // make call async because of 'apply' inside the function
+                $timeout(function() {
+                    playerService.setProgress(0);
+                }, 0);
+
             }
         });
 

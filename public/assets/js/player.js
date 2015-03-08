@@ -121,7 +121,7 @@ Player.prototype.setPosition = function (hundredPercent) {
     if (_soundPlayer) {
         _soundPlayer.setPosition((_soundPlayer.duration / 100) * hundredPercent);
         if (_callbackProgressInSeconds) {
-            _callbackProgressInSeconds((_soundPlayer.duration / 100) * hundredPercent);
+            _callbackProgressInSeconds(((_soundPlayer.duration / 100) * hundredPercent) / 1000);
         }
     }
 };

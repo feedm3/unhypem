@@ -1,7 +1,7 @@
 (function () {
     var app = angular.module('player', []);
 
-    app.controller('PlayerController', ['$scope', 'playerService', function ($scope, playerService) {
+    app.controller('PlayerController', ['$scope', '$timeout', 'playerService', function ($scope, $timeout, playerService) {
         $scope.currentSong = playerService.getCurrentSong();
 
         $scope.volumeInPercent = 100;
@@ -27,7 +27,11 @@
             var width = document.getElementById('progressbar').offsetWidth;
             var offset = event.layerX;
             $scope.progressInPercent = 100 / width * offset;
-            playerService.setProgress($scope.progressInPercent);
+
+            // make call async because of 'apply' inside the function
+            $timeout(function() {
+                playerService.setProgress($scope.progressInPercent);
+            }, 0);
         };
 
         $scope.onVolumebarClick = function (event) {
