@@ -35,7 +35,7 @@
         };
 
         $scope.onVolumebarClick = function (event) {
-            var width = document.getElementById('volumebar').offsetWidth;
+            var width = document.getElementById('volumebar').offsetWidth; // TODO fdi geht nicht im IE10
             var offset = event.layerX;
             $scope.volumeInPercent = 100 / width * offset;
             playerService.setVolume($scope.volumeInPercent);
