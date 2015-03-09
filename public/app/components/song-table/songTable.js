@@ -26,9 +26,9 @@
 
         playerService.setOnFinishCallback(function () {
             if ($scope.selectedPosition < 49) {
-                $scope.setSelectedPosition($scope.selectedPosition + 1);
+                $scope.onClickSelectPosition($scope.selectedPosition + 1);
             } else {
-                $scope.setSelectedPosition(0);
+                $scope.onClickSelectPosition(0);
             }
         });
 
