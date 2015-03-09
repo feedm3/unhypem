@@ -4,10 +4,10 @@
             <div class="player-info hidden-xs">
                 <strong class="title" ng-bind="currentSong.title"></strong>
                 <span class="artist" ng-bind="currentSong.artist"></span>
-                <div class="duration">
-                    <span ng-bind="progress"></span>
-                    <span> / </span>
-                    <span ng-bind="duration"></span>
+                <div class="volumebar-container">
+                    <div class="volumebar-icon-minus"></div>
+                    <progressbar id="volumebar" class="volumebar" value="volumeInPercent" ng-click="onVolumebarClick($event)"></progressbar>
+                    <div class="volumebar-icon-plus"></div>
                 </div>
             </div>
             <div class="player-control">
@@ -27,7 +27,11 @@
                 </button>
             </div>
             <div class="player-secondary">
-                Share
+                <div class="duration">
+                    <span ng-bind="progress"></span>
+                    <span> / </span>
+                    <span ng-bind="duration"></span>
+                </div>
             </div>
         </div>
     </div>

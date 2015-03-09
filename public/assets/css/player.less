@@ -9,11 +9,41 @@
 
 .player-info {
   flex: 2 2 100px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.player-info > * {
+  display: block;
+  line-height: 1.5em;
+}
+
+.volumebar-container {
+  margin-top: 10px;
+  line-height: 16px;
+}
+
+.volumebar-container > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.volumebar-icon-plus {
+  background-image: url("../img/volume-plus-icon-16.png");
+  width: 16px;
+  height: 16px;
+}
+
+.volumebar {
+  width: 100px;
+  height: 18px;
+  margin: 0 5px;
+}
+
+.volumebar-icon-minus {
+  background-image: url("../img/volume-minus-icon-16.png");
+  width: 16px;
+  height: 16px;
 }
 
 .player-control {
@@ -36,5 +66,5 @@
 }
 
 .player-secondary {
-  flex: 1 1 100px;
+  flex: 0 0 100px;
 }
