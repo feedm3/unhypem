@@ -20,6 +20,10 @@
             return $scope.selectedPosition === selectedPosition;
         };
 
+        $scope.hasStreamUrl = function (song) {
+            return (typeof song.streamUrl == "string" && song.streamUrl.length > 0)
+        };
+
         $scope.hasSoundcloudUrl = function (soundcloudUrl) {
             return (typeof soundcloudUrl == "string" && soundcloudUrl.length > 0)
         };
