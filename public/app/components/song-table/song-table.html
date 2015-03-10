@@ -3,21 +3,21 @@
         <thead>
         <tr class="white">
             <th></th>
-            <th></th>
+            <th class="hidden-xs"></th>
             <th>Artist</th>
             <th>Title</th>
-            <th>Love</th>
+            <th class="hidden-xs">Love</th>
         </tr>
         </thead>
         <tbody>
         <tr class="white" ng-repeat="(i, song) in songs" ng-click="onClickSelectPosition(i)" ng-class="{info: isSelected(i)}">
             <td class="vertical-center text-center"><strong>{{i+1}}</strong></td>
-            <td class="vertical-center">
+            <td class="vertical-center hidden-xs">
                 <a ng-href="{{song.soundcloudUrl}}" ng-class="{'no-soundcloud-url': !hasSoundcloudUrl(song.soundcloudUrl)}" target="_blank" ><img src="../../../assets/img/soundcloud-icon-32.png"></a>
             </td>
             <td class="vertical-center">{{song.artist}}</td>
             <td class="vertical-center">{{song.title}}</td>
-            <td class="vertical-center">{{song.hypemLovedCount}}</td>
+            <td class="vertical-center hidden-xs">{{song.hypemLovedCount}}</td>
         </tr>
         </tbody>
     </table>
