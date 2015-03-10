@@ -10,6 +10,7 @@ Song = function () {
     this.hypemLovedCount = 0;
     this.soundcloudId = "";
     this.soundcloudUrl = "";
+    this.waveformUrl = "";
 };
 
 exports.createNewSong = function () {

@@ -166,6 +166,7 @@ function resolveSoundcloudURL(song) {
                 var soundcloudInfo = JSON.parse(body);
                 song.streamUrl = soundcloudInfo.uri + "/stream?client_id=" + CLIENT_ID;
                 song.soundcloudId = soundcloudInfo.id;
+                song.waveformUrl = soundcloudInfo.waveform_url;
                 getSoundcloudMP3(song);
             } else {
                 console.error("Error resolve soundcloud Stream: " + song.s_url + " StatusCode: " + response.statusCode);
