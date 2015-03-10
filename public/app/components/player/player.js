@@ -3,13 +3,23 @@
 
     app.controller('PlayerController', ['$scope', '$timeout', 'playerService', function ($scope, $timeout, playerService) {
         $scope.currentSong = playerService.getCurrentSong();
-
         $scope.volumeInPercent = 100;
         $scope.progress = '00:00';
         $scope.progressInPercent = 0;
         $scope.duration = '00:00';
         $scope.durationInSeconds = 0;
         $scope.isPlaying = false;
+        
+
+        $scope.$watch('currentSong', function () {
+            $scope.waveformStyle = {
+                'background': 'url(' + $scope.currentSong.waveformUrl + ')',
+                'background-size': '100% 100%',
+                'background-repeat': 'no-repeat',
+                'height': '80px',
+                'position': 'absolute',
+                'width': '100%'
+            };}, true);
 
         $scope.play = function () {
             playerService.play($scope.currentSong.hypemMediaId);

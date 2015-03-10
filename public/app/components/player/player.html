@@ -18,8 +18,9 @@
                     <span class="hide">Play</span>
                 </button>
             </div>
-            <div class="player-progressbar">
-                <progressbar id="progressbar" class="progress-striped active player-soundcloud-wave" value="progressInPercent" max="100" type="info" ng-click="onProgressbarClick($event)"></progressbar>
+            <div class="player-waveform-container" ng-click="onProgressbarClick($event)">
+                <div ng-style="waveformStyle"></div>
+                <progressbar id="progressbar" class="player-progressbar" value="progressInPercent" max="100" type="info"></progressbar>
             </div>
             <div class="player-control-one">
                 <button type="button" class="btn button button-forward" ng-click="forward()">

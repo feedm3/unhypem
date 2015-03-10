@@ -57,18 +57,27 @@
   line-height: 80px;
 }
 
-.player-progressbar {
+.player-waveform-container {
+  position: relative;
   flex: 3 3 250px;
+}
+
+.player-progressbar {
   height: 80px;
+  background-color: #ffffff;
   line-height: 80px;
 }
 
-.player-progressbar > * {
-  display: inline-block;
-  width: 100%;
-  margin: 0;
-  vertical-align: middle;
+.player-progressbar > div {
+  background-color: black;
 }
+
+//.player-progressbar > * {
+//  display: inline-block;
+//  width: 100%;
+//  margin: 0;
+//  vertical-align: middle;
+//}
 
 .player-secondary {
   flex: 0 0 100px;
