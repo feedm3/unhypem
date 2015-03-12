@@ -12,9 +12,11 @@
         
 
         $scope.$watch('currentSong', function () {
+            $scope.progressInPercent = 0;
             $scope.waveformStyle = {
                 'background-image': 'url(' + $scope.currentSong.waveformUrl + ')'
-            };}, true);
+            };
+        }, true);
 
         $scope.play = function () {
             playerService.play($scope.currentSong.hypemMediaId);
