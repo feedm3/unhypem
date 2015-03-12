@@ -11,19 +11,19 @@
                 </div>
             </div>
             <div class="player-control-two">
-                <button type="button" class="btn button button-rewind" ng-click="rewind()">
+                <button type="button" class="btn button button-rewind no-select" ng-click="rewind()">
                     <span class="hidden">Rewind</span>
                 </button>
-                <button type="button" class="btn button button-play" ng-class="{'button-play': !isPlaying, 'button-stop': isPlaying}" ng-click="play()">
+                <button type="button" class="btn button button-play no-select" ng-class="{'button-play': !isPlaying, 'button-stop': isPlaying}" ng-click="play()">
                     <span class="hide">Play</span>
                 </button>
             </div>
             <div class="player-waveform-container" ng-click="onProgressbarClick($event)">
-                <div ng-style="waveformStyle"></div>
+                <div class="player-waveform" ng-style="waveformStyle"></div>
                 <progressbar id="progressbar" class="player-progressbar" value="progressInPercent" max="100" type="info"></progressbar>
             </div>
             <div class="player-control-one">
-                <button type="button" class="btn button button-forward" ng-click="forward()">
+                <button type="button" class="btn button button-forward no-select" ng-click="forward()">
                     <span class="hidden">Forward</span>
                 </button>
             </div>

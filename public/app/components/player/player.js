@@ -13,12 +13,7 @@
 
         $scope.$watch('currentSong', function () {
             $scope.waveformStyle = {
-                'background': 'url(' + $scope.currentSong.waveformUrl + ')',
-                'background-size': '100% 100%',
-                'background-repeat': 'no-repeat',
-                'height': '80px',
-                'position': 'absolute',
-                'width': '100%'
+                'background-image': 'url(' + $scope.currentSong.waveformUrl + ')'
             };}, true);
 
         $scope.play = function () {
