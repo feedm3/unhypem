@@ -1,84 +1,88 @@
 .player-flex-wrapper {
-  width: 100%;
-  height: 100px;
-  display: flex;
-  flex-wrap: nowrap;
-  padding: 10px 0;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 10px 0;
 }
 
 .player-info {
-  flex: 2 2 100px;
-  white-space: nowrap;
-  overflow: hidden;
+    flex: 2 2 100px;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .player-info > * {
-  display: block;
-  line-height: 1.5em;
+    display: block;
+    line-height: 1.5em;
 }
 
 .volumebar-container {
-  margin-top: 10px;
-  line-height: 16px;
+    margin-top: 10px;
+    line-height: 16px;
 }
 
 .volumebar-container > * {
-  display: inline-block;
-  vertical-align: middle;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .volumebar-icon-plus {
-  background-image: url("../img/volume-plus-icon-16.png");
-  width: 16px;
-  height: 16px;
+    background-image: url("../img/volume-plus-icon-16.png");
+    width: 16px;
+    height: 16px;
 }
 
 .volumebar {
-  width: 75px;
-  height: 18px;
-  margin: 0 5px;
+    width: 75px;
+    height: 18px;
+    margin: 0 5px;
 }
 
 .volumebar-icon-minus {
-  background-image: url("../img/volume-minus-icon-16.png");
-  width: 16px;
-  height: 16px;
+    background-image: url("../img/volume-minus-icon-16.png");
+    width: 16px;
+    height: 16px;
 }
 
 .player-control-one {
-  flex: 0 0 45px;
-  padding: 0 10px;
-  line-height: 80px;
+    flex: 0 0 45px;
+    padding: 0 10px;
+    line-height: 80px;
 }
 
 .player-control-two {
-  flex: 0 0 90px;
-  padding: 0 10px;
-  line-height: 80px;
+    flex: 0 0 90px;
+    padding: 0 10px;
+    line-height: 80px;
 }
 
 .player-waveform-container {
-  position: relative;
-  flex: 3 3 250px;
+    position: relative;
+    flex: 3 3 250px;
+}
+
+.player-waveform {
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    height: 80px;
+    position: absolute;
+    width: 100%;
+    filter: brightness(0) invert(1);
+    -webkit-filter: brightness(0) invert(1);
+    -ms-filter: brightness(0) invert(1);
 }
 
 .player-progressbar {
-  height: 80px;
-  background-color: #ffffff;
-  line-height: 80px;
+    height: 80px;
+    background-color: #5bc0de;
+    line-height: 80px;
 }
 
 .player-progressbar > div {
-  background-color: black;
+    background-color: black;
 }
 
-//.player-progressbar > * {
-//  display: inline-block;
-//  width: 100%;
-//  margin: 0;
-//  vertical-align: middle;
-//}
-
 .player-secondary {
-  flex: 0 0 100px;
+    flex: 0 0 100px;
 }
