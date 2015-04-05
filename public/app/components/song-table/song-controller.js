@@ -29,6 +29,12 @@
                 return (typeof soundcloudUrl == "string" && soundcloudUrl.length > 0)
             };
 
+            $scope.setDate = function(date){
+                var timeSincePopularRefresh =  moment().startOf(date).fromNow();
+                var exactTime = moment(new Date(date)).calendar();
+                $scope.date = timeSincePopularRefresh + " (" + exactTime.toLowerCase() + ")";
+            };
+
             playerService.setOnFinishCallback(function () {
                 if ($scope.selectedPosition < 49) {
                     $scope.onClickSelectPosition($scope.selectedPosition + 1);
@@ -84,7 +90,7 @@
             Songs.popular()
                 .success(function (songs, status, headers, config) {
                     $scope.songs = _.values(songs); // TODO reihenfolge nicht sichergestellt
-                    $scope.date = headers("timestamp");
+                    $scope.setDate(headers("timestamp"));
                     playerService.preloadSongs($scope.songs);
                     $scope.setSelectedPosition(0);
                 });
