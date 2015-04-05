@@ -7,14 +7,15 @@
 }
 
 .player-info {
-    flex: 2 2 100px;
-    white-space: nowrap;
-    overflow: hidden;
+    flex: 0 0 130px; // grow | shrink | basis
 }
 
 .player-info > * {
     display: block;
     line-height: 1.5em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .volumebar-container {
@@ -70,7 +71,6 @@
     width: 100%;
     filter: brightness(0) invert(1);
     -webkit-filter: brightness(0) invert(1);
-    -ms-filter: brightness(0) invert(1);
 }
 
 .player-progressbar {
