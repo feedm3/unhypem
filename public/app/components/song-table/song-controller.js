@@ -5,9 +5,11 @@
             $scope.selectedPosition = 0;
             $scope.date = "";
 
-            $scope.onClickSelectPosition = function (selectedPosition) {
-                $scope.setSelectedPosition(selectedPosition);
-                playerService.play($scope.songs[selectedPosition].hypemMediaId);
+            $scope.onClickSelectPosition = function (selectedPosition, $event) {
+                if(!isSoundcloudHtmlNode($event.target.className)) {
+                    $scope.setSelectedPosition(selectedPosition);
+                    playerService.play($scope.songs[selectedPosition].hypemMediaId);
+                }
             };
 
             $scope.setSelectedPosition = function (selectedPosition) {
@@ -87,4 +89,8 @@
                     $scope.setSelectedPosition(0);
                 });
         }]);
+
+    function isSoundcloudHtmlNode(className) {
+        return className === "soundcloud-logo"
+    }
 })();
