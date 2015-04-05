@@ -13,7 +13,7 @@
         <tr class="white" ng-repeat="(i, song) in songs" ng-click="onClickSelectPosition(i)" ng-class="{'info': isSelected(i), 'warning': !hasStreamUrl(song)}">
             <td class="vertical-center text-center">{{i+1}}</td>
             <td class="vertical-center hidden-xs">
-                <a ng-href="{{song.soundcloudUrl}}" ng-class="{'no-soundcloud-url': !hasSoundcloudUrl(song.soundcloudUrl)}" target="_blank" ><img src="../../../assets/img/soundcloud-icon-32.png"></a>
+                <a ng-href="{{song.soundcloudUrl}}" ng-class="{'no-soundcloud-url': !hasSoundcloudUrl(song.soundcloudUrl)}" class="soundcloud-logo" target="_blank" ></a>
             </td>
             <td class="vertical-center">{{song.artist}}</td>
             <td class="vertical-center"><strong>{{song.title}}</strong></td>
