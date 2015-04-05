@@ -2,8 +2,8 @@
     <div class="container">
         <div class="player-flex-wrapper">
             <div class="player-info hidden-xs">
-                <strong class="title" ng-bind="currentSong.title"></strong>
-                <span class="artist" ng-bind="currentSong.artist"></span>
+                <strong ng-bind="currentSong.title"></strong>
+                <span ng-bind="currentSong.artist"></span>
                 <div class="volumebar-container">
                     <div class="volumebar-icon-minus"></div>
                     <progressbar id="volumebar" class="volumebar" value="volumeInPercent" ng-click="onVolumebarClick($event)"></progressbar>
@@ -32,6 +32,12 @@
                     <span ng-bind="progress"></span>
                     <span> / </span>
                     <span ng-bind="duration"></span>
+                </div>
+                <div class="link">
+                    <a ng-href="{{hypemLink}}" target="_blank">Hypem</a>
+                </div>
+                <div class="link">
+                    <a ng-href="{{soundcloudLink}}" target="_blank">Soundcloud</a>
                 </div>
             </div>
         </div>

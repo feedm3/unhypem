@@ -15,6 +15,8 @@
                 $scope.waveformStyle = {
                     'background-image': 'url(' + $scope.currentSong.waveformUrl + ')'
                 };
+                $scope.hypemLink = "http://hypem.com/track/" + $scope.currentSong.hypemMediaId;
+                $scope.soundcloudLink = $scope.currentSong.soundcloudUrl;
             }, true);
 
             $scope.play = function () {
