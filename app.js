@@ -6,8 +6,8 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     hypemService = require('./app/database/hypemService');
 
-var indexRoute = require('./routes/index'),
-    popularRoute = require('./routes/popular');
+var indexRoute = require('./app/routes/index'),
+    popularRoute = require('./app/routes/popular');
 
 require('./app/config/newrelic');
 

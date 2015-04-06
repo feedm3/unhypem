@@ -1,5 +1,5 @@
 var express = require('express');
-var dbAdapter = require('./../app/database/dbAdapter');
+var dbAdapter = require('../database/dbAdapter');
 var router = express.Router();
 
 /**

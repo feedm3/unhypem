@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var dbAdapter = require('./../app/database/dbAdapter');
+var dbAdapter = require('../database/dbAdapter');
 
 // THIS FILE IS NOT USED!!
 
