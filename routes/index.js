@@ -2,10 +2,14 @@ var express = require('express');
 var router = express.Router();
 var dbAdapter = require('./../dbAdapter');
 
+// THIS FILE IS NOT USED!!
+
+
 /* GET home page. */
 router.get('/', function (req, res) {
     dbAdapter.getPopularSongs(function(latestEntry) {
-        var date = getTimestampById(latestEntry._id);
+        var date = latestEntry._id;
+        console.log(date);
         res.render('index', {"popularSongsDTO": latestEntry.songs, "date":date});
     });
 });
