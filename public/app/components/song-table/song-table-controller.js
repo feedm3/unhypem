@@ -6,7 +6,7 @@
             $scope.date = "";
 
             $scope.onClickSelectPosition = function (selectedPosition, $event) {
-                if(!isSoundcloudHtmlNode($event.target.className)) {
+                if(!isSoundcloudHtmlNode($event)) {
                     $scope.setSelectedPosition(selectedPosition);
                     playerService.play($scope.songs[selectedPosition].hypemMediaId);
                 }
@@ -96,7 +96,10 @@
                 });
         }]);
 
-    function isSoundcloudHtmlNode(className) {
-        return className === "soundcloud-logo"
+    function isSoundcloudHtmlNode(event) {
+        if (event != null) {
+            return event.target.className === "soundcloud-logo"
+        }
+        return false;
     }
 })();
