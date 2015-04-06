@@ -1,15 +1,15 @@
-require('newrelic');
-
 var express = require('express'),
     path = require('path'),
     morgan = require('morgan'),
     logger = require('winston'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
-    hypemService = require('./hypemService');
+    hypemService = require('./app/database/hypemService');
 
 var indexRoute = require('./routes/index'),
     popularRoute = require('./routes/popular');
+
+require('./app/config/newrelic');
 
 var app = express();
 

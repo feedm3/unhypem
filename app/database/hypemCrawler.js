@@ -8,7 +8,7 @@
 
 var request = require('request');
 var dbAdapter = require('./dbAdapter');
-var songModel = require('./model/song');
+var songModel = require('../model/song');
 var q = require('q');
 var queryString = require('querystring');
 
