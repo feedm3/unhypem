@@ -9,7 +9,7 @@ var express = require('express'),
 var indexRoute = require('./app/routes/index'),
     popularRoute = require('./app/routes/popular');
 
-require('./app/config/newrelic');
+require('./newrelic');
 
 var app = express();
 
