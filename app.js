@@ -1,3 +1,5 @@
+require('./newrelic');
+
 var express = require('express'),
     path = require('path'),
     morgan = require('morgan'),
@@ -9,7 +11,6 @@ var express = require('express'),
 var indexRoute = require('./app/routes/index'),
     popularRoute = require('./app/routes/popular');
 
-require('./newrelic');
 
 var app = express();
 
