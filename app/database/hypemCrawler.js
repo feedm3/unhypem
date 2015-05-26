@@ -12,7 +12,7 @@ var songModel = require('../model/song');
 var q = require('q');
 var queryString = require('querystring');
 
-var CLIENT_ID = "a20ebcaf4c7fc8931bfcba9c7557864a", // Soundcloud Client ID
+var CLIENT_ID = "62edeaeda6170b1ebe2b4ea14b04dd1a", // Soundcloud Client ID
     SONGS_TO_CRAWL = 50,
     COOKIE = "__utma=1717032.393072307.1385723530.1413915594.1413918197.143; __utmz=1717032.1411373803.101.4.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); __qca=P0-1192099176-1385723530317; hblid=fYaYEQ1S27S34nfX2t6JN4W3JOFC0CDj; olfsk=olfsk00024760656742828235; __gads=ID=f437c883a9450f76:T=1398362427:S=ALNI_MZpJh3KfFJKxg7lAgkIujTTrdzhYA; AUTH=03%3A406b2fe38a1ab80a2953869a475ff110%3A1412624464%3A1469266248%3A01-DE; __utmb=1717032.3.10.1413918197; __utmc=1717032; __utmt=1";
 
