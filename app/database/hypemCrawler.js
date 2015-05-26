@@ -158,7 +158,7 @@ function getMP3(hypemLink, song) {
 }
 
 function resolveSoundcloudURL(song) {
-    var url = "http://api.soundcloud.com/resolve.json?url=" + song.soundcloudUrl + "&client_id=" + CLIENT_ID,
+    var url = "https://api.soundcloud.com/resolve.json?url=" + song.soundcloudUrl + "&client_id=" + CLIENT_ID,
         options = {method: "GET", url: url};
     request(options, function (error, response, body) {
         if (!error) {
@@ -191,7 +191,7 @@ function getSoundcloudMP3(song) {
                 finish();
             } else {
                 // get stream url with hypem api key
-                song.streamUrl = "http://api.soundcloud.com/tracks/" + song.soundcloudId + "/stream?consumer_key=nH8p0jYOkoVEZgJukRlG6w";
+                song.streamUrl = "https://api.soundcloud.com/tracks/" + song.soundcloudId + "/stream?consumer_key=nH8p0jYOkoVEZgJukRlG6w";
                 getSoundcloudMP3(song);
             }
         } else {
