@@ -2,4 +2,4 @@
 @echo off
 
 echo Starting local mongodb server
-mongod --dbpath data
+mongod --dbpath ../data
