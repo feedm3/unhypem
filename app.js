@@ -1,4 +1,4 @@
-require('newrelic');
+require('./app/config/newrelic');
 
 var express = require('express'),
     path = require('path'),
@@ -37,21 +37,26 @@ app.use(function(req, res, next) {
     next(err);
 });
 
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        logger.error(err.message, err);
-        res.sendStatus(err.status || 500);
+/**
+ * Development error handler
+ *
+ * Will send the error object back to the user
+ */
+if (process.env.NODE_ENV === 'development') {
+    app.use(function (err, req, res, next) {
+        console.error(err);
+        res.status(err.status || 500);
+        res.json(err);
     });
 }
 
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    logger.error(err.message, err);
+/**
+ * Production error handler
+ *
+ * Will only send the status code back to the user
+ */
+app.use(function (err, req, res, next) {
+    console.error(err);
     res.sendStatus(err.status || 500);
 });
 
