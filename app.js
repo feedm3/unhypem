@@ -3,7 +3,6 @@ require('./app/config/newrelic');
 var express = require('express'),
     path = require('path'),
     morgan = require('morgan'),
-    logger = require('winston'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     hypemService = require('./app/database/hypemService');
@@ -32,7 +31,8 @@ app.get('/song/:hypemId', function(req, res){
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    var err = new Error('Not Found');
+    var requestedUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+    var err = new Error('Not Found - ' + requestedUrl);
     err.status = 404;
     next(err);
 });
@@ -44,7 +44,7 @@ app.use(function(req, res, next) {
  */
 if (process.env.NODE_ENV === 'development') {
     app.use(function (err, req, res, next) {
-        console.error(err);
+        console.error(err.status + " " + err.message);
         res.status(err.status || 500);
         res.json(err);
     });
@@ -56,7 +56,7 @@ if (process.env.NODE_ENV === 'development') {
  * Will only send the status code back to the user
  */
 app.use(function (err, req, res, next) {
-    console.error(err);
+    console.error(err.status + " " + err.message);
     res.sendStatus(err.status || 500);
 });
 
