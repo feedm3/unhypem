@@ -9,7 +9,7 @@
     "test-watch-changes": "mocha ./test --recursive --watch"
   },
   "dependencies": {
-    "body-parser": "~1.12.4",
+    "body-parser": "~1.13.2",
     "cookie-parser": "~1.3.5",
     "cron": "~1.0.6",
     "debug": "~2.2.0",
@@ -22,8 +22,7 @@
     "newrelic": "^1.19.2",
     "q": "~1.4.1",
     "querystring": "0.2.0",
-    "request": "~2.55.0",
-    "winston": "~1.0.0"
+    "request": "~2.55.0"
   },
   "devDependencies": {
     "mocha": "^2.2.5",
