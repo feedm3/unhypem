@@ -1,4 +1,4 @@
-require('./app/config/newrelic');
+require('./newrelic');
 
 var express = require('express'),
     path = require('path'),

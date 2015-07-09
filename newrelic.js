@@ -1,5 +1,5 @@
 /**
- * New Relic agent configuration.
+ * New Relic agent configuration. Must be in the root directory!
  *
  * See lib/config.defaults.js in the agent distribution for a more complete
  * description of configuration variables and their potential values.
