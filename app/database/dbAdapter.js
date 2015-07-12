@@ -4,9 +4,6 @@
  * Persists PopularSongDTO in MongoDB
  * Adds current date for further data analysis
  */
-var dotenv = require('dotenv');
-dotenv.load();
-
 var db = require('monk')(process.env.MONGOLAB_URI);
 
 // TODO abfangen wenn kein eintrag gefunden wird
