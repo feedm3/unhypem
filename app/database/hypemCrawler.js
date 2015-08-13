@@ -154,7 +154,6 @@ function getMP3(hypemLink, song) {
             finish();
         }
     })
-
 }
 
 function resolveSoundcloudURL(song) {
