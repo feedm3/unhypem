@@ -16,7 +16,7 @@ var SongSchema = mongoose.Schema({
         required: true,
         index: true
     },
-    hypemLoveCount: number,
+    hypemLoveCount: Number,
     mp3Url: String,
     streamUrl: String,
     soundcloudUrl: String,
