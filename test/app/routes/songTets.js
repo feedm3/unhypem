@@ -5,7 +5,7 @@
 'use strict';
 
 var request = require('supertest'),
-    app = require('../../app.js');
+    app = require('../../../app.js');
 
 describe('Request the song path', function () {
     it('should return 200 status code', function (done) {

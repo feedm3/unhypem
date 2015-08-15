@@ -5,7 +5,7 @@
 'use strict';
 
 var request = require('supertest'),
-    app = require('../../app.js'),
+    app = require('../../../app.js'),
     _ = require('lodash');
 
 describe('Request the popular songs object', function () {
