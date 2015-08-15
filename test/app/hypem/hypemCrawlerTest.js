@@ -12,14 +12,38 @@ var hypemCrawler = require('../../../app/hypem/hypemCrawler'),
     _ = require('lodash');
 
 describe.only('Resolve all songs on the popular list', function () {
-    this.setTimeout = 10000;
+    this.timeout(5000);
 
     it('should return an object with 50 elements', function (done) {
-        hypemCrawler.resolvePopularList(function (songs) {
-            songs.should.be.a('Object');
+        hypemCrawler.resolvePopularList(function (err, songs) {
+            songs.should.be.a('object');
             _.keys(songs).should.have.length(50);
             done();
         });
     });
 
+    it('every object should contain song informations', function (done) {
+        hypemCrawler.resolvePopularList(function (err, songs) {
+            _.forIn(songs, function (song, num) {
+                num.should.be.above(0);
+                num.should.be.below(51);
+
+                song.artist.should.be.a('string');
+                song.title.should.be.a('string');
+                song.streamUrl.should.be.a('string');
+                song.loved_count.should.be.a('number');
+                song.mediaid.should.be.a('string');
+
+                if (isSoundcloudUrl(song.streamUrl)) {
+                    song.soundcloudUrl.should.be.a('string');
+                }
+            });
+            done();
+        });
+    });
 });
+
+function isSoundcloudUrl(songUrl) {
+    return songUrl !== "http://soundcloud.com/not/found" &&
+        songUrl !== "https://soundcloud.com/not/found";
+}
