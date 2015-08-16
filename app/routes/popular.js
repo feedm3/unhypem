@@ -33,14 +33,4 @@ router.get('/', function (req, res) {
         });
 });
 
-/**
- * Convert an object ID to a date.
- *
- * @param objectId the object id to convert
- * @returns {Date} the date
- */
-function dateFromObjectId(objectId) {
-    return new Date(parseInt(objectId.toString().substring(0, 8), 16) * 1000);
-}
-
 module.exports = router;
