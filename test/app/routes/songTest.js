@@ -20,7 +20,7 @@ describe('Request the song path', function () {
                 .get('/songs/2crtc')
                 .expect(function (res) {
                     var song = res.body;
-                    song.should.have.all.keys(['artist', 'title', 'hypemMediaId', 'streamUrl', 'soundcloudUrl']);
+                    song.should.have.all.keys(['artist', 'title', 'hypemMediaId', 'streamUrl', 'soundcloudUrl', 'soundcloudId', 'waveformUrl']);
                 })
                 .end(done);
         });

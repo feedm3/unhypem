@@ -39,8 +39,10 @@ describe('Request the popular songs object', function () {
             .get('/popular')
             .expect(function (res) {
                 var songs = res.body;
-                _.forEach(songs, function (song) {
-                   song.should.have.all.keys(['artist', 'title', 'hypemMediaId', 'streamUrl', 'soundcloudUrl']);
+                _.forEach(songs, function (song, position) {
+                    position.should.be.above(0);
+                    position.should.be.below(51);
+                    song.should.have.all.keys(['artist', 'title', 'hypemMediaId', 'streamUrl', 'soundcloudUrl', 'soundcloudId', 'waveformUrl']);
                 });
             })
             .end(done);
