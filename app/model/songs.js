@@ -14,10 +14,10 @@ var SongSchema = mongoose.Schema({
     hypemMediaId: {
         type: String,
         required: true,
+        unique: true,
         index: true
     },
     hypemLoveCount: Number,
-    mp3Url: String,
     streamUrl: String,
     soundcloudUrl: String,
     soundcloudId: String,
