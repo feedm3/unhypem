@@ -1,32 +1,28 @@
 /**
  * Starts CronJob which updates the current popular songs in a given interval
  *
- * Created by Fabian on 19.10.2014.
+ * @author Fabian Dietenberger
  */
 
-var hypemCrawler = require('./hypemCrawler');
-var CronJob = require('cron').CronJob;
-var dbAdapter = require('./dbAdapter');
+'use strict';
+
+var hypemCrawler = require('./hypemCrawler'),
+    CronJob = require('cron').CronJob,
+    Songs = require('../model/songs').Songs,
+    dbAdapter = require('../database/dbAdapter');
 
 var job;
-var lockedInARow;
 
-exports.start = function() {
-    lockedInARow = 0;
+exports.start = function () {
 
     // seconds minutes hours dayOfMonth months dayOfWeek
-    job = new CronJob('0 */5 * * * *', function() {
-        if (hypemCrawler.isLocked()) {
-            lockedInARow++;
-            console.log("Could not start crawling job " + lockedInARow + " times in a row.");
-        } else {
-            startCrawler();
-        }
+    job = new CronJob('0 */5 * * * *', function () {
+        startCrawler();
     });
     job.start();
 };
 
-exports.stop = function() {
+exports.stop = function () {
     job.stop();
 };
 

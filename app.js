@@ -9,7 +9,7 @@ var express = require('express'),
     morgan = require('morgan'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
-    hypemService = require('./app/database/hypemService');
+    hypemService = require('./app/hypem/hypemService');
 
 var indexRoute = require('./app/routes/index'),
     popularRoute = require('./app/routes/popular');
