@@ -1,6 +1,13 @@
-var express = require('express');
-var dbAdapter = require('../database/dbAdapter');
-var router = express.Router();
+/**
+ * @author Fabian Dietenberger
+ */
+
+'use strict';
+
+var express = require('express'),
+    router = express.Router(),
+    _ = require('lodash'),
+    Charts = require('../model/charts').Charts;
 
 /**
  * GET the latest popular songs.
@@ -8,11 +15,22 @@ var router = express.Router();
  * the header field 'timestamp'.
  */
 router.get('/', function (req, res) {
-    dbAdapter.getPopularSongs(function (latestEntry) {
-        var objectId = latestEntry._id;
-        res.header('timestamp', dateFromObjectId(objectId));
-        res.json(latestEntry.songs);
-    });
+    Charts.findOne()
+        .sort({timestamp: -1})
+        .populate('songs.song')
+        .exec(function (err, charts) {
+            var popularSongs = {};
+            _.forEach(charts.songs, function (songAndPosition) {
+                var position = songAndPosition.position;
+                var song = songAndPosition.song.toObject();
+                delete song._id;
+                delete song.__v;
+                popularSongs[position] = song;
+            });
+
+            res.header('timestamp', charts.timestamp);
+            res.json(popularSongs);
+        });
 });
 
 /**
