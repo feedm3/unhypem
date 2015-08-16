@@ -6,6 +6,7 @@ require('./newrelic');
 var express = require('express'),
     app = express(),
     mongoose = require('mongoose'),
+    lessMiddleware = require('less-middleware'),
     path = require('path'),
     morgan = require('morgan'),
     cookieParser = require('cookie-parser'),
@@ -19,7 +20,7 @@ app.use(morgan('dev')); // TODO put this in .env
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(require('less-middleware')(path.join(__dirname, 'public')));
+app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 hypemService.start();
