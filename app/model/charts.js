@@ -21,7 +21,7 @@ var ChartSchema = mongoose.Schema({
     songs: [{
         position: Number,
         song: {
-            type: [Schema.Types.ObjectId],
+            type: Schema.Types.ObjectId,
             ref: 'songs'
         }
     }]
