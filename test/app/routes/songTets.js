@@ -9,7 +9,21 @@ var request = require('supertest'),
 
 describe('Request the song path', function () {
     describe('if the media id is correct', function () {
+        it('should return 200', function (done) {
+            request(app)
+                .get('/songs/2crtc')
+                .expect(200, done);
+        });
 
+        it('should contain all needed fields', function (done) {
+            request(app)
+                .get('/songs/2crtc')
+                .expect(function (res) {
+                    var song = res.body;
+                    song.should.have.all.keys(['artist', 'title', 'hypemMediaId', 'streamUrl', 'soundcloudUrl']);
+                })
+                .end(done);
+        });
     });
 
     describe('if the media id does not exist', function () {

@@ -10,7 +10,7 @@ var request = require('supertest'),
     app = require('../../../app.js'),
     _ = require('lodash');
 
-describe.only('Request the popular songs object', function () {
+describe('Request the popular songs object', function () {
     it('should return 200', function (done) {
         request(app)
             .get('/popular')
