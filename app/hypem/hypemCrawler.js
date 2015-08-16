@@ -90,11 +90,18 @@ function loadPopularSongsFromHypem(done) {
 function resolvePopularSongsUrl(done) {
     async.each(popularHypemSongs, function (song, done) {
         hypemResolver.getById(song.mediaid, function (err, url) {
-            song.streamUrl = url;
             if (isSoundcloudUrl(url)) {
-                song.soundcloudUrl = url;
+                resolveSoundcloudProperties(url, function (err, properties) {
+                    song.soundcloudUrl = url;
+                    song.streamUrl = properties.uri + "/stream?client_id=" + process.env.SOUNDCLOUD_CLIENT_ID;
+                    song.soundcloudId = properties.id;
+                    song.waveformUrl = properties.waveform_url;
+                    done();
+                });
+            } else {
+                song.streamUrl = url;
+                done();
             }
-            done();
         });
     }, function (err) {
         if (err) {
@@ -103,6 +110,24 @@ function resolvePopularSongsUrl(done) {
             return;
         }
         done();
+    });
+}
+
+function resolveSoundcloudProperties(soundcloudUrl, callback) {
+    var options = {
+        method: "GET",
+        url: "https://api.soundcloud.com/resolve.json?url=" + soundcloudUrl + "&client_id=" + process.env.SOUNDCLOUD_CLIENT_ID
+    };
+    request(options, function (error, response) {
+        if (!error) {
+            if (response.statusCode === 200) {
+                callback(null, JSON.parse(response.body));
+            } else {
+                callback(new Error("Error resolving soundcloud properties from " + soundcloudUrl));
+            }
+        } else {
+            callback(new Error("Error resolving soundcloud properties from " + soundcloudUrl));
+        }
     });
 }
 

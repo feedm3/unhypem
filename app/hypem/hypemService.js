@@ -52,7 +52,9 @@ function crawlAndSavePopularSongs() {
                         hypemMediaId: songRaw.mediaid,
                         hypemLoveCount: songRaw.love_count,
                         streamUrl: songRaw.streamUrl,
-                        soundcloudUrl: songRaw.soundcloudUrl
+                        soundcloudUrl: songRaw.soundcloudUrl,
+                        soundcloudId: songRaw.soundcloudId,
+                        waveformUrl: songRaw.waveformUrl
                     });
                     songModel.save(function (err, song) {
                         if (err) {
