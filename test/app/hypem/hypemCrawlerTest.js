@@ -11,7 +11,7 @@ require('chai').should();
 var hypemCrawler = require('../../../app/hypem/hypemCrawler'),
     _ = require('lodash');
 
-describe.only('Resolve all songs on the popular list', function () {
+describe('Resolve all songs on the popular list', function () {
     this.timeout(5000);
 
     it('should return an object with 50 elements', function (done) {
