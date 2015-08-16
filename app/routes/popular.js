@@ -19,17 +19,25 @@ router.get('/', function (req, res) {
         .sort({timestamp: -1})
         .populate('songs.song')
         .exec(function (err, charts) {
-            var popularSongs = {};
-            _.forEach(charts.songs, function (songAndPosition) {
-                var position = songAndPosition.position;
-                var song = songAndPosition.song.toObject();
-                delete song._id;
-                delete song.__v;
-                popularSongs[position] = song;
-            });
+            if (err) {
+                console.error("Could not find popular songs in database. " + err);
+                throw err;
+            }
+            if (charts) {
+                var popularSongs = {};
+                _.forEach(charts.songs, function (songAndPosition) {
+                    var position = songAndPosition.position;
+                    var song = songAndPosition.song.toObject();
+                    delete song._id;
+                    delete song.__v;
+                    popularSongs[position] = song;
+                });
 
-            res.header('timestamp', charts.timestamp);
-            res.json(popularSongs);
+                res.header('timestamp', charts.timestamp);
+                res.json(popularSongs);
+            } else {
+                res.sendStatus(404);
+            }
         });
 });
 
