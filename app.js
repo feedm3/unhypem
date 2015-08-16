@@ -12,7 +12,8 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     hypemService = require('./app/hypem/hypemService');
 
-var popularRoute = require('./app/routes/popular');
+var popularRoute = require('./app/routes/popular'),
+    songsRoute = require('./app/routes/songs');
 
 app.use(morgan('dev')); // TODO put this in .env
 app.use(bodyParser.json());
@@ -34,11 +35,8 @@ db.on('error', console.error.bind(console, 'Could not connect to the database'))
 /**
  * Routes
  */
+app.use('/songs', songsRoute);
 app.use('/popular', popularRoute);
-app.get('/song/:hypemId', function(req, res){
-    var hypemId = req.params.hypemId.toLowerCase();
-    res.send("You want to have song information to " + hypemId);
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
