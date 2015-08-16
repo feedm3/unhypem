@@ -1,9 +1,10 @@
-var dotenv = require('dotenv');
-    dotenv.load();
+'use strict';
 
+require('dotenv').load();
 require('./newrelic');
 
 var express = require('express'),
+    app = express(),
     path = require('path'),
     morgan = require('morgan'),
     cookieParser = require('cookie-parser'),
@@ -12,9 +13,6 @@ var express = require('express'),
 
 var indexRoute = require('./app/routes/index'),
     popularRoute = require('./app/routes/popular');
-
-
-var app = express();
 
 app.use(morgan('dev')); // TODO put this in .env
 app.use(bodyParser.json());
