@@ -5,6 +5,7 @@ require('./newrelic');
 
 var express = require('express'),
     app = express(),
+    mongoose = require('mongoose'),
     path = require('path'),
     morgan = require('morgan'),
     cookieParser = require('cookie-parser'),
@@ -21,8 +22,19 @@ app.use(cookieParser());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-hypemService.start();
+//hypemService.start();
+hypemService.startNow();
 
+/**
+ * Database setup
+ */
+mongoose.connect('mongodb://' + process.env.MONGOLAB_URI);
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'Could not connect to the database'));
+
+/**
+ * Routes
+ */
 app.use('/', indexRoute);
 app.use('/popular', popularRoute);
 app.get('/song/:hypemId', function(req, res){
