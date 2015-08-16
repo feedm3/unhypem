@@ -18,6 +18,7 @@
     "dotenv": "~1.2.0",
     "express": "~4.13.3",
     "hypem-resolver": "^1.2.0",
+    "less-middleware": "^2.0.1",
     "lodash": "~3.10.1",
     "mongoose": "^4.1.2",
     "morgan": "~1.6.1",
