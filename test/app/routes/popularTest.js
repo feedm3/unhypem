@@ -34,6 +34,18 @@ describe.only('Request the popular songs object', function () {
             .end(done);
     });
 
+    it('every song should have the needed fields', function (done) {
+        request(app)
+            .get('/popular')
+            .expect(function (res) {
+                var songs = res.body;
+                _.forEach(songs, function (song) {
+                   song.should.have.all.keys(['artist', 'title', 'hypemMediaId', 'streamUrl', 'soundcloudUrl']);
+                });
+            })
+            .end(done);
+    });
+
     it('should contain the timestamp in the header', function (done) {
         request(app)
             .get('/popular')
