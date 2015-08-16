@@ -22,8 +22,8 @@ app.use(cookieParser());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-//hypemService.start();
-hypemService.startNow();
+hypemService.start();
+//hypemService.startNow();
 
 /**
  * Database setup
