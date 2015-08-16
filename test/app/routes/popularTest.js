@@ -4,12 +4,14 @@
 
 'use strict';
 
+require('chai').should();
+
 var request = require('supertest'),
     app = require('../../../app.js'),
     _ = require('lodash');
 
-describe('Request the popular songs object', function () {
-    it('should return 200 status code', function (done) {
+describe.only('Request the popular songs object', function () {
+    it('should return 200', function (done) {
         request(app)
             .get('/popular')
             .expect(200, done);
@@ -19,31 +21,17 @@ describe('Request the popular songs object', function () {
         request(app)
             .get('/popular')
             .expect('Content-Type', /json/)
-            .end(function (error) {
-                if (error) {
-                    throw error;
-                }
-                done();
-            });
+            .end(done);
     });
 
     it('should contain 50 songs in body', function (done) {
         request(app)
             .get('/popular')
-            .expect(function (response) {
-                var songs = JSON.parse(response.text);
-                var songCount = _.keysIn(songs);
-
-                if(songCount.length !== 50) {
-                    throw "There must be 50 songs";
-                }
+            .expect(function (res) {
+                var songs = res.body;
+                _.keysIn(songs).should.have.length(50);
             })
-            .end(function (error) {
-                if (error) {
-                    throw error;
-                }
-                done();
-            });
+            .end(done);
     });
 
     it('should contain the timestamp in the header', function (done) {
