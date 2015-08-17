@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+
+'use strict';
+
 var debug = require('debug')('Unhypem');
 var app = require('../app');
 
