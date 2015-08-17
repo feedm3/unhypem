@@ -1,1 +1,1 @@
-web: node ./bin/www
+web: ./node_modules/.bin/pm2 start bin/www
