@@ -1,7 +1,6 @@
 'use strict';
 
 require('dotenv').load();
-require('./newrelic');
 
 var express = require('express'),
     app = express(),
