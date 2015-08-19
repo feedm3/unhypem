@@ -50,7 +50,7 @@ function crawlAndSavePopularSongs() {
                         artist: songRaw.artist,
                         title: songRaw.title,
                         hypemMediaId: songRaw.mediaid,
-                        hypemLoveCount: songRaw.loved_count,
+                        hypemLovedCount: songRaw.loved_count,
                         streamUrl: songRaw.streamUrl,
                         soundcloudUrl: songRaw.soundcloudUrl,
                         soundcloudId: songRaw.soundcloudId,
