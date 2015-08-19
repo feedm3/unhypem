@@ -59,6 +59,7 @@ function crawlAndSavePopularSongs() {
                     songModel.save(function (err, song) {
                         if (err) {
                             console.error("Could not save song to database. " + err);
+                            console.error(song);
                             throw err;
                         }
                         popularSongs.push({

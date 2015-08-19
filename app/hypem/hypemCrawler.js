@@ -71,6 +71,11 @@ function loadPopularSongsFromHypem(done) {
                 _.forIn(hypemSongs, function (hypemSong, num) {
                     if (_.isObject(hypemSong)) {
                         var position = parseInt(num) + offset + 1; // we start at 1 not 0
+                        if (_.isEmpty(hypemSong.artist)) {
+                            // there are some edge cases where the artist is
+                            // not given a.e. http://hypem.com/track/2cvak/
+                            hypemSong.artist = " ";
+                        }
                         popularHypemSongs[position] = hypemSong;
                     }
                 });
@@ -92,10 +97,14 @@ function resolvePopularSongsUrl(done) {
         hypemResolver.getById(song.mediaid, function (err, url) {
             if (isSoundcloudUrl(url)) {
                 resolveSoundcloudProperties(url, function (err, properties) {
+                    if (err) {
+                        console.error("Could not request soundcloud api with " + url);
+                    } else {
+                        song.streamUrl = properties.uri + "/stream?client_id=" + process.env.SOUNDCLOUD_CLIENT_ID;
+                        song.soundcloudId = properties.id;
+                        song.waveformUrl = properties.waveform_url;
+                    }
                     song.soundcloudUrl = url;
-                    song.streamUrl = properties.uri + "/stream?client_id=" + process.env.SOUNDCLOUD_CLIENT_ID;
-                    song.soundcloudId = properties.id;
-                    song.waveformUrl = properties.waveform_url;
                     done();
                 });
             } else {
@@ -105,7 +114,7 @@ function resolvePopularSongsUrl(done) {
         });
     }, function (err) {
         if (err) {
-            console.error("Error resolving stream url for popular songs. " + err);
+            console.error("Error requesting soundcloud api for popular songs. " + err);
             done(err);
             return;
         }
@@ -132,6 +141,14 @@ function resolveSoundcloudProperties(soundcloudUrl, callback) {
 }
 
 function isSoundcloudUrl(songUrl) {
-    return songUrl !== "http://soundcloud.com/not/found" &&
-        songUrl !== "https://soundcloud.com/not/found";
+    if (songUrl !== null &&
+        songUrl !== undefined &&
+        songUrl !== "http://soundcloud.com/not/found" &&
+        songUrl !== "https://soundcloud.com/not/found") {
+        if (_.startsWith(songUrl, "http://soundcloud.com" ||
+                _.startsWith(songUrl, "https://soundcloud.com"))) {
+            return true;
+        }
+    }
+    return false;
 }
