@@ -11,16 +11,16 @@ describe('Request the song path', function () {
     describe('if the media id is correct', function () {
         it('should return 200', function (done) {
             request(app)
-                .get('/songs/2crtc')
+                .get('/songs/2d0f2')
                 .expect(200, done);
         });
 
         it('should contain all needed fields', function (done) {
             request(app)
-                .get('/songs/2crtc')
+                .get('/songs/2d0f2')
                 .expect(function (res) {
                     var song = res.body;
-                    song.should.have.all.keys(['artist', 'title', 'hypemMediaId', 'streamUrl', 'soundcloudUrl', 'soundcloudId', 'waveformUrl']);
+                    song.should.have.all.keys(['artist', 'title', 'hypemMediaId', 'hypemLovedCount', 'streamUrl', 'soundcloudUrl', 'soundcloudId', 'waveformUrl']);
                 })
                 .end(done);
         });
