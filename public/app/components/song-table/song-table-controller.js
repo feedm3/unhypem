@@ -37,9 +37,9 @@
             };
 
             $scope.setDate = function(date){
-                //var dateInMillis = new Date(date).getTime();
-                var formattedTimeDifference =  moment(date).fromNow();
-                var formattedDateTime = moment(date).format('Do MMM YYYY, HH:mm:ss');
+                var dateInMillis = new Date(date).getTime();
+                var formattedTimeDifference =  moment(dateInMillis).fromNow();
+                var formattedDateTime = moment(dateInMillis).format('Do MMM YYYY, HH:mm:ss');
                 $scope.dateMessage = formattedTimeDifference;
                 $scope.dateTime = formattedDateTime;
             };
