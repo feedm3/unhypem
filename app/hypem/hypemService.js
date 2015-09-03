@@ -82,7 +82,7 @@ function crawlAndSavePopularSongs() {
                 throw err;
             }
             var charts = new Charts({
-                timestamp: new Date(),
+                timestamp: new Date().getTime(),
                 songs: popularSongs
             });
             charts.save(function (err, chartsSaved) {
