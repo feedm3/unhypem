@@ -3,7 +3,8 @@
         .controller('SongController',  ['$scope', '$timeout', 'playerService', 'Songs', function ($scope, $timeout, playerService, Songs) {
             $scope.songs = [];
             $scope.selectedPosition = 0;
-            $scope.date = "";
+            $scope.dateMessage = "";
+            $scope.dateTime = "";
 
             $scope.onClickSelectPosition = function (selectedPosition, $event) {
                 if(!isSoundcloudHtmlNode($event)) {
@@ -30,9 +31,11 @@
             };
 
             $scope.setDate = function(date){
-                var timeSincePopularRefresh =  moment(date).fromNow();
-                var exactTime = moment(date).format('Do MMM YYYY, HH:mm:ss');
-                $scope.date = timeSincePopularRefresh + " (" + exactTime + ")";
+                var dateInMillis = new Date(date).getTime();
+                var formattedTimeDifference =  moment(dateInMillis).fromNow();
+                var formattedDateTime = moment(dateInMillis).format('Do MMM YYYY, HH:mm:ss');
+                $scope.dateMessage = formattedTimeDifference;
+                $scope.dateTime = formattedDateTime;
             };
 
             playerService.setOnFinishCallback(function () {
