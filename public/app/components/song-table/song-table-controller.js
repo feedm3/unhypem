@@ -30,9 +30,9 @@
             };
 
             $scope.setDate = function(date){
-                var timeSincePopularRefresh =  moment().startOf(date).fromNow();
-                var exactTime = moment(new Date(date)).calendar();
-                $scope.date = timeSincePopularRefresh + " (" + exactTime.toLowerCase() + ")";
+                var timeSincePopularRefresh =  moment(date).fromNow();
+                var exactTime = moment(date).format('Do MMM YYYY, HH:mm:ss');
+                $scope.date = timeSincePopularRefresh + " (" + exactTime + ")";
             };
 
             playerService.setOnFinishCallback(function () {
