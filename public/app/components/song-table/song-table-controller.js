@@ -1,3 +1,9 @@
+/**
+ * @author Fabian Dietenberger
+ */
+
+'use strict';
+
 (function () {
     angular.module('unhypemApp')
         .controller('SongController',  ['$scope', '$timeout', 'playerService', 'Songs', function ($scope, $timeout, playerService, Songs) {
@@ -23,11 +29,11 @@
             };
 
             $scope.hasStreamUrl = function (song) {
-                return (typeof song.streamUrl == "string" && song.streamUrl.length > 0)
+                return (typeof song.streamUrl === "string" && song.streamUrl.length > 0);
             };
 
             $scope.hasSoundcloudUrl = function (soundcloudUrl) {
-                return (typeof soundcloudUrl == "string" && soundcloudUrl.length > 0)
+                return (typeof soundcloudUrl === "string" && soundcloudUrl.length > 0);
             };
 
             $scope.setDate = function(date){
@@ -100,7 +106,7 @@
         }]);
 
     function isSoundcloudHtmlNode(event) {
-        if (event != null) {
+        if (event !== null) {
             return event.target.className === "soundcloud-logo"
         }
         return false;

@@ -1,3 +1,9 @@
+/**
+ * @author Fabian Dietenberger
+ */
+
+'use strict';
+
 (function () {
     angular.module('unhypemApp')
         .directive('welcomeHeader', function () {

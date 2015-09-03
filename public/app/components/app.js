@@ -1,3 +1,9 @@
+/**
+ * @author Fabian Dietenberger
+ */
+
+'use strict';
+
 (function(){
     // only new module must be injected as dependency
     angular.module('unhypemApp', ['player-service', 'ui.bootstrap', 'ngRoute'])

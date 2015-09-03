@@ -1,3 +1,9 @@
+/**
+ * @author Fabian Dietenberger
+ */
+
+'use strict';
+
 (function () {
     angular.module('unhypemApp')
         .controller('PlayerController', ['$scope', '$timeout', 'playerService', function ($scope, $timeout, playerService) {

@@ -1,3 +1,9 @@
+/**
+ * @author Fabian Dietenberger
+ */
+
+'use strict';
+
 (function(){
     var app = angular.module('player-service', []);
 
