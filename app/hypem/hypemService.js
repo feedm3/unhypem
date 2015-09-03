@@ -11,7 +11,8 @@ var hypemCrawler = require('./hypemCrawler'),
     Songs = require('../model/songs').Songs,
     Charts = require('../model/charts').Charts,
     async = require('async'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    moment = require('moment');
 
 var job;
 
@@ -82,7 +83,7 @@ function crawlAndSavePopularSongs() {
                 throw err;
             }
             var charts = new Charts({
-                timestamp: new Date().getTime(),
+                timestamp: moment(),
                 songs: popularSongs
             });
             charts.save(function (err, chartsSaved) {
