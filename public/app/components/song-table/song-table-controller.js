@@ -13,7 +13,7 @@
             $scope.dateTime = "";
 
             $scope.onClickSelectPosition = function (selectedPosition, $event) {
-                if(!isSoundcloudHtmlNode($event)) {
+                if(!isSoundcloudLogoClicked($event)) {
                     $scope.setSelectedPosition(selectedPosition);
                     playerService.play($scope.songs[selectedPosition].hypemMediaId);
                 }
@@ -105,7 +105,7 @@
                 });
         }]);
 
-    function isSoundcloudHtmlNode(event) {
+    function isSoundcloudLogoClicked(event) {
         if (event !== undefined && event !== null) {
             return event.target.className === "soundcloud-logo";
         }
