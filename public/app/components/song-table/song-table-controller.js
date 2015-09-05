@@ -106,8 +106,8 @@
         }]);
 
     function isSoundcloudHtmlNode(event) {
-        if (event !== null) {
-            return event.target.className === "soundcloud-logo"
+        if (event !== undefined && event !== null) {
+            return event.target.className === "soundcloud-logo";
         }
         return false;
     }
