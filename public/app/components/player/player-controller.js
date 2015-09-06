@@ -58,7 +58,7 @@
             playerService.setProgressCallback(function (seconds) {
                 $scope.$apply(function () {
                     $scope.progress = secondFormatter(seconds);
-                    if ($scope.durationInSeconds != 0) {
+                    if ($scope.durationInSeconds !== 0) {
                         $scope.progressInPercent = 100 / $scope.durationInSeconds * seconds;
                     }
                 });
