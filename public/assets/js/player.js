@@ -1,80 +1,87 @@
+/**
+ * @author Fabian Dietenberger
+ */
+
+'use strict';
+
 var soundManager,
     soundPlayer;
 
-Player = function () {
-    _soundManager = soundManager;
-    _soundPlayer = soundPlayer;
-    _isPlaying = false;
-    _volume = 100;
-    _progressInSeconds = 0;
-    _currentPlayId = "";
-    _callbackOnPlay = null;
-    _callbackOnPause = null;
-    _callbackFinish = null;
-    _callbackDurationInSeconds = null;
-    _callbackWhileLoading = null;
-    _callbackProgressInSeconds = null;
-};
+function Player() {
+    this._soundManager = soundManager;
+    this._soundPlayer = soundPlayer;
+    this._isPlaying = false;
+    this._volume = 100;
+    this._progressInSeconds = 0;
+    this._currentPlayId = "";
+    this._callbackOnPlay = null;
+    this._callbackOnPause = null;
+    this._callbackFinish = null;
+    this._callbackDurationInSeconds = null;
+    this._callbackWhileLoading = null;
+    this._callbackProgressInSeconds = null;
+}
 
 Player.prototype.init = function () {
-    _soundManager.url = '/swfs/';
-    _soundManager.flashVersion = 9;
-    _soundManager.useFlashBlock = false;
-    _soundManager.useHighPerformance = true;
-    _soundManager.wmode = 'transparent';
-    _soundManager.useFastPolling = true;
-    _soundManager.waitForWindowLoad = true;
-    _soundManager.volume = _volume;
+    this._soundManager.url = '/swfs/';
+    this._soundManager.flashVersion = 9;
+    this._soundManager.useFlashBlock = false;
+    this._soundManager.useHighPerformance = true;
+    this._soundManager.wmode = 'transparent';
+    this._soundManager.useFastPolling = true;
+    this._soundManager.waitForWindowLoad = true;
+    this._soundManager.volume = this._volume;
 };
 
 Player.prototype.isPlaying = function () {
-    return _isPlaying;
+    return this._isPlaying;
 };
 
 Player.prototype.preloadSong = function (songs) {
+    var that = this;
     _.forEach(songs, function (song) {
-        _soundManager.createSound({
+        that._soundManager.createSound({
             url: song.streamUrl,
             id: song.hypemMediaId,
             onplay: function () {
-                _isPlaying = true;
-                if (_callbackOnPlay) {
-                    _callbackOnPlay();
+                that._isPlaying = true;
+                if (that._callbackOnPlay) {
+                    that._callbackOnPlay();
                 }
-                if (this.readyState == 3 && _callbackDurationInSeconds) {
-                    _callbackDurationInSeconds(parseInt(this.duration / 1000));
+                if (this.readyState === 3 && that._callbackDurationInSeconds) {
+                    that._callbackDurationInSeconds(parseInt(this.duration / 1000));
                 }
             },
             onpause: function () {
-                _isPlaying = false;
-                if (_callbackOnPause) {
-                    _callbackOnPause();
+                that._isPlaying = false;
+                if (that._callbackOnPause) {
+                    that._callbackOnPause();
                 }
             },
             onresume: function () {
-                _isPlaying = true;
-                if (_callbackOnPlay) {
-                    _callbackOnPlay();
+                that._isPlaying = true;
+                if (that._callbackOnPlay) {
+                    that._callbackOnPlay();
                 }
             },
             onfinish: function () {
-                if (_callbackFinish) {
-                    _callbackFinish();
+                if (that._callbackFinish) {
+                    that._callbackFinish();
                 }
             },
             whileloading: function () {
-                if (_callbackWhileLoading) {
-                    _callbackWhileLoading((this.bytesLoaded / this.bytesTotal) * 100);
+                if (that._callbackWhileLoading) { // sekunden werden nicht richtig gespeichert. scope problem mit this und that
+                    that._callbackWhileLoading((this.bytesLoaded / this.bytesTotal) * 100);
                 }
-                if (this.duration && _callbackDurationInSeconds) {
-                    _callbackDurationInSeconds(parseInt(this.duration / 1000));
+                if (this.duration && that._callbackDurationInSeconds) {
+                    that._callbackDurationInSeconds(parseInt(this.duration / 1000));
                 }
             },
             whileplaying: function () {
-                if (_callbackProgressInSeconds) {
+                if (that._callbackProgressInSeconds) {
                     // return song progress in seconds
-                    _progressInSeconds = this.position / 1000;
-                    _callbackProgressInSeconds(_progressInSeconds);
+                    that._progressInSeconds = this.position / 1000;
+                    that._callbackProgressInSeconds(that._progressInSeconds);
                 }
             }
         });
@@ -83,25 +90,25 @@ Player.prototype.preloadSong = function (songs) {
 
 Player.prototype.play = function (id) {
     // If same ID wants to be played, just pause the song
-    if (_currentPlayId == id) {
-        if (_isPlaying) {
-            _soundPlayer.pause();
+    if (this._currentPlayId === id) {
+        if (this._isPlaying) {
+            this._soundPlayer.pause();
             return;
         }
 
-        _soundPlayer.play();
-        _soundPlayer.setVolume(_volume)
+        this._soundPlayer.play();
+        this._soundPlayer.setVolume(this._volume);
     } else {
         // If new song wants to be played
         // reset the previous so it doesn't start
         // playing in the last position if restarted
-        _currentPlayId = id;
-        if (_soundPlayer) {
-            _soundPlayer.stop();
+        this._currentPlayId = id;
+        if (this._soundPlayer) {
+            this._soundPlayer.stop();
         }
-        _soundPlayer = _soundManager.getSoundById(_currentPlayId);
-        _soundPlayer.play();
-        _soundPlayer.setVolume(_volume)
+        this._soundPlayer = this._soundManager.getSoundById(this._currentPlayId);
+        this._soundPlayer.play();
+        this._soundPlayer.setVolume(this._volume);
     }
 };
 
@@ -109,7 +116,7 @@ Player.prototype.play = function (id) {
  * Pause current song
  */
 Player.prototype.pause = function () {
-    _soundPlayer.pause();
+    this._soundPlayer.pause();
 };
 
 /**
@@ -118,10 +125,10 @@ Player.prototype.pause = function () {
  * @param hundredPercent position in the song between 0-100
  */
 Player.prototype.setPosition = function (hundredPercent) {
-    if (_soundPlayer) {
-        _soundPlayer.setPosition((_soundPlayer.duration / 100) * hundredPercent);
-        if (_callbackProgressInSeconds) {
-            _callbackProgressInSeconds(((_soundPlayer.duration / 100) * hundredPercent) / 1000);
+    if (this._soundPlayer) {
+        this._soundPlayer.setPosition((this._soundPlayer.duration / 100) * hundredPercent);
+        if (this._callbackProgressInSeconds) {
+            this._callbackProgressInSeconds(((this._soundPlayer.duration / 100) * hundredPercent) / 1000);
         }
     }
 };
@@ -132,9 +139,9 @@ Player.prototype.setPosition = function (hundredPercent) {
  * @param volume number between 0-100
  */
 Player.prototype.setVolume = function (volume) {
-    _volume = volume;
-    if (_soundPlayer) {
-        _soundPlayer.setVolume(_volume);
+    this._volume = volume;
+    if (this._soundPlayer) {
+        this._soundPlayer.setVolume(this._volume);
     }
 };
 
@@ -144,7 +151,7 @@ Player.prototype.setVolume = function (volume) {
  * @returns {number} seconds
  */
 Player.prototype.getProgressInSeconds = function () {
-    return _progressInSeconds;
+    return this._progressInSeconds;
 };
 
 /**
@@ -153,19 +160,19 @@ Player.prototype.getProgressInSeconds = function () {
  * @param callback
  */
 Player.prototype.setOnPlayCallback = function (callback) {
-    _callbackOnPlay = callback;
+    this._callbackOnPlay = callback;
 };
 
 Player.prototype.setOnPauseCallback = function (callback) {
-    _callbackOnPause = callback;
+    this._callbackOnPause = callback;
 };
 
 Player.prototype.setOnFinishCallback = function (callback) {
-    _callbackFinish = callback;
+    this._callbackFinish = callback;
 };
 
 Player.prototype.setWhileLoadingCallback = function (callback) {
-    _callbackWhileLoading = callback;
+    this._callbackWhileLoading = callback;
 };
 
 /**
@@ -174,7 +181,7 @@ Player.prototype.setWhileLoadingCallback = function (callback) {
  * @param callback
  */
 Player.prototype.setDurationInSecondsCallback = function (callback) {
-    _callbackDurationInSeconds = callback;
+    this._callbackDurationInSeconds = callback;
 };
 
 /**
@@ -183,5 +190,5 @@ Player.prototype.setDurationInSecondsCallback = function (callback) {
  * @param callback
  */
 Player.prototype.setProgressInSecondsCallback = function (callback) {
-    _callbackProgressInSeconds = callback;
+    this._callbackProgressInSeconds = callback;
 };
