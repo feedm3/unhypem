@@ -28,6 +28,7 @@ router.get('/', function (req, res) {
                 _.forEach(charts.songs, function (songAndPosition) {
                     var position = songAndPosition.position;
                     var song = songAndPosition.song.toObject();
+                    song.hypemLovedCount = _.last(song.hypemLovedCount).count;
                     delete song._id;
                     delete song.__v;
                     popularSongs[position] = song;

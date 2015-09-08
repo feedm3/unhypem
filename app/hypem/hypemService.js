@@ -45,13 +45,33 @@ function crawlAndSavePopularSongs() {
                     console.error("Error finding song in database. " + err);
                     throw err;
                 }
-                if (!song) {
+                if (song) {
+                    song.hypemLovedCount.push({
+                        timestamp: moment(),
+                        count: songRaw.loved_count
+                    });
+                    song.save(function (err, song) {
+                        if (err) {
+                            console.error("Could not update song in database. " + err);
+                            console.error(song);
+                            throw err;
+                        }
+                        popularSongs.push({
+                            position: position,
+                            song: song._id
+                        });
+                        done();
+                    });
+                } else {
                     // song does not exist in database so we save it
                     var songModel = new Songs({
                         artist: songRaw.artist,
                         title: songRaw.title,
                         hypemMediaId: songRaw.mediaid,
-                        hypemLovedCount: songRaw.loved_count,
+                        hypemLovedCount: {
+                            timestamp: moment(),
+                            count: songRaw.loved_count
+                        },
                         streamUrl: songRaw.streamUrl,
                         soundcloudUrl: songRaw.soundcloudUrl,
                         soundcloudId: songRaw.soundcloudId,
@@ -69,12 +89,6 @@ function crawlAndSavePopularSongs() {
                         });
                         done();
                     });
-                } else {
-                    popularSongs.push({
-                        position: position,
-                        song: song._id
-                    });
-                    done();
                 }
             });
         }, function (err) {

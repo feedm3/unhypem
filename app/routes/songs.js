@@ -22,6 +22,7 @@ router.get('/:hypemMediaId', function (req, res) {
                 return;
             }
             var songObject = song.toObject();
+            songObject.hypemLovedCount = _.last(songObject.hypemLovedCount).count;
             delete songObject._id;
             delete songObject.__v;
             res.json(songObject);

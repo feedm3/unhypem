@@ -17,7 +17,10 @@ var SongSchema = mongoose.Schema({
         unique: true,
         index: true
     },
-    hypemLovedCount: Number,
+    hypemLovedCount: [{
+        timestamp: Date,
+        count: Number
+    }],
     streamUrl: String,
     soundcloudUrl: String,
     soundcloudId: String,
