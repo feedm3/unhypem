@@ -100,7 +100,9 @@ function resolvePopularSongsUrl(done) {
                     if (err) {
                         console.error("Could not request soundcloud api with " + url);
                     } else {
-                        song.streamUrl = properties.uri + "/stream?client_id=" + process.env.SOUNDCLOUD_CLIENT_ID;
+                        if (properties.stream_url) {
+                            song.streamUrl = properties.stream_url + "?client_id=" + process.env.SOUNDCLOUD_CLIENT_ID;
+                        }
                         song.soundcloudId = properties.id;
                         song.waveformUrl = properties.waveform_url;
                     }
