@@ -11,6 +11,8 @@ var request = require('supertest'),
     _ = require('lodash');
 
 describe('Request the popular songs object', function () {
+    this.timeout(5000);
+
     it('should return 200', function (done) {
         request(app)
             .get('/popular')
