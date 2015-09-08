@@ -9,6 +9,7 @@ var request = require('supertest'),
 
 describe('Request the song path', function () {
     describe('if the media id is correct', function () {
+        // TODO fdi take the song id from the currect charts
         it('should return 200', function (done) {
             request(app)
                 .get('/songs/2d0f2')

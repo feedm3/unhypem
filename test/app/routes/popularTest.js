@@ -42,7 +42,10 @@ describe('Request the popular songs object', function () {
                 _.forEach(songs, function (song, position) {
                     position.should.be.above(0);
                     position.should.be.below(51);
-                    song.should.have.all.keys(['artist', 'title', 'hypemMediaId', 'hypemLovedCount', 'streamUrl', 'soundcloudUrl', 'soundcloudId', 'waveformUrl']);
+                    song.should.include.all.keys(['artist', 'title', 'hypemMediaId', 'hypemLovedCount', 'streamUrl']);
+                    // we dont test for 'soundcloudUrl', 'soundcloudId', 'waveformUrl'
+                    // because sometimes the song is not hosted on soundcloud
+                    // TODO make isSoundcloud() method into a utils module
                 });
             })
             .end(done);
