@@ -44,6 +44,9 @@ describe('Resolve all songs on the popular list', function () {
 });
 
 function isSoundcloudUrl(songUrl) {
-    return songUrl !== "http://soundcloud.com/not/found" &&
-        songUrl !== "https://soundcloud.com/not/found";
+    return (_.startsWith(songUrl, "http://soundcloud") ||
+            _.startsWith(songUrl, "http://soundcloud")) && (
+            !_.startsWith(songUrl, "http://soundcloud.com/not/found") ||
+            !_.startsWith(songUrl, "https://soundcloud.com/not/found")
+        );
 }
