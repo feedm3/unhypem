@@ -30,7 +30,6 @@ describe('Resolve all songs on the popular list', function () {
 
                 song.artist.should.be.a('string');
                 song.title.should.be.a('string');
-                song.streamUrl.should.be.a('string');
                 song.loved_count.should.be.a('number');
                 song.mediaid.should.be.a('string');
 
@@ -44,9 +43,10 @@ describe('Resolve all songs on the popular list', function () {
 });
 
 function isSoundcloudUrl(songUrl) {
-    return (_.startsWith(songUrl, "http://soundcloud") ||
+    return (songUrl !== null && (
+            _.startsWith(songUrl, "http://soundcloud") ||
             _.startsWith(songUrl, "http://soundcloud")) && (
             !_.startsWith(songUrl, "http://soundcloud.com/not/found") ||
             !_.startsWith(songUrl, "https://soundcloud.com/not/found")
-        );
+    ));
 }
