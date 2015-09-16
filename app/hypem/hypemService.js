@@ -25,15 +25,15 @@ exports.start = function () {
     job.start();
 };
 
-exports.startNow = function () {
-    crawlAndSavePopularSongs();
+exports.startNow = function (done) {
+    crawlAndSavePopularSongs(done);
 };
 
 exports.stop = function () {
     job.stop();
 };
 
-function crawlAndSavePopularSongs() {
+function crawlAndSavePopularSongs(done) {
     hypemCrawler.resolvePopularList(function (err, songs) {
         var popularSongs = [];
         async.each(songs, function (songRaw, done) {
@@ -100,7 +100,10 @@ function crawlAndSavePopularSongs() {
                 timestamp: moment(),
                 songs: popularSongs
             });
-            charts.save(function (err, chartsSaved) {
+            charts.save(function (err) {
+                if (done) {
+                    done(err);
+                }
                 if (err) {
                     console.error("Error saving charts. " + err);
                     throw err;
