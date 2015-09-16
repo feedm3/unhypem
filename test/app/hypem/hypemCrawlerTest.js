@@ -12,7 +12,7 @@ var hypemCrawler = require('../../../app/hypem/hypemCrawler'),
     _ = require('lodash');
 
 describe('Resolve all songs on the popular list', function () {
-    this.timeout(5000);
+    this.timeout(10000);
 
     it('should return an object with 50 elements', function (done) {
         hypemCrawler.resolvePopularList(function (err, songs) {
