@@ -9,7 +9,8 @@
 require('chai').should();
 
 var hypemCrawler = require('../../../app/hypem/hypemCrawler'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    util = require('../../../app/util');
 
 describe('Resolve all songs on the popular list', function () {
     this.timeout(10000);
@@ -33,20 +34,14 @@ describe('Resolve all songs on the popular list', function () {
                 song.loved_count.should.be.a('number');
                 song.mediaid.should.be.a('string');
 
-                if (isSoundcloudUrl(song.streamUrl)) {
+                song.should.include.all.keys(['artist', 'title', 'hypemMediaId', 'hypemLovedCount']);
+
+                if (util.isSoundcloudUrl(song.streamUrl)) {
                     song.soundcloudUrl.should.be.a('string');
+                    song.sould.include.all.keys(['soundcloudUrl', 'soundcloudId', 'waveformUrl']);
                 }
             });
             done();
         });
     });
 });
-
-function isSoundcloudUrl(songUrl) {
-    return (songUrl !== null && (
-            _.startsWith(songUrl, "http://soundcloud") ||
-            _.startsWith(songUrl, "http://soundcloud")) && (
-            !_.startsWith(songUrl, "http://soundcloud.com/not/found") ||
-            !_.startsWith(songUrl, "https://soundcloud.com/not/found")
-    ));
-}
