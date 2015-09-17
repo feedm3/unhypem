@@ -1,7 +1,4 @@
 /**
- * This class is used to crawl all current popular songs from hypem
- * and extend the single songs with their streaming and soundcloud url.
- *
  * @author Fabian Dietenberger
  */
 
@@ -20,6 +17,13 @@ var popularHypemSongs = {},
         "http://hypem.com/playlist/popular/3day/json/3/data.js"
     ];
 
+/**
+ * This class is used to crawl all current popular songs from hypem
+ * and extend the single songs with their streaming and soundcloud url.
+ *
+ * @returns {{getAllPopularSongs: getAllPopularSongs}}
+ * @constructor
+ */
 var HypemCrawler = function () {
 
     /**
@@ -29,7 +33,7 @@ var HypemCrawler = function () {
      * @param {Error} callback.err null if no error occurred
      * @param {object} callback.songs the current songs (key: chart position; value: song)
      */
-    function resolvePopularList(callback) {
+    function getAllPopularSongs(callback) {
         async.waterfall([
             function (done) {
                 loadPopularSongsFromHypem(done);
@@ -48,7 +52,7 @@ var HypemCrawler = function () {
     }
 
     return {
-        resolvePopularList: resolvePopularList
+        getAllPopularSongs: getAllPopularSongs
     };
 };
 

@@ -15,7 +15,7 @@ describe('Resolve all songs on the popular list', function () {
     this.timeout(10000);
 
     it('should return an object with 50 elements', function (done) {
-        hypemCrawler.resolvePopularList(function (err, songs) {
+        hypemCrawler.getAllPopularSongs(function (err, songs) {
             songs.should.be.a('object');
             _.keys(songs).should.have.length(50);
             done();
@@ -23,7 +23,7 @@ describe('Resolve all songs on the popular list', function () {
     });
 
     it('every object should contain song informations', function (done) {
-        hypemCrawler.resolvePopularList(function (err, songs) {
+        hypemCrawler.getAllPopularSongs(function (err, songs) {
             _.forIn(songs, function (song, num) {
                 num.should.be.above(0);
                 num.should.be.below(51);

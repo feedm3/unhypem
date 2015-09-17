@@ -34,7 +34,7 @@ exports.stop = function () {
 };
 
 function crawlAndSavePopularSongs(done) {
-    hypemCrawler.resolvePopularList(function (err, songs) {
+    hypemCrawler.getAllPopularSongs(function (err, songs) {
         var popularSongs = [];
         async.each(songs, function (songRaw, done) {
 
