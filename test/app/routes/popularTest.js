@@ -8,6 +8,7 @@ require('chai').should();
 
 var request = require('supertest'),
     app = require('../../../app.js'),
+    util = require('../../../app/util'),
     _ = require('lodash');
 
 describe('Request the popular songs object', function () {
@@ -45,9 +46,9 @@ describe('Request the popular songs object', function () {
                     position.should.be.above(0);
                     position.should.be.below(51);
                     song.should.include.all.keys(['artist', 'title', 'hypemMediaId', 'hypemLovedCount']);
-                    // we dont test for 'streamUrl', 'soundcloudUrl', 'soundcloudId', 'waveformUrl'
-                    // because sometimes the song is not hosted on soundcloud
-                    // TODO make isSoundcloud() method into a utils module
+                    if (util.isSoundcloudUrl(song.streamUrl)) {
+                        song.sould.include.all.keys(['soundcloudUrl', 'soundcloudId', 'waveformUrl']);
+                    }
                 });
             })
             .end(done);

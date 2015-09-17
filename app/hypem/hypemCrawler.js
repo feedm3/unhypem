@@ -8,6 +8,7 @@ var request = require('request'),
     async = require('async'),
     url = require('url'),
     _ = require('lodash'),
+    util = require('../util'),
     hypemResolver = require('hypem-resolver');
 
 var popularHypemSongs = {},
@@ -36,10 +37,10 @@ var HypemCrawler = function () {
     function getAllPopularSongs(callback) {
         async.waterfall([
             function (done) {
-                loadPopularSongsFromHypem(done);
+                fetchAllPopularSongs(done);
             },
             function (done) {
-                resolvePopularSongsUrl(done);
+                resolveStreamingUrls(done);
             }
         ], function (err) {
             if (err) {
@@ -58,12 +59,10 @@ var HypemCrawler = function () {
 
 module.exports = new HypemCrawler();
 
-function loadPopularSongsFromHypem(done) {
+function fetchAllPopularSongs(done) {
     async.each(hypemPopularLinks, function (link, done) {
-        var pathname = url.parse(link).pathname; // '/playlist/popular/3day/json/1/data.js'
-        var offsetLink = pathname.split('/')[5]; // '1'
-        var offset = 20 * (offsetLink - 1);
 
+        var positionOffset = getPositionOffsetFromLink(link);
         var options = {
             method: "GET",
             url: link
@@ -74,7 +73,7 @@ function loadPopularSongsFromHypem(done) {
                 var hypemSongs = JSON.parse(response.body);
                 _.forIn(hypemSongs, function (hypemSong, num) {
                     if (_.isObject(hypemSong)) {
-                        var position = parseInt(num) + offset + 1; // we start at 1 not 0
+                        var position = parseInt(num) + positionOffset + 1; // we start at 1 not 0
                         if (_.isEmpty(hypemSong.artist)) {
                             // there are some edge cases where the artist is
                             // not given a.e. http://hypem.com/track/2cvak/
@@ -96,11 +95,11 @@ function loadPopularSongsFromHypem(done) {
     });
 }
 
-function resolvePopularSongsUrl(done) {
+function resolveStreamingUrls(done) {
     async.each(popularHypemSongs, function (song, done) {
         hypemResolver.getById(song.mediaid, function (err, url) {
-            if (isSoundcloudUrl(url)) {
-                resolveSoundcloudProperties(url, function (err, properties) {
+            if (util.isSoundcloudUrl(url)) {
+                fetchSoundcloudProperties(url, function (err, properties) {
                     if (err) {
                         console.error("Could not request soundcloud api with " + url);
                     } else {
@@ -128,7 +127,7 @@ function resolvePopularSongsUrl(done) {
     });
 }
 
-function resolveSoundcloudProperties(soundcloudUrl, callback) {
+function fetchSoundcloudProperties(soundcloudUrl, callback) {
     var options = {
         method: "GET",
         url: "https://api.soundcloud.com/resolve.json?url=" + soundcloudUrl + "&client_id=" + process.env.SOUNDCLOUD_CLIENT_ID
@@ -146,15 +145,8 @@ function resolveSoundcloudProperties(soundcloudUrl, callback) {
     });
 }
 
-function isSoundcloudUrl(songUrl) {
-    if (songUrl !== null &&
-        songUrl !== undefined &&
-        songUrl !== "http://soundcloud.com/not/found" &&
-        songUrl !== "https://soundcloud.com/not/found") {
-        if (_.startsWith(songUrl, "http://soundcloud.com" ||
-                _.startsWith(songUrl, "https://soundcloud.com"))) {
-            return true;
-        }
-    }
-    return false;
+function getPositionOffsetFromLink(link) {
+    var pathname = url.parse(link).pathname; // example: '/playlist/popular/3day/json/1/data.js'
+    var positionOffsetInLink = pathname.split('/')[5]; // example: '1'
+    return 20 * (positionOffsetInLink - 1);
 }
