@@ -11,14 +11,14 @@ exports.isSoundcloudUrl = function (url) {
         url === undefined) {
         return false;
     }
-    if (url === "http://soundcloud.com/not/found" ||
-        url === "https://soundcloud.com/not/found") {
+    if (url === "https://soundcloud.com/not/found" ||
+        url === "http://soundcloud.com/not/found") {
         return false;
     }
-    if (url !== _.startsWith(url, "http://soundcloud.com" ||
-        url !== _.startsWith(url, "https://soundcloud.com")) ) {
-        return false;
+    if (_.startsWith(url, "https://soundcloud.com") ||
+        _.startsWith(url, "http://soundcloud.com")) {
+        return true;
     }
-    return true;
+    return false;
 };
  
