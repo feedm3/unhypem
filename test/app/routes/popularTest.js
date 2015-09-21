@@ -47,7 +47,7 @@ describe('Request the popular songs object', function () {
                     position.should.be.below(51);
                     song.should.include.all.keys(['artist', 'title', 'hypemMediaId', 'hypemLovedCount']);
                     if (util.isSoundcloudUrl(song.streamUrl)) {
-                        song.sould.include.all.keys(['soundcloudUrl', 'soundcloudId', 'waveformUrl']);
+                        song.should.include.all.keys(['soundcloudUrl', 'soundcloudId', 'waveformUrl']);
                     }
                 });
             })
