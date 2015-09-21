@@ -8,6 +8,8 @@ var soundManager,
     soundPlayer;
 
 function Player() {
+    this.ID_PREFIX = "s_";
+
     this._soundManager = soundManager;
     this._soundPlayer = soundPlayer;
     this._isPlaying = false;
@@ -40,9 +42,12 @@ Player.prototype.isPlaying = function () {
 Player.prototype.preloadSong = function (songs) {
     var that = this;
     _.forEach(songs, function (song) {
+        if (!_.isString(song.streamUrl)) {
+            return;
+        }
         that._soundManager.createSound({
             url: song.streamUrl,
-            id: song.hypemMediaId,
+            id: that.ID_PREFIX + song.hypemMediaId,
             onplay: function () {
                 that._isPlaying = true;
                 if (that._callbackOnPlay) {
@@ -88,6 +93,16 @@ Player.prototype.preloadSong = function (songs) {
     });
 };
 
+/**
+ * Check if the given id exists in the player and can be played.
+ *
+ * @param id the id of the song
+ * @returns {boolean} true if song exists and can be played
+ */
+Player.prototype.hasId = function (id) {
+    return !!this._soundManager.getSoundById(this.ID_PREFIX + id);
+};
+
 Player.prototype.play = function (id) {
     // If same ID wants to be played, just pause the song
     if (this._currentPlayId === id) {
@@ -106,7 +121,7 @@ Player.prototype.play = function (id) {
         if (this._soundPlayer) {
             this._soundPlayer.stop();
         }
-        this._soundPlayer = this._soundManager.getSoundById(this._currentPlayId);
+        this._soundPlayer = this._soundManager.getSoundById(this.ID_PREFIX + this._currentPlayId);
         this._soundPlayer.play();
         this._soundPlayer.setVolume(this._volume);
     }
