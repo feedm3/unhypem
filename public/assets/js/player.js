@@ -9,6 +9,7 @@ var soundManager,
 
 function Player() {
     this.ID_PREFIX = "s_";
+    this.READY = false;
 
     this._soundManager = soundManager;
     this._soundPlayer = soundPlayer;
@@ -91,6 +92,7 @@ Player.prototype.preloadSong = function (songs) {
             }
         });
     });
+    that.READY = true;
 };
 
 /**
@@ -103,6 +105,22 @@ Player.prototype.hasId = function (id) {
     return !!this._soundManager.getSoundById(this.ID_PREFIX + id);
 };
 
+/**
+ * Check if the player has been preloaded.
+ * If the player is not preloaded most of the
+ * functions do not work.
+ *
+ * @returns {boolean} true if player has been preloaded
+ */
+Player.prototype.isReady = function () {
+    return this.READY;
+};
+
+/**
+ * Play a song.
+ *
+ * @param id the id of the song
+ */
 Player.prototype.play = function (id) {
     // If same ID wants to be played, just pause the song
     if (this._currentPlayId === id) {

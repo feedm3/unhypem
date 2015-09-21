@@ -20,11 +20,28 @@
         };
 
         this.setCurrentSong = function (song) {
+            _.forIn(currentSong, function (value, key) {
+                // we have to delete every key which is not present
+                // in the new song. otherwise the old keys would remain
+                // because the assign method does not delete them.
+                // example: waveformurl which may not be given
+                if (!_.has(song, key)) {
+                    delete currentSong[key];
+                }
+            });
             _.assign(currentSong, song);
         };
 
         this.preloadSongs = function (songArray) {
             player.preloadSong(songArray);
+        };
+
+        this.hasId = function(id) {
+            return player.hasId(id);
+        };
+
+        this.isReady = function () {
+            return player.isReady();
         };
 
         this.play = function (hypemMediaId) {
