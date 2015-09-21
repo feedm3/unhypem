@@ -22,7 +22,7 @@
                     'background-image': 'url(' + $scope.currentSong.waveformUrl + ')'
                 };
                 $scope.hypemLink = "http://hypem.com/track/" + $scope.currentSong.hypemMediaId;
-                $scope.soundcloudLink = $scope.currentSong.soundcloudUrl;
+                $scope.soundcloudLink = $scope.currentSong.soundcloudUrl; // TODO hide link
             }, true);
 
             $scope.play = function () {

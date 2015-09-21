@@ -13,15 +13,21 @@
             $scope.dateTime = "";
 
             $scope.onClickSelectPosition = function (selectedPosition, $event) {
-                if(!isSoundcloudLogoClicked($event)) {
+                if(!isSoundcloudLogoClicked($event)) { // TODO maybe use better methods like setNextSongAndPlay() and setNextSong() and setPreviousSong()
                     $scope.setSelectedPosition(selectedPosition);
-                    playerService.play($scope.songs[selectedPosition].hypemMediaId);
+                    var selectedId = $scope.songs[$scope.selectedPosition].hypemMediaId;
+                    playerService.play(selectedId);
                 }
             };
 
             $scope.setSelectedPosition = function (selectedPosition) {
-                $scope.selectedPosition = selectedPosition;
-                playerService.setCurrentSong($scope.songs[selectedPosition]);
+                var selectedId = $scope.songs[selectedPosition].hypemMediaId;
+                if (playerService.hasId(selectedId)) {
+                    $scope.selectedPosition = selectedPosition;
+                    playerService.setCurrentSong($scope.songs[selectedPosition]);
+                } else {
+                    $scope.setSelectedPosition(selectedPosition + 1);
+                }
             };
 
             $scope.isSelected = function (selectedPosition) {
