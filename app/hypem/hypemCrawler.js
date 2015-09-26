@@ -104,7 +104,7 @@ function resolveStreamingUrls(done) {
                         console.error("Could not request soundcloud api with " + url);
                     } else {
                         if (properties.stream_url) {
-                            song.streamUrl = properties.stream_url + "?client_id=" + process.env.SOUNDCLOUD_CLIENT_ID;
+                            song.streamUrl = properties.stream_url;
                         }
                         song.soundcloudId = properties.id;
                         song.waveformUrl = properties.waveform_url;
