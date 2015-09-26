@@ -17,6 +17,10 @@ exports.isSoundcloudUrl = function (link) {
         return false;
     }
     var hostName = url.parse(link).hostname;
-    return hostName === "soundcloud.com";
+    if (hostName === "soundcloud.com" ||
+        hostName === "api.soundcloud.com") {
+        return true;
+    }
+    return false;
 };
  
