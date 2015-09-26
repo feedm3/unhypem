@@ -4,21 +4,19 @@
 
 'use strict';
 
-var _ = require('lodash');
+var url = require('url');
 
-exports.isSoundcloudUrl = function (url) {
-    if (url === null ||
-        url === undefined) {
+exports.isSoundcloudUrl = function (link) {
+    if (link === null ||
+        link === undefined ||
+        typeof link !== 'string') {
         return false;
     }
-    if (url === "https://soundcloud.com/not/found" ||
-        url === "http://soundcloud.com/not/found") {
+    if (link === "https://soundcloud.com/not/found" ||
+        link === "http://soundcloud.com/not/found") {
         return false;
     }
-    if (_.startsWith(url, "https://soundcloud.com") ||
-        _.startsWith(url, "http://soundcloud.com")) {
-        return true;
-    }
-    return false;
+    var hostName = url.parse(link).hostname;
+    return hostName === "soundcloud.com";
 };
  
