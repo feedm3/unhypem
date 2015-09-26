@@ -23,6 +23,9 @@ router.get('/:hypemMediaId', function (req, res) {
             }
             var songObject = song.toObject();
             songObject.hypemLovedCount = _.last(songObject.hypemLovedCount).count;
+            if (util.isSoundcloudUrl(song.streamUrl)) {
+                song.streamUrl += "?client_id=" + process.env.SOUNDCLOUD_CLIENT_ID;
+            }
             delete songObject._id;
             delete songObject.__v;
             res.json(songObject);

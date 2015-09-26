@@ -35,21 +35,6 @@ var SongSchema = mongoose.Schema({
     waveformUrl: String
 });
 
-/**
- *
- */
-SongSchema.post('find', function (songs) {
-    _.forEach(songs, function (song) {
-        appendSoundcloudClientId(song);
-    });
-});
-
-SongSchema.post('findOne', function (song) {
-    if (song) {
-        appendSoundcloudClientId(song);
-    }
-});
-
 var Songs = mongoose.model('songs', SongSchema);
 
 module.exports = {

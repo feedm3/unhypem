@@ -7,6 +7,7 @@
 var express = require('express'),
     router = express.Router(),
     _ = require('lodash'),
+    util = require('../util'),
     Charts = require('../model/charts').Charts;
 
 /**
@@ -29,6 +30,9 @@ router.get('/', function (req, res) {
                     var position = songAndPosition.position;
                     var song = songAndPosition.song.toObject();
                     song.hypemLovedCount = _.last(song.hypemLovedCount).count;
+                    if (util.isSoundcloudUrl(song.streamUrl)) {
+                        song.streamUrl += "?client_id=" + process.env.SOUNDCLOUD_CLIENT_ID;
+                    }
                     delete song._id;
                     delete song.__v;
                     popularSongs[position] = song;
