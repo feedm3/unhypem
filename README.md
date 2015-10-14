@@ -6,3 +6,20 @@
 [![Dependency Status](https://david-dm.org/feedm3/unhypem.svg)](https://david-dm.org/feedm3/unhypem)
 
 Unhypem is a site to explore the current charts on [hypem](http://hypem.com/popular).
+
+## Run
+
+- start mongodb server 
+    - 'mongod --dbpath data'
+- if you start unhypem the first time, you want to run the tests to trigger the crawling for the current charts
+    - 'npm test'
+- start unhypem 
+    - 'npm start'
+- visit http://localhost:3000/
+
+## Test
+
+- start mongodb server 
+    - 'mongod --dbpath data'
+- run the tests
+    - 'npm test'
