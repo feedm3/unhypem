@@ -11,7 +11,7 @@ Hear the [hypem charts](http://hypem.com/popular) with the waveform from soundcl
 
 To run your own instance on your local machine follow these steps:
 
-1. Start a mongodb server 
+1. Start a [mongodb](https://www.mongodb.org/downloads#production) server 
 
     `mongod --dbpath data`
     
@@ -31,7 +31,7 @@ Consider using `npm run start-watch-changes` during development to restart the s
 
 ## Test
 
-1. Start mongodb server 
+1. Start [mongodb](https://www.mongodb.org/downloads#production) server 
 
     `mongod --dbpath data`
     
