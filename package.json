@@ -1,6 +1,9 @@
 {
   "name": "Unhypem",
   "version": "0.1.0",
+  "description": "Explore the hypem charts like a pro",
+  "homepage": "https://unhypem.com/",
+  "author": "Fabian Dietenberger <piano.fabian@t-online.de>",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
@@ -8,6 +11,13 @@
     "test": "mocha ./test --recursive",
     "test-watch-changes": "mocha ./test --recursive --watch",
     "test-hypem": "mocha ./test/app/hypem --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:feedm3/unhypem.git"
+  },
+  "bugs": {
+    "url": "https://github.com/feedm3/unhypem/issues"
   },
   "dependencies": {
     "async": "^1.4.2",
