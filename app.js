@@ -1,9 +1,11 @@
 'use strict';
 
 require('dotenv').load();
+require('./app/config/log'); // configure logger
 
 var express = require('express'),
     app = express(),
+    logger = require('winston'),
     mongoose = require('mongoose'),
     lessMiddleware = require('less-middleware'),
     path = require('path'),
