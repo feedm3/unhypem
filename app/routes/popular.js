@@ -18,8 +18,9 @@ var express = require('express'),
  */
 router.get('/', function (req, res) {
     logger.info("Popular route requested");
-    Charts.findOne()
+    Charts.find()
         .sort({timestamp: -1})
+        .limit(1)
         .populate('songs.song')
         .exec(function (err, charts) {
             logger.info("Popular songs found");
@@ -27,9 +28,10 @@ router.get('/', function (req, res) {
                 logger.error("Could not find popular songs in database. " + err);
                 throw err;
             }
-            if (charts) {
+            // TODO fdi refactor
+            if (charts[0]) {
                 var popularSongs = {};
-                _.forEach(charts.songs, function (songAndPosition) {
+                _.forEach(charts[0].songs, function (songAndPosition) {
                     var position = songAndPosition.position;
                     var song = songAndPosition.song.toObject();
                     song.hypemLovedCount = _.last(song.hypemLovedCount).count;
