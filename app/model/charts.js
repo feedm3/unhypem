@@ -16,7 +16,8 @@ var ChartSchema = mongoose.Schema({
     },
     timestamp: {
         type: Date,
-        required: true
+        required: true,
+        index: true
     },
     songs: [{
         position: Number,
