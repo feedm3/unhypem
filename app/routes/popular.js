@@ -6,6 +6,7 @@
 
 var express = require('express'),
     router = express.Router(),
+    logger = require('winston'),
     _ = require('lodash'),
     util = require('../util'),
     Charts = require('../model/charts').Charts;
@@ -16,12 +17,14 @@ var express = require('express'),
  * the header field 'timestamp'.
  */
 router.get('/', function (req, res) {
+    logger.info("Popular route requested");
     Charts.findOne()
         .sort({timestamp: -1})
         .populate('songs.song')
         .exec(function (err, charts) {
+            logger.info("Popular songs found");
             if (err) {
-                console.error("Could not find popular songs in database. " + err);
+                logger.error("Could not find popular songs in database. " + err);
                 throw err;
             }
             if (charts) {
@@ -39,6 +42,7 @@ router.get('/', function (req, res) {
                 });
 
                 res.header('timestamp', charts.timestamp);
+                logger.info("Popular songs sent");
                 res.json(popularSongs);
             } else {
                 res.sendStatus(404);
