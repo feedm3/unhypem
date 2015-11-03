@@ -6,7 +6,7 @@
                 <span ng-bind="currentSong.artist"></span>
                 <div class="volumebar-container">
                     <div class="volumebar-icon-minus"></div>
-                    <progressbar id="volumebar" class="volumebar" value="volumeInPercent" ng-click="onVolumebarClick($event)"></progressbar>
+                    <uib-progressbar id="volumebar" class="volumebar" value="volumeInPercent" ng-click="onVolumebarClick($event)"></uib-progressbar>
                     <div class="volumebar-icon-plus"></div>
                 </div>
             </div>
@@ -20,7 +20,7 @@
             </div>
             <div class="player-waveform-container" ng-click="onProgressbarClick($event)">
                 <div class="player-waveform" ng-style="waveformStyle"></div>
-                <progressbar id="progressbar" class="player-progressbar" value="progressInPercent" max="100" type="info"></progressbar>
+                <uib-progressbar id="progressbar" class="player-progressbar" value="progressInPercent" max="100" type="info"></uib-progressbar>
             </div>
             <div class="player-control-one">
                 <button type="button" class="btn button button-forward no-select" ng-click="forward()">
