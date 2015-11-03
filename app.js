@@ -5,9 +5,9 @@ require('./app/config/log'); // configure logger
 
 var express = require('express'),
     app = express(),
-    logger = require('winston'),
     mongoose = require('mongoose'),
     lessMiddleware = require('less-middleware'),
+    favicon = require('serve-favicon'),
     path = require('path'),
     morgan = require('morgan'),
     cookieParser = require('cookie-parser'),
@@ -21,6 +21,7 @@ app.use(morgan('dev')); // TODO put this in .env
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(favicon(__dirname + '/public/assets/img/favicon.ico'));
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
