@@ -28,6 +28,7 @@ winston.add(winston.transports.Console, {
     handleExceptions: true
 });
 if (process.env.LOGGLY_ENABLED === "true") {
+    console.log("Add loggly to the global logger");
     winston.add(winston.transports.Loggly, {
         token: "1c96a7e3-b77e-4fd2-b909-9cec22ad513d",
         subdomain: "feedme",
