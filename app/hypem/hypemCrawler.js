@@ -7,6 +7,7 @@
 var request = require('request'),
     async = require('async'),
     url = require('url'),
+    logger = require('winston'),
     _ = require('lodash'),
     util = require('../util'),
     hypemResolver = require('hypem-resolver');
@@ -44,7 +45,7 @@ var HypemCrawler = function () {
             }
         ], function (err) {
             if (err) {
-                console.error("Could not crawl hypem songs");
+                logger.error("Could not crawl hypem songs");
                 callback(err);
                 return;
             }
@@ -87,7 +88,7 @@ function fetchAllPopularSongs(done) {
         });
     }, function (err) {
         if (err) {
-            console.error("Error parsing popular songs json form hypem. " + err);
+            logger.error("Error parsing popular songs json form hypem. " + err);
             done(err);
             return;
         }
@@ -101,7 +102,7 @@ function resolveStreamingUrls(done) {
             if (util.isSoundcloudUrl(url)) {
                 fetchSoundcloudProperties(url, function (err, properties) {
                     if (err) {
-                        console.error("Could not request soundcloud api with " + url);
+                        logger.error("Could not request soundcloud api with " + url);
                     } else {
                         if (properties.stream_url) {
                             song.streamUrl = properties.stream_url;
@@ -119,7 +120,7 @@ function resolveStreamingUrls(done) {
         });
     }, function (err) {
         if (err) {
-            console.error("Error requesting soundcloud api for popular songs. " + err);
+            logger.error("Error requesting soundcloud api for popular songs. " + err);
             done(err);
             return;
         }

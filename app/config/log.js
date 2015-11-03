@@ -23,12 +23,11 @@ winston.add(winston.transports.Console, {
     'timestamp': function () {
         return moment().format('dd, DD MMM YYYY - HH:mm:ss:SSS');
     },
-    'level': 'info',
+    'level': 'debug',
     'colorize': true,
     handleExceptions: true
 });
 if (process.env.LOGGLY_ENABLED === "true") {
-    console.log("loggly enabled");
     winston.add(winston.transports.Loggly, {
         token: "1c96a7e3-b77e-4fd2-b909-9cec22ad513d",
         subdomain: "feedme",
@@ -36,7 +35,5 @@ if (process.env.LOGGLY_ENABLED === "true") {
         json:true
     });
 }
-
-winston.info('Logger configured');
 
 module.exports = winston;

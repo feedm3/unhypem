@@ -9,7 +9,7 @@ var express = require('express'),
     lessMiddleware = require('less-middleware'),
     favicon = require('serve-favicon'),
     path = require('path'),
-    morgan = require('morgan'),
+    logger = require('winston'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     hypemService = require('./app/hypem/hypemService');
@@ -17,7 +17,6 @@ var express = require('express'),
 var popularRoute = require('./app/routes/popular'),
     songsRoute = require('./app/routes/songs');
 
-app.use(morgan('dev')); // TODO put this in .env
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -33,7 +32,7 @@ hypemService.start();
  */
 mongoose.connect('mongodb://' + process.env.MONGOLAB_URI);
 var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'Could not connect to the database'));
+db.on('error', logger.error.bind(logger, 'Could not connect to the database'));
 
 /**
  * Routes
@@ -56,7 +55,7 @@ app.use(function(req, res, next) {
  */
 if (process.env.NODE_ENV === 'development') {
     app.use(function (err, req, res, next) {
-        console.error(err.status + " " + err.message);
+        logger.error(err.status + " " + err.message);
         res.status(err.status || 500);
         res.json(err);
     });
@@ -68,7 +67,7 @@ if (process.env.NODE_ENV === 'development') {
  * Will only send the status code back to the user
  */
 app.use(function (err, req, res, next) {
-    console.error(err.status + " " + err.message);
+    logger.error(err.status + " " + err.message);
     res.sendStatus(err.status || 500);
 });
 

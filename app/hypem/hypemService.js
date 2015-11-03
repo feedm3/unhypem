@@ -10,6 +10,7 @@ var hypemCrawler = require('./hypemCrawler'),
     CronJob = require('cron').CronJob,
     Songs = require('../model/songs').Songs,
     Charts = require('../model/charts').Charts,
+    logger = require('winston'),
     async = require('async'),
     _ = require('lodash'),
     moment = require('moment');
@@ -19,7 +20,7 @@ var job;
 exports.start = function () {
     // seconds minutes hours dayOfMonth months dayOfWeek
     job = new CronJob('0 */5 * * * *', function () {
-        console.log("Start updating charts");
+        logger.info("Start updating charts");
         crawlAndSavePopularSongs();
     });
     job.start();
@@ -42,7 +43,7 @@ function crawlAndSavePopularSongs(done) {
 
             Songs.findOne({hypemMediaId: songRaw.mediaid}, function (err, song) {
                 if (err) {
-                    console.error("Error finding song in database. " + err);
+                    logger.error("Error finding song in database. " + err);
                     throw err;
                 }
                 if (song) {
@@ -52,8 +53,8 @@ function crawlAndSavePopularSongs(done) {
                     });
                     song.save(function (err, song) {
                         if (err) {
-                            console.error("Could not update song in database. " + err);
-                            console.error(song);
+                            logger.error("Could not update song in database. " + err);
+                            logger.error(song);
                             throw err;
                         }
                         popularSongs.push({
@@ -79,8 +80,8 @@ function crawlAndSavePopularSongs(done) {
                     });
                     songModel.save(function (err, song) {
                         if (err) {
-                            console.error("Could not save song to database. " + err);
-                            console.error(song);
+                            logger.error("Could not save song to database. " + err);
+                            logger.error(song);
                             throw err;
                         }
                         popularSongs.push({
@@ -93,7 +94,7 @@ function crawlAndSavePopularSongs(done) {
             });
         }, function (err) {
             if (err) {
-                console.error("Error saving popular songs. " + err);
+                logger.error("Error saving popular songs. " + err);
                 throw err;
             }
             var charts = new Charts({
@@ -105,10 +106,10 @@ function crawlAndSavePopularSongs(done) {
                     done(err);
                 }
                 if (err) {
-                    console.error("Error saving charts. " + err);
+                    logger.error("Error saving charts. " + err);
                     throw err;
                 }
-                console.log("Charts saved");
+                logger.info("Charts saved");
             });
         });
     });
