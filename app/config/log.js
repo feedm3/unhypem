@@ -27,12 +27,15 @@ winston.add(winston.transports.Console, {
     'colorize': true,
     handleExceptions: true
 });
-winston.add(winston.transports.Loggly, {
-    token: "1c96a7e3-b77e-4fd2-b909-9cec22ad513d",
-    subdomain: "feedme",
-    tags: ["Winston-NodeJS"],
-    json:true
-});
+if (process.env.LOGGLY_ENABLED === "true") {
+    console.log("loggly enabled");
+    winston.add(winston.transports.Loggly, {
+        token: "1c96a7e3-b77e-4fd2-b909-9cec22ad513d",
+        subdomain: "feedme",
+        tags: ["Winston-NodeJS"],
+        json:true
+    });
+}
 
 winston.info('Logger configured');
 
