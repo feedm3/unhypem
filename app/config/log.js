@@ -23,7 +23,8 @@ winston.add(winston.transports.Console, {
         return moment().format('dd, DD MMM YYYY - HH:mm:ss:SSS');
     },
     'level': 'info',
-    'colorize':true
+    'colorize':true,
+    handleExceptions: true
 });
 
 winston.info('Logger configured');
