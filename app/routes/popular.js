@@ -43,7 +43,7 @@ router.get('/', function (req, res) {
                     popularSongs[position] = song;
                 });
 
-                res.header('timestamp', charts.timestamp);
+                res.header('timestamp', charts[0].timestamp);
                 logger.info("Popular songs sent");
                 res.json(popularSongs);
             } else {
