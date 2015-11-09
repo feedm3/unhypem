@@ -33,13 +33,13 @@
     "mongoose": "^4.2.3",
     "request": "~2.65.0",
     "serve-favicon": "^2.3.0",
-    "winston": "^2.0.0",
+    "winston": "^2.1.0",
     "winston-loggly": "^1.2.0"
   },
   "devDependencies": {
-    "chai": "^3.4.0",
+    "chai": "^3.4.1",
     "mocha": "^2.3.3",
-    "nodemon": "1.8.0",
+    "nodemon": "1.8.1",
     "supertest": "^1.1.0"
   },
   "engines": {
