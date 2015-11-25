@@ -29,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 /**
  * Database setup
  */
-var db = require('./app/config/db-config');
+var db = require('./app/config/db');
 var migration =require('./app/config/migration');
 migration.up(db.knex).then(function () {
     console.log("Database is ready to use");
