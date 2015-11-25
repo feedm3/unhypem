@@ -27,6 +27,7 @@ var up = function (knex) {
                 return knex.schema.createTable('charts', function (table) {
                     table.increments('id').primary();
                     table.timestamp('time', 100);
+                    table.enu('type', ['popular', 'remix-only', 'no-remix']).defaultTo('popular');
                 });
             }
         });
