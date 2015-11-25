@@ -5,7 +5,6 @@ require('./app/config/log'); // configure logger
 
 var express = require('express'),
     app = express(),
-    mongoose = require('mongoose'),
     lessMiddleware = require('less-middleware'),
     favicon = require('serve-favicon'),
     path = require('path'),
@@ -24,15 +23,27 @@ app.use(favicon(__dirname + '/public/assets/img/favicon.ico'));
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-hypemService.start();
+//hypemService.start();
 //hypemService.startNow();
 
 /**
  * Database setup
  */
-mongoose.connect('mongodb://' + process.env.MONGOLAB_URI);
-var db = mongoose.connection;
-db.on('error', logger.error.bind(logger, 'Could not connect to the database'));
+var db = require('./app/config/db-config').db;
+require('./app/config/db-config').createTablesIfNotExist().then(function () {
+    console.log("DB created");
+
+    var Songs = db.Model.extend({
+        tableName: 'songs'
+    });
+    Songs.collection().fetch().then(function (collection) {
+        console.log(collection.toJSON());
+    });
+}).catch(function (err) {
+    console.error("No connection to database or error creating tables");
+    console.error(err);
+});
+
 
 /**
  * Routes
