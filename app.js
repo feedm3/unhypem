@@ -29,9 +29,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 /**
  * Database setup
  */
-var db = require('./app/config/db-config').db;
-require('./app/config/db-config').createTablesIfNotExist().then(function () {
-    console.log("DB created");
+var db = require('./app/config/db-config');
+var migration =require('./app/config/migration');
+migration.up(db.knex).then(function () {
+    console.log("Database is ready to use");
 
     var Songs = db.Model.extend({
         tableName: 'songs'
