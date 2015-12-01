@@ -23,26 +23,17 @@ app.use(favicon(__dirname + '/public/assets/img/favicon.ico'));
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-//hypemService.start();
-//hypemService.startNow();
-
 /**
  * Database setup
  */
 var db = require('./app/config/db');
 var migration =require('./app/config/migration');
 migration.up(db.knex).then(function () {
-    console.log("Database is ready to use");
-
-    var Songs = db.Model.extend({
-        tableName: 'songs'
-    });
-    Songs.collection().fetch().then(function (collection) {
-        console.log(collection.toJSON());
-    });
+    logger.info("Database is ready to use");
+    hypemService.start();
+    //hypemService.startNow();
 }).catch(function (err) {
-    console.error("No connection to database or error creating tables");
-    console.error(err);
+    logger.error("No connection to database or error creating tables. " + err);
 });
 
 

@@ -4,37 +4,25 @@
 
 'use strict';
 
-var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+var bookshelf = require('../config/db');
 
-var ChartSchema = mongoose.Schema({
-    type: {
-        type: String,
-        required: true,
-        index: true,
-        default: 'popular'
+var ChartsModel = bookshelf.Model.extend({
+    tableName: 'charts',
+    songs: function() {
+        return this.belongsToMany('Songs').withPivot(['position']);
     },
-    timestamp: {
-        type: Date,
-        required: true,
-        index: true
-    },
-    songs: [{
-        position: Number,
-        song: {
-            type: Schema.Types.ObjectId,
-            ref: 'songs'
-        }
-    }]
+
+    /**
+     * Get the latest chart
+     */
+    latest: function () {
+        return this.query(function (qb) {
+            qb.orderBy('timestamp', 'DESC').limit(1);
+        });
+    }
 });
 
-var Charts = mongoose.model('charts', ChartSchema);
-
-Charts.schema.path('type').validate(function (value) {
-    return /popular|remix-only|no-remix/.test(value);
-}, 'Invalid input. Type must be \'popular\', \'remix-only\' or \'no-remix\'');
-
-module.exports = {
-    Charts: Charts
-};
- 
+/**
+ * Export model and register to bookshelf
+ */
+module.exports = bookshelf.model('Charts', ChartsModel);

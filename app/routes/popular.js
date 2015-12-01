@@ -7,49 +7,48 @@
 var express = require('express'),
     router = express.Router(),
     logger = require('winston'),
-    _ = require('lodash'),
     util = require('../util'),
-    Charts = require('../model/charts').Charts;
+    _ = require('lodash'),
+    ChartsModel = require('../model/charts');
 
 /**
  * GET the latest popular songs.
- * The timestamp of the popular songs gets written into
- * the header field 'timestamp'.
  */
 router.get('/', function (req, res) {
     logger.info("Popular route requested");
-    Charts.find()
-        .sort({timestamp: -1})
-        .limit(1)
-        .populate('songs.song')
-        .exec(function (err, charts) {
-            logger.info("Popular songs found");
-            if (err) {
-                logger.error("Could not find popular songs in database. " + err);
-                throw err;
-            }
-            // TODO fdi refactor
-            if (charts[0]) {
-                var popularSongs = {};
-                _.forEach(charts[0].songs, function (songAndPosition) {
-                    var position = songAndPosition.position;
-                    var song = songAndPosition.song.toObject();
-                    song.hypemLovedCount = _.last(song.hypemLovedCount).count;
-                    if (util.isSoundcloudUrl(song.streamUrl)) {
-                        song.streamUrl += "?client_id=" + process.env.SOUNDCLOUD_CLIENT_ID;
-                    }
-                    delete song._id;
-                    delete song.__v;
-                    popularSongs[position] = song;
-                });
+    ChartsModel
+        .forge()
+        .latest()
+        .fetch({
+            withRelated: [
+                {songs: function(query) {
+                    query.orderBy('position');
+                }}
+            ]
+        })
+        .then(function (chart) {
+            var result = chart.toJSON();
+            _.forEach(result.songs, function (song) {
+                song.position = song._pivot_position;
+                // TODO add soundcloud api
+                appendSoundcloudClientId(song);
+                delete song._pivot_chart_id;
+                delete song._pivot_song_id;
+                delete song._pivot_position;
+            });
 
-                res.header('timestamp', charts[0].timestamp);
-                logger.info("Popular songs sent");
-                res.json(popularSongs);
-            } else {
-                res.sendStatus(404);
-            }
-        });
+            delete result.id;
+
+            res.json(result);
+        }).catch(function (err) {
+            throw err;
+    });
 });
 
 module.exports = router;
+
+function appendSoundcloudClientId(song) { // Todo put in model
+    if (util.isSoundcloudUrl(song.streamUrl)) {
+        song.streamUrl += "?client_id=" + process.env.SOUNDCLOUD_CLIENT_ID;
+    }
+}

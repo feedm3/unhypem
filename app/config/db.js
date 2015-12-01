@@ -6,13 +6,9 @@
 
 var knex = require('knex')({
     client: 'pg',
-    connection: {
-        host: 'localhost',
-        database: 'unhypem',
-        user: 'postgres',
-        password: 'admin'
-    }
+    connection: process.env.DATABASE_URL
 });
 
 var db = require('bookshelf')(knex);
+db.plugin('registry');
 module.exports = db;
