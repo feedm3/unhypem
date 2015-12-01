@@ -31,7 +31,7 @@ describe('Request the popular songs object', function () {
         request(app)
             .get('/popular')
             .expect(function (res) {
-                var songs = res.body;
+                var songs = res.body.songs;
                 _.keysIn(songs).should.have.length(50);
             })
             .end(done);
@@ -41,10 +41,10 @@ describe('Request the popular songs object', function () {
         request(app)
             .get('/popular')
             .expect(function (res) {
-                var songs = res.body;
-                _.forEach(songs, function (song, position) {
-                    position.should.be.above(0);
-                    position.should.be.below(51);
+                var songs = res.body.songs;
+                _.forEach(songs, function (song) {
+                    song.position.should.be.above(0);
+                    song.position.should.be.below(51);
                     song.should.include.all.keys(['artist', 'title', 'hypemMediaId', 'hypemLovedCount']);
                     if (util.isSoundcloudUrl(song.streamUrl)) {
                         song.should.include.all.keys(['soundcloudUrl', 'soundcloudId', 'waveformUrl']);
@@ -54,10 +54,12 @@ describe('Request the popular songs object', function () {
             .end(done);
     });
 
-    it('should contain the timestamp in the header', function (done) {
+    it('should contain the timestamp', function (done) {
         request(app)
             .get('/popular')
-            .expect('timestamp', /\d{2}:\d{2}:\d{2}/)
+            .expect(function (res) {
+                res.body.timestamp.should.be.an('string');
+            })
             .end(done);
     });
 });

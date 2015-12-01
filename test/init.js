@@ -4,22 +4,16 @@
 
 'use strict';
 
-var db = require('../app/config/db'),
-    migration =require('../app/config/migration'),
-    hypemService = require('../app/hypem/hypemService');
+var hypemService = require('../app/hypem/hypemService');
 
 before(function (done) {
     this.timeout(10000);
 
-    migration.up(db.knex).then(function () {
-        hypemService.startNow(function (err) {
-                    if (err) {
-                        throw err;
-                    }
-            console.log("Setup done");
-            done();
-        });
-    }).catch(function (err) {
-        throw err;
+    hypemService.startNow(function (err) {
+        if (err) {
+            throw err;
+        }
+        console.log("Setup done");
+        done();
     });
 });
