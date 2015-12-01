@@ -83,12 +83,10 @@ function crawlAndSavePopularSongs(done) {
                 logger.error("Error saving popular songs. " + err);
                 throw err;
             }
-            ChartsModel
-                .forge()
-                .where({
-                    timestamp: moment(),
-                    type: 'popular'
-                })
+            new ChartsModel({
+                timestamp: moment(),
+                type: 'popular'
+            })
                 .save()
                 .then(function (chartEntry) {
                     var chartId = chartEntry.get('id');
