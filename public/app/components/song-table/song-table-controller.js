@@ -103,9 +103,9 @@
             });
 
             Songs.popular()
-                .success(function (songs, status, headers, config) {
-                    $scope.songs = _.values(songs); // TODO reihenfolge nicht sichergestellt
-                    $scope.setDate(headers("timestamp"));
+                .success(function (chart, status, headers, config) {
+                    $scope.songs = _.values(chart.songs); // TODO reihenfolge nicht sichergestellt
+                    $scope.setDate(chart.timestamp);
                     playerService.preloadSongs($scope.songs);
                     $scope.setSelectedPosition(0);
                 });

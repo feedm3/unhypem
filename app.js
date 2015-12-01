@@ -5,7 +5,6 @@ require('./app/config/log'); // configure logger
 
 var express = require('express'),
     app = express(),
-    mongoose = require('mongoose'),
     lessMiddleware = require('less-middleware'),
     favicon = require('serve-favicon'),
     path = require('path'),
@@ -24,15 +23,19 @@ app.use(favicon(__dirname + '/public/assets/img/favicon.ico'));
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-hypemService.start();
-//hypemService.startNow();
-
 /**
  * Database setup
  */
-mongoose.connect('mongodb://' + process.env.MONGOLAB_URI);
-var db = mongoose.connection;
-db.on('error', logger.error.bind(logger, 'Could not connect to the database'));
+var db = require('./app/config/db');
+var migration =require('./app/config/migration');
+migration.up(db.knex).then(function () {
+    logger.info("Database is ready to use");
+    hypemService.start();
+    //hypemService.startNow();
+}).catch(function (err) {
+    logger.error("No connection to database or error creating tables. " + err);
+});
+
 
 /**
  * Routes
