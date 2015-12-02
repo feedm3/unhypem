@@ -43,8 +43,10 @@ describe('Request the popular songs object', function () {
             .expect(function (res) {
                 var songs = res.body.songs;
                 _.forEach(songs, function (song) {
-                    song.position.should.be.above(0);
-                    song.position.should.be.below(51);
+                    if (song.position === 0) {
+                        console.log(song);
+                    }
+                    song.position.should.be.within(1, 50);
                     song.should.include.all.keys(['artist', 'title', 'hypemMediaId', 'hypemLovedCount']);
                     if (util.isSoundcloudUrl(song.streamUrl)) {
                         song.should.include.all.keys(['soundcloudUrl', 'soundcloudId', 'waveformUrl']);

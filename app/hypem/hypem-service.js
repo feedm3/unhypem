@@ -23,7 +23,7 @@ exports.start = function () {
     job = new CronJob('0 */5 * * * *', function () {
         logger.info("Start updating charts");
         crawlAndSavePopularSongs(function () {
-            logger.info("Songs updated");
+            logger.info("Charts updated");
         });
     });
     job.start();
@@ -40,9 +40,9 @@ exports.stop = function () {
 function crawlAndSavePopularSongs(done) {
     hypemCrawler.getAllPopularSongs(function (err, songs) {
         var popularSongs = [];
-        async.each(songs, function (songRaw, done) {
+        async.forEach(songs, function (songRaw, done) {
 
-            var position = _.findKey(songs, songRaw);
+            var position = songRaw.position;
 
             new SongsModel().where('hypemMediaId', songRaw.mediaid)
                 .fetch()

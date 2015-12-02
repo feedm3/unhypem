@@ -21,6 +21,7 @@ router.get('/:hypemMediaId', function (req, res) {
         .then(function (song) {
             if (!song) {
                 res.sendStatus(404);
+                return;
             }
 
             if (util.isSoundcloudUrl(song.streamUrl)) {
