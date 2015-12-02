@@ -6,10 +6,10 @@
 
 'use strict';
 
-var hypemCrawler = require('./hypemCrawler'),
+var hypemCrawler = require('./hypem-crawler'),
     CronJob = require('cron').CronJob,
-    SongsModel = require('../model/songs'),
-    ChartsModel = require('../model/charts'),
+    SongsModel = require('../model/songs-model'),
+    ChartsModel = require('../model/charts-model'),
     ChartSongsModel = require('../model/chart-songs-model'),
     logger = require('winston'),
     async = require('async'),
@@ -22,7 +22,9 @@ exports.start = function () {
     // seconds minutes hours dayOfMonth months dayOfWeek
     job = new CronJob('0 */5 * * * *', function () {
         logger.info("Start updating charts");
-        crawlAndSavePopularSongs();
+        crawlAndSavePopularSongs(function () {
+            logger.info("Charts updated");
+        });
     });
     job.start();
 };
@@ -38,9 +40,9 @@ exports.stop = function () {
 function crawlAndSavePopularSongs(done) {
     hypemCrawler.getAllPopularSongs(function (err, songs) {
         var popularSongs = [];
-        async.each(songs, function (songRaw, done) {
+        async.forEach(songs, function (songRaw, done) {
 
-            var position = _.findKey(songs, songRaw);
+            var position = songRaw.position;
 
             new SongsModel().where('hypemMediaId', songRaw.mediaid)
                 .fetch()
