@@ -11,7 +11,7 @@ var express = require('express'),
     logger = require('winston'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
-    hypemService = require('./app/hypem/hypemService');
+    hypemService = require('./app/hypem/hypem-service');
 
 var popularRoute = require('./app/routes/popular'),
     songsRoute = require('./app/routes/songs');

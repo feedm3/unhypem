@@ -8,7 +8,7 @@
 
 require('chai').should();
 
-var hypemCrawler = require('../../../app/hypem/hypemCrawler'),
+var hypemCrawler = require('../../../app/hypem/hypem-crawler'),
     _ = require('lodash'),
     util = require('../../../app/util');
 

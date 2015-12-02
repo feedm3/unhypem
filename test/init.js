@@ -4,7 +4,7 @@
 
 'use strict';
 
-var hypemService = require('../app/hypem/hypemService');
+var hypemService = require('../app/hypem/hypem-service');
 
 before(function (done) {
     this.timeout(10000);

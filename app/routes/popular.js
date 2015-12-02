@@ -9,7 +9,7 @@ var express = require('express'),
     logger = require('winston'),
     util = require('../util'),
     _ = require('lodash'),
-    ChartsModel = require('../model/charts');
+    ChartsModel = require('../model/charts-model');
 
 /**
  * GET the latest popular songs.

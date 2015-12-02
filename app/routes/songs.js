@@ -7,7 +7,7 @@
 var express = require('express'),
     router = express.Router(),
     util = require('../util'),
-    SongsModel = require('../model/songs');
+    SongsModel = require('../model/songs-model');
 
 router.get('/:hypemMediaId', function (req, res) {
     var hypemMediaId = req.params.hypemMediaId;
