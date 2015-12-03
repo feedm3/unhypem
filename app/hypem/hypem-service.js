@@ -18,23 +18,24 @@ var hypemCrawler = require('./hypem-crawler'),
 
 var job;
 
-exports.start = function () {
-    // seconds minutes hours dayOfMonth months dayOfWeek
-    job = new CronJob('0 */5 * * * *', function () {
-        logger.info("Start updating charts");
-        crawlAndSavePopularSongs(function () {
-            logger.info("Charts updated");
-        });
-    });
-    job.start();
-};
-
-exports.startNow = function (done) {
-    crawlAndSavePopularSongs(done);
-};
-
-exports.stop = function () {
-    job.stop();
+module.exports = {
+    start: function () {
+        // cron format:
+        // seconds minutes hours dayOfMonth months dayOfWeek
+        job = new CronJob('0 */5 * * * *', function () {
+            logger.info("Start updating charts");
+            crawlAndSavePopularSongs(function () {
+                logger.info("Charts updated");
+            });
+        }, null, null, null, null, true); // start on init
+        job.start();
+    },
+    startNow: function (done) {
+        crawlAndSavePopularSongs(done);
+    },
+    stop: function () {
+        job.stop();
+    }
 };
 
 function crawlAndSavePopularSongs(done) {
