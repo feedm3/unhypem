@@ -4,7 +4,6 @@
 
 'use strict';
 
-
 /**
  * This class is used to crawl all current popular songs from hypem
  * and extend the songs data with their streaming and soundcloud url.

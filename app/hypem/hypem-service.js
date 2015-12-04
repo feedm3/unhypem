@@ -25,7 +25,7 @@ module.exports = {
         job = new CronJob('0 */5 * * * *', function () {
             logger.info("Start updating charts");
             crawlAndSavePopularSongs(function () {
-                logger.info("Charts updated");
+                logger.info("Finished updating charts");
             });
         }, null, null, null, null, true); // start on init
         job.start();
