@@ -11,7 +11,8 @@ var express = require('express'),
     logger = require('winston'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
-    hypemService = require('./app/hypem/hypem-service');
+    hypemService = require('./app/hypem/hypem-service'),
+    databaseManager = require('./app/hypem/database-manager');
 
 var popularRoute = require('./app/routes/popular'),
     songsRoute = require('./app/routes/songs');
@@ -31,7 +32,7 @@ var migration =require('./app/config/migration');
 migration.up(db.knex).then(function () {
     logger.info("Database is ready to use");
     hypemService.start();
-    //hypemService.startNow();
+    databaseManager.deleteChartsHistoryEveryHour();
 }).catch(function (err) {
     logger.error("No connection to database or error creating tables. " + err);
 });
