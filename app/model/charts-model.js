@@ -16,8 +16,8 @@ var ChartsModel = bookshelf.Model.extend({
      * Get the latest chart
      */
     latest: function () {
-        return this.query(function (qb) {
-            qb.orderBy('timestamp', 'DESC').limit(1);
+        return this.query(function (queryBuilder) {
+            queryBuilder.orderBy('timestamp', 'DESC').limit(1);
         });
     }
 });

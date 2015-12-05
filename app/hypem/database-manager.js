@@ -5,7 +5,7 @@
 'use strict';
 
 var CronJob = require('cron').CronJob,
-    ChartsSongsModel = require('../model/chart-songs-model'),
+    ChartsSongsModel = require('../model/charts-songs-model'),
     ChartsModel = require('../model/charts-model'),
     logger = require('winston');
 
