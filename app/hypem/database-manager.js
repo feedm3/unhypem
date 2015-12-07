@@ -37,7 +37,6 @@ var deleteChartsHistory = function (numberOfChartsToKeep, done) {
                             done();
                         });
                 });
-            console.log(chart);
         });
 };
 
