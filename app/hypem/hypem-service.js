@@ -49,12 +49,14 @@ function crawlAndSavePopularSongs(done) {
                 .fetch()
                 .then(function (song) {
                     if (song) {
-                        song.set('hypemLovedCount', songRaw.loved_count);
                         popularSongs.push({
                             position: position,
                             songId: song.get('id')
                         });
-                        done();
+                        song.save({hypemLovedCount: songRaw.loved_count})
+                            .then(function () {
+                                done();
+                            });
                     } else {
                         new SongsModel({
                             artist: songRaw.artist,
