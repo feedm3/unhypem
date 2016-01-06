@@ -8,6 +8,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "start-watch-changes": "nodemon ./bin/www --ignore public/ --ignore test/",
+    "start-front": "webpack-dev-server",
+    "build-front": "webpack --progress --colors",
     "test": "mocha ./test --recursive",
     "test-watch-changes": "mocha ./test --recursive --watch",
     "test-hypem": "mocha ./test/app/hypem --recursive"
