@@ -11,32 +11,32 @@ Hear the [hypem charts](http://hypem.com/popular) with the waveform from soundcl
 
 To run your own instance on your local machine follow these steps:
 
-1. Start a [mongodb](https://www.mongodb.org/downloads#production) server 
-
-    `mongod --dbpath data`
+1. Start a postgres server
     
 2. If you start unhypem the first time you want to run the tests first. This triggers the crawler and pushes the current
 charts into the db.
 
     `npm test`
 
-3. Start unhypem and visit http://localhost:3000/
+3. Build the frontend
+
+    `npm run build-front`
+
+4. Start unhypem server and visit http://localhost:3000/
 
     `npm start`
 
-For further starts you can skip the second step. There is also a starting script for the mongo server in the 
-[scripts directory](script). 
+For further starts you can skip the second step.
 
-Consider using `npm run start-watch-changes` during development to restart the server every time the server-side code changes.
+Consider using `npm run start-watch-changes` during backend development and `npm run start-front`
+during development for instant reloading.
 
 ## Test
 
-1. Start [mongodb](https://www.mongodb.org/downloads#production) server 
-
-    `mongod --dbpath data`
+1. Start postgres server
     
 2. Run the tests
 
     `npm test`
         
-Consider using `npm run test-watch-changes` during development to execute the tests every time to code inside the test directory changes.
+Consider using `npm run test-watch-changes` during backend development to execute the tests every time to code inside the test directory changes.
