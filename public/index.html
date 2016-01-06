@@ -13,25 +13,10 @@
     <link rel="stylesheet" href="assets/css/player.css"/>
     <link rel="stylesheet" href="assets/css/buttons.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-route.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/soundmanager2/2.97a.20150601/script/soundmanager2-nodebug-jsmin.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="assets/js/player.js"></script>
-
-    <script src="app/components/app.js"></script>
-    <script src="app/components/navigation/navigation-bar-directive.js"></script>
-    <script src="app/components/welcome-header/welcome-header-directive.js"></script>
-    <script src="app/components/imprint/imprint-directive.js"></script>
-    <script src="app/components/player/player-directive.js"></script>
-    <script src="app/components/player/player-controller.js"></script>
-    <script src="app/components/song-table/song-table-directive.js"></script>
-    <script src="app/components/song-table/song-table-controller.js"></script>
-    <script src="app/shared/service/player-service.js"></script>
-    <script src="app/shared/service/songs.js"></script>
 
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -45,12 +30,7 @@
     </script>
 </head>
 <body>
-    <navigation-bar></navigation-bar>
-    <welcome-header></welcome-header>
-    <ng-view></ng-view>
-
-    <div class="bottom">
-        <player></player>
-    </div>
+    <div id="main"></div>
+    <script src="bundle.js"></script>
 </body>
 </html>
