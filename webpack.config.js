@@ -3,6 +3,7 @@
  */
 
 var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
     entry: './public/app/main.js',
@@ -16,6 +17,9 @@ module.exports = {
         port: 3333,
         contentBase: 'public'
     },
+    //plugins: [ // uncomment to minimize
+    //    new webpack.optimize.UglifyJsPlugin({minimize: true})
+    //],
     module: {
         loaders: [
             {
