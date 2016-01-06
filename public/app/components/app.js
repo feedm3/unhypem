@@ -2,22 +2,10 @@
  * @author Fabian Dietenberger
  */
 
-'use strict';
+import React from 'react';
 
-(function(){
-    // only new module must be injected as dependency
-    angular.module('unhypemApp', ['player-service', 'ui.bootstrap', 'ngRoute'])
-        .config(['$routeProvider', function($routeProvider){
-            $routeProvider
-                .when('/', {
-                    templateUrl: 'app/components/song-table/song-table.html',
-                    controller: 'SongController'
-                })
-                .when('/imprint', {
-                    templateUrl: 'app/components/imprint/imprint.html'
-                })
-                .otherwise({
-                    redirectTo: '/'
-                });
-        }]);
-})();
+export default () => {
+    return (
+        <h1>Hi fabi</h1>
+    );
+};
