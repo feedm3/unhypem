@@ -7,14 +7,15 @@
 require('chai').should();
 require('dotenv').load();
 
+import ChartsModel from '../../../app/model/charts-model';
+
 var databaseManager = require('../../../app/hypem/database-manager'),
-    hypemService = require('../../../app/hypem/hypem-service'),
-    ChartsModel = require('../../../app/model/charts-model');
+    hypemService = require('../../../app/hypem/hypem-service');
 
 var numberOfChartsInDb = {};
 
 before(function (done) {
-    this.timeout(10000);
+    this.timeout(20000);
     hypemService.startNow(function () {
         hypemService.startNow(function () {
             hypemService.startNow(function () {

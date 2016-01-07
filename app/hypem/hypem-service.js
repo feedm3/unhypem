@@ -6,11 +6,12 @@
 
 'use strict';
 
+import ChartsModel from '../model/charts-model';
+import ChartsSongsModel from '../model/charts-songs-model';
+import SongsModel from '../model/songs-model';
+
 var hypemCrawler = require('./hypem-crawler'),
     CronJob = require('cron').CronJob,
-    SongsModel = require('../model/songs-model'),
-    ChartsModel = require('../model/charts-model'),
-    ChartsSongsModel = require('../model/charts-songs-model'),
     logger = require('winston'),
     async = require('async'),
     _ = require('lodash'),
@@ -86,8 +87,8 @@ function crawlAndSavePopularSongs(done) {
                 .then(function (chart) {
                     callback(chart);
                 }).catch(function (err) {
-                    logger.error("Error saving chart. " + err);
-                    throw err;
+                logger.error("Error saving chart. " + err);
+                throw err;
             });
         }
 

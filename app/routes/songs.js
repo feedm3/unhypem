@@ -4,10 +4,11 @@
 
 'use strict';
 
+import SongsModel from '../model/songs-model';
+
 var express = require('express'),
     router = express.Router(),
-    util = require('../util'),
-    SongsModel = require('../model/songs-model');
+    util = require('../util');
 
 router.get('/:hypemMediaId', function (req, res) {
     var hypemMediaId = req.params.hypemMediaId;

@@ -4,7 +4,7 @@
 
 'use strict';
 
-var bookshelf = require('../config/db');
+import bookshelf from '../config/db';
 
 var SongsModel = bookshelf.Model.extend({
     tableName: 'songs',
@@ -13,7 +13,5 @@ var SongsModel = bookshelf.Model.extend({
     }
 });
 
-/**
- * Export model and register to bookshelf
- */
-module.exports = bookshelf.model('Songs', SongsModel);
+bookshelf.model('Songs', SongsModel);
+export default SongsModel;
