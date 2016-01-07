@@ -4,8 +4,8 @@
 
 'use strict';
 
-require('chai').should();
-require('dotenv').load();
+import chai from 'chai';
+chai.should();
 
 import ChartsModel from '../../../app/model/charts-model';
 
