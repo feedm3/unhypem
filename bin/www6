@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+/**
+ * This file is used as main starting file to transform all es6 code to es5.
+ *
+ * @author Fabian Dietenberger
+ */
+
+'use strict';
+
+require("babel-core/register");
+require("./www");
