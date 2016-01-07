@@ -6,30 +6,32 @@
 
 import ChartsModel from '../model/charts-model';
 
-var express = require('express'),
-    router = express.Router(),
-    logger = require('winston'),
-    util = require('../util'),
-    _ = require('lodash');
+const express = require('express');
+const router = express.Router();
+const logger = require('winston');
+const util = require('../util');
+const _ = require('lodash');
 
 /**
  * GET the latest popular songs.
  */
-router.get('/', function (req, res) {
-    logger.info("Popular route requested");
+router.get('/', function(req, res) {
+    logger.info('Popular route requested');
     ChartsModel
         .forge()
         .latest()
         .fetch({
             withRelated: [
-                {songs: function(query) {
-                    query.orderBy('position');
-                }}
+                {
+                    songs: function(query) {
+                        query.orderBy('position');
+                    }
+                }
             ]
         })
-        .then(function (chart) {
-            var result = chart.toJSON();
-            _.forEach(result.songs, function (song) {
+        .then(function(chart) {
+            const result = chart.toJSON();
+            _.forEach(result.songs, function(song) {
                 song.position = song._pivot_position;
                 // TODO add soundcloud api
                 appendSoundcloudClientId(song);
@@ -41,15 +43,15 @@ router.get('/', function (req, res) {
             delete result.id;
 
             res.json(result);
-        }).catch(function (err) {
+        }).catch(function(err) {
             throw err;
-    });
+        });
 });
 
 module.exports = router;
 
 function appendSoundcloudClientId(song) { // Todo put in model
     if (util.isSoundcloudUrl(song.streamUrl)) {
-        song.streamUrl += "?client_id=" + process.env.SOUNDCLOUD_CLIENT_ID;
+        song.streamUrl += '?client_id=' + process.env.SOUNDCLOUD_CLIENT_ID;
     }
 }

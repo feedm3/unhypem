@@ -21,19 +21,19 @@ function deleteChartsHistory(numberOfChartsToKeep, done) {
         .forge()
         .latest()
         .fetch()
-        .then(function (chart) {
-            var chartId = chart.get("id");
-            var chartsToDelete = chartId - numberOfChartsToKeep + 1;
+        .then(function(chart) {
+            const chartId = chart.get('id');
+            const chartsToDelete = chartId - numberOfChartsToKeep + 1;
             ChartsSongsModel
                 .forge()
                 .where('chart_id', '<', chartsToDelete)
                 .destroy()
-                .then(function () {
+                .then(function() {
                     ChartsModel
                         .forge()
                         .where('id', '<', chartsToDelete)
                         .destroy()
-                        .then(function () {
+                        .then(function() {
                             done();
                         });
                 });
@@ -43,10 +43,10 @@ function deleteChartsHistory(numberOfChartsToKeep, done) {
 function deleteChartsHistoryEveryHour() {
     // cron format:
     // seconds minutes hours dayOfMonth months dayOfWeek
-    var job = new CronJob('0 0 */1 * * *', function () {
-        logger.info("Start clearing chats-songs table");
-        deleteChartsHistory(10, function () {
-            logger.info("Finished clearing chats-songs table");
+    const job = new CronJob('0 0 */1 * * *', function() {
+        logger.info('Start clearing chats-songs table');
+        deleteChartsHistory(10, function() {
+            logger.info('Finished clearing chats-songs table');
         });
     }, null, null, null, null, true); // start on init
     job.start();

@@ -6,7 +6,7 @@
 
 import bookshelf from '../config/db';
 
-var ChartsSongsModel = bookshelf.Model.extend({
+const ChartsSongsModel = bookshelf.Model.extend({
     tableName: 'charts_songs',
     idAttribute: null
 });

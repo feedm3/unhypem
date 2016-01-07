@@ -2,11 +2,11 @@
 
 'use strict';
 
-var app = require('../app'),
-    logger = require('winston');
+const app = require('../app');
+const logger = require('winston');
 
 app.set('port', process.env.PORT || 3000);
 
-var server = app.listen(app.get('port'), function () {
+const server = app.listen(app.get('port'), function() {
     logger.debug('Express server listening on port ' + server.address().port);
 });

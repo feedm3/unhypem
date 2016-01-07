@@ -6,12 +6,12 @@
 
 import SongsModel from '../model/songs-model';
 
-var express = require('express'),
-    router = express.Router(),
-    util = require('../util');
+const express = require('express');
+const router = express.Router();
+const util = require('../util');
 
-router.get('/:hypemMediaId', function (req, res) {
-    var hypemMediaId = req.params.hypemMediaId;
+router.get('/:hypemMediaId', function(req, res) {
+    const hypemMediaId = req.params.hypemMediaId;
 
     SongsModel
         .forge()
@@ -19,14 +19,14 @@ router.get('/:hypemMediaId', function (req, res) {
             hypemMediaId: hypemMediaId
         })
         .fetch()
-        .then(function (song) {
+        .then(function(song) {
             if (!song) {
                 res.sendStatus(404);
                 return;
             }
 
             if (util.isSoundcloudUrl(song.streamUrl)) {
-                song.streamUrl += "?client_id=" + process.env.SOUNDCLOUD_CLIENT_ID;
+                song.streamUrl += '?client_id=' + process.env.SOUNDCLOUD_CLIENT_ID;
             }
             res.json(song.toJSON());
         });

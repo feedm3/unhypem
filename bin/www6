@@ -7,5 +7,5 @@
 
 'use strict';
 
-require("babel-core/register");
-require("./www");
+require('babel-core/register');
+require('./www');
