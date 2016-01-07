@@ -21,15 +21,15 @@ corresponding keys.
 3. If you start unhypem the first time you want to run the tests first. This triggers the crawler and pushes the current
 charts into the db.
 
-```npm test```
+    `npm test`
 
 4. Build the frontend
 
-```npm run build-front```
+    `npm run build-front`
 
 5. Start unhypem server and visit _http://localhost:3000/_
 
-```npm start```
+    `npm start`
 
 For further starts you can skip the third step.
 
