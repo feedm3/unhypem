@@ -4,11 +4,18 @@
 
 'use strict';
 
-var knex = require('knex')({
+require('dotenv').load();
+
+const knex = require('knex')({
+    pool: {
+        min: 2,
+        max: 10
+    },
     client: 'pg',
     connection: process.env.DATABASE_URL
 });
 
-var db = require('bookshelf')(knex);
+const db = require('bookshelf')(knex);
 db.plugin('registry');
-module.exports = db;
+
+export default db;

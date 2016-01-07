@@ -4,12 +4,13 @@
 
 'use strict';
 
+import ChartsModel from '../model/charts-model';
+
 var express = require('express'),
     router = express.Router(),
     logger = require('winston'),
     util = require('../util'),
-    _ = require('lodash'),
-    ChartsModel = require('../model/charts-model');
+    _ = require('lodash');
 
 /**
  * GET the latest popular songs.

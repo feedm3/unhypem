@@ -4,11 +4,11 @@
 
 'use strict';
 
-var bookshelf = require('../config/db');
+import bookshelf from '../config/db';
 
 var ChartsSongsModel = bookshelf.Model.extend({
     tableName: 'charts_songs',
     idAttribute: null
 });
 
-module.exports = ChartsSongsModel;
+export default ChartsSongsModel;
