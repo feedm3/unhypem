@@ -14,26 +14,26 @@
 
 'use strict';
 
-var winston = require('winston');
+const winston = require('winston');
 require('winston-loggly');
-var moment = require('moment');
+const moment = require('moment');
 
 winston.remove(winston.transports.Console);
 winston.add(winston.transports.Console, {
-    'timestamp': function () {
+    'timestamp': function() {
         return moment().format('dd, DD MMM YYYY - HH:mm:ss:SSS');
     },
     'level': 'debug',
     'colorize': true,
     handleExceptions: true
 });
-if (process.env.LOGGLY_ENABLED === "true") {
-    console.log("Add loggly to the global logger");
+if (process.env.LOGGLY_ENABLED === 'true') {
+    console.log('Add loggly to the global logger');
     winston.add(winston.transports.Loggly, {
-        token: "1c96a7e3-b77e-4fd2-b909-9cec22ad513d",
-        subdomain: "feedme",
-        tags: ["Winston-NodeJS"],
-        json:true
+        token: '1c96a7e3-b77e-4fd2-b909-9cec22ad513d',
+        subdomain: 'feedme',
+        tags: ['Winston-NodeJS'],
+        json: true
     });
 }
 

@@ -6,7 +6,7 @@
 
 import bookshelf from '../config/db';
 
-var ChartsModel = bookshelf.Model.extend({
+const ChartsModel = bookshelf.Model.extend({
     tableName: 'charts',
     songs: function() {
         return this.belongsToMany('Songs').withPivot(['position']);
@@ -15,8 +15,8 @@ var ChartsModel = bookshelf.Model.extend({
     /**
      * Get the latest chart
      */
-    latest: function () {
-        return this.query(function (queryBuilder) {
+    latest: function() {
+        return this.query(function(queryBuilder) {
             queryBuilder.orderBy('timestamp', 'DESC').limit(1);
         });
     }

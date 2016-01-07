@@ -6,7 +6,7 @@
 
 import bookshelf from '../config/db';
 
-var SongsModel = bookshelf.Model.extend({
+const SongsModel = bookshelf.Model.extend({
     tableName: 'songs',
     charts: function() {
         return this.belongsToMany('Charts');

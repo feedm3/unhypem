@@ -2,13 +2,13 @@
  * @author Fabian Dietenberger
  */
 
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+// const webpack = require('webpack');
 
 module.exports = {
     entry: './public/app/main.js',
     output: {
-        path: path.resolve(__dirname, "./public"),
+        path: path.resolve(__dirname, './public'),
         filename: 'bundle.js',
         publicPath: '/'
     },
@@ -17,9 +17,9 @@ module.exports = {
         port: 3333,
         contentBase: 'public'
     },
-    //plugins: [ // uncomment to minimize
+    // plugins: [ // uncomment to minimize
     //    new webpack.optimize.UglifyJsPlugin({minimize: true})
-    //],
+    // ],
     module: {
         loaders: [
             {

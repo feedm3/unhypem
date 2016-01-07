@@ -10,31 +10,30 @@ import ChartsModel from '../model/charts-model';
 import ChartsSongsModel from '../model/charts-songs-model';
 import SongsModel from '../model/songs-model';
 
-var hypemCrawler = require('./hypem-crawler'),
-    CronJob = require('cron').CronJob,
-    logger = require('winston'),
-    async = require('async'),
-    _ = require('lodash'),
-    moment = require('moment');
+const hypemCrawler = require('./hypem-crawler');
+const CronJob = require('cron').CronJob;
+const logger = require('winston');
+const async = require('async');
+const moment = require('moment');
 
-var job;
+let job;
 
 module.exports = {
-    start: function () {
+    start: function() {
         // cron format:
         // seconds minutes hours dayOfMonth months dayOfWeek
-        job = new CronJob('0 */5 * * * *', function () {
-            logger.info("Start updating charts");
-            crawlAndSavePopularSongs(function () {
-                logger.info("Finished updating charts");
+        job = new CronJob('0 */5 * * * *', function() {
+            logger.info('Start updating charts');
+            crawlAndSavePopularSongs(function() {
+                logger.info('Finished updating charts');
             });
         }, null, null, null, null, true); // start on init
         job.start();
     },
-    startNow: function (done) {
+    startNow: function(done) {
         crawlAndSavePopularSongs(done);
     },
-    stop: function () {
+    stop: function() {
         job.stop();
     }
 };
@@ -45,23 +44,24 @@ module.exports = {
  * @param {Function}[done] gets executed when function is finished
  */
 function crawlAndSavePopularSongs(done) {
-    hypemCrawler.getAllPopularSongs(function (err, songs) {
+    hypemCrawler.getAllPopularSongs(function(err, songs) {
+        if (err) throw err;
 
-        var popularSongPositions = [];
+        const popularSongPositions = [];
 
-        async.forEach(songs, function (hypemSong, done) {
+        async.forEach(songs, function(hypemSong, done) {
             saveOrUpdateSong(hypemSong, done);
-        }, function (err) {
+        }, function(err) {
             if (err) {
-                logger.error("Error saving popular songs. " + err);
+                logger.error('Error saving popular songs. ' + err);
                 throw err;
             }
-            createNewCharts(function (chart) {
-                async.each(popularSongPositions, function (song, done) {
+            createNewCharts(function(chart) {
+                async.each(popularSongPositions, function(song, done) {
                     createForeignEntryBetweenChartsAndSongs(chart, song, done);
-                }, function (err) {
+                }, function(err) {
                     if (err) {
-                        logger.error("Error saving foreign keys between chart and songs. " + err);
+                        logger.error('Error saving foreign keys between chart and songs. ' + err);
                         throw err;
                     }
                     done();
@@ -77,19 +77,19 @@ function crawlAndSavePopularSongs(done) {
          * @param {[object]} callback.chart the saved chart
          */
         function createNewCharts(callback) {
-            var chartToSave = {
+            const chartToSave = {
                 timestamp: moment(),
                 type: 'popular'
             };
 
             new ChartsModel(chartToSave)
                 .save()
-                .then(function (chart) {
+                .then(function(chart) {
                     callback(chart);
-                }).catch(function (err) {
-                logger.error("Error saving chart. " + err);
-                throw err;
-            });
+                }).catch(function(err) {
+                    logger.error('Error saving chart. ' + err);
+                    throw err;
+                });
         }
 
         /**
@@ -105,7 +105,7 @@ function crawlAndSavePopularSongs(done) {
                 chart_id: chart.get('id'),
                 song_id: song.songId,
                 position: song.position
-            }).save().then(function () {
+            }).save().then(function() {
                 done();
             });
         }
@@ -118,24 +118,24 @@ function crawlAndSavePopularSongs(done) {
          * @param {Function}[done] gets executed when function is finished
          */
         function saveOrUpdateSong(hypemSong, done) {
-            var position = hypemSong.position;
+            const position = hypemSong.position;
 
             new SongsModel().where('hypemMediaId', hypemSong.mediaid)
                 .fetch()
-                .then(function (song) {
+                .then(function(song) {
                     if (song) {
                         updateSong(song, hypemSong.loved_count, done);
                         pushToPopularSongPositions(song.get('id'), position);
                     } else {
-                        saveNewSong(hypemSong, function (song) {
+                        saveNewSong(hypemSong, function(song) {
                             pushToPopularSongPositions(song.get('id'), position);
                             done();
                         });
                     }
-                }).catch(function (err) {
-                logger.error("Error finding song in database. Cancel saving of the current charts. " + err);
-                throw err;
-            });
+                }).catch(function(err) {
+                    logger.error('Error finding song in database. Cancel saving of the current charts. ' + err);
+                    throw err;
+                });
         }
 
         /**
@@ -147,7 +147,7 @@ function crawlAndSavePopularSongs(done) {
          * @param {[object]} callback.song the saved songs
          */
         function saveNewSong(hypemSong, callback) {
-            var songToSave = {
+            const songToSave = {
                 artist: hypemSong.artist,
                 title: hypemSong.title,
                 hypemMediaId: hypemSong.mediaid,
@@ -160,12 +160,12 @@ function crawlAndSavePopularSongs(done) {
 
             new SongsModel(songToSave)
                 .save()
-                .then(function (song) {
+                .then(function(song) {
                     callback(song);
-                }).catch(function (err) {
-                logger.error("Error inserting song into database. " + err);
-                throw err;
-            });
+                }).catch(function(err) {
+                    logger.error('Error inserting song into database. ' + err);
+                    throw err;
+                });
         }
 
         /**
@@ -178,7 +178,7 @@ function crawlAndSavePopularSongs(done) {
          */
         function updateSong(song, lovedCount, done) {
             song.save({hypemLovedCount: lovedCount})
-                .then(function () {
+                .then(function() {
                     done();
                 });
         }
