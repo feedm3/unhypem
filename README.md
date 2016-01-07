@@ -11,32 +11,47 @@ Hear the [hypem charts](http://hypem.com/popular) with the waveform from soundcl
 
 To run your own instance on your local machine follow these steps:
 
-1. Start a postgres server
+1. Start a postgres server with an `unhypem` database
+
+2. Create a new `.env` file and copy all variables from the
+[`example.env`](example.env) into it. Replace or create all values to their
+corresponding keys.
+
     
-2. If you start unhypem the first time you want to run the tests first. This triggers the crawler and pushes the current
+3. If you start unhypem the first time you want to run the tests first. This triggers the crawler and pushes the current
 charts into the db.
 
-    `npm test`
+```npm test```
 
-3. Build the frontend
+4. Build the frontend
 
-    `npm run build-front`
+```npm run build-front```
 
-4. Start unhypem server and visit http://localhost:3000/
+5. Start unhypem server and visit _http://localhost:3000/_
 
-    `npm start`
+```npm start```
 
-For further starts you can skip the second step.
+For further starts you can skip the third step.
 
-Consider using `npm run start-watch-changes` during backend development and `npm run start-front`
+Consider using `npm run start-watch` during backend development and `npm run start-front`
 during development for instant reloading.
 
-## Test
+## Development and testing
 
-1. Start postgres server
-    
-2. Run the tests
+During backend development you can use the `npm run start-watch` command to restart
+the server with every code change. Use `npm run start-front` during frontend
+development for live reloading on code changes.
 
-    `npm test`
-        
-Consider using `npm run test-watch-changes` during backend development to execute the tests every time to code inside the test directory changes.
+To test you code make sure postgres is running with an `unhypem database`.
+
+You can then run all tests with
+
+```
+npm test
+```
+
+Consider using the following the execute the tests on file changes
+
+```
+npm run test-watch
+```
