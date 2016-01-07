@@ -3,8 +3,9 @@
 require('dotenv').load();
 require('./app/config/log'); // configure logger
 
-var express = require('express'),
-    app = express(),
+import express from 'express';
+
+var app = express(),
     lessMiddleware = require('less-middleware'),
     favicon = require('serve-favicon'),
     path = require('path'),
@@ -18,7 +19,7 @@ var popularRoute = require('./app/routes/popular'),
     songsRoute = require('./app/routes/songs');
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(favicon(__dirname + '/public/assets/img/favicon.ico'));
 app.use(lessMiddleware(path.join(__dirname, 'public')));
@@ -28,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
  * Database setup
  */
 var db = require('./app/config/db');
-var migration =require('./app/config/migration');
+var migration = require('./app/config/migration');
 migration.up(db.knex).then(function () {
     logger.info("Database is ready to use");
     hypemService.start();
@@ -45,7 +46,7 @@ app.use('/songs', songsRoute);
 app.use('/popular', popularRoute);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     var requestedUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
     var err = new Error('Not Found - ' + requestedUrl);
     err.status = 404;
