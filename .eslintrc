@@ -6,7 +6,7 @@
   },
 
   "env": {
-    "browser": false,
+    "browser": true,
     "es6": true,
     "node": true,
     "mocha": true
@@ -105,7 +105,7 @@
     "no-unexpected-multiline": 2,
     "no-unneeded-ternary": [2, { "defaultAssignment": false }],
     "no-unreachable": 2,
-    "no-unused-vars": [2, { "vars": "all", "args": "none" }],
+    "no-unused-vars": [2, { "vars": "all", "args": "none", "ignore": "React" }],
     "no-useless-call": 2,
     "no-var": 2,
     "no-with": 2,
@@ -114,6 +114,8 @@
     "padded-blocks": [2, "never"],
     "quotes": [2, "single", "avoid-escape"],
     "radix": 2,
+    "react/prefer-es6-class": 1,
+    "react/jsx-uses-react": 1,
     "semi": [2, "always"],
     "semi-spacing": [2, { "before": false, "after": true }],
     "space-after-keywords": [2, "always"],
