@@ -6,7 +6,7 @@ const path = require('path');
 // const webpack = require('webpack');
 
 module.exports = {
-    entry: './public/app/main.js',
+    entry: './public/app/song-table.js',
     output: {
         path: path.resolve(__dirname, './public'),
         filename: 'bundle.js',
