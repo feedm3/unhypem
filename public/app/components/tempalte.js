@@ -6,6 +6,7 @@
 
 import React from 'react';
 import Header from './header/header';
+import SongPlayer from './player/song-player';
 
 export default (props) => {
     return (
@@ -13,6 +14,10 @@ export default (props) => {
             <Header />
             <div className="container">
                 {props.children}
+            </div>
+            <div className="bottom">
+                { /* put this in own bottom component */ }
+                <SongPlayer />
             </div>
         </div>
     );
