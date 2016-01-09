@@ -8,7 +8,7 @@
   "scripts": {
     "start": "node ./bin/www6",
     "start-watch": "nodemon ./bin/www6 --ignore public/ --ignore test/ --exec babel-node --presets es2015",
-    "start-front-watch": "webpack-dev-server",
+    "start-front": "webpack-dev-server",
     "build-front": "webpack --progress --colors",
     "test": "mocha ./test --compilers js:babel-core/register --recursive",
     "test-watch": "mocha ./test  --compilers js:babel-core/register --recursive --watch",
