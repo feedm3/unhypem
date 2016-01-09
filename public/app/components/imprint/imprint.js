@@ -8,7 +8,7 @@ import React from 'react';
 
 export default () => {
     return (
-        <div className="container">
+        <div>
             <h1>Impressum</h1>
             <h2>Angaben gemäß § 5 TMG:</h2>
             <img src={'assets/img/contact.png'}/>
