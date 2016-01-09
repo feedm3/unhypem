@@ -52,8 +52,8 @@ class SongTable extends React.Component {
     }
 
     render() {
-        const songTableRows = this.state.songs.map(function(song) {
-            return <SongTableRow song={song} />;
+        const songTableRows = this.state.songs.map(function(song, index) {
+            return <SongTableRow song={song} key={index}/>;
         });
         return (
             <div>
