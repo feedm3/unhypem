@@ -8,7 +8,9 @@ import React from 'react';
 
 export default () => {
     return (
-        <h1>This is the about page</h1>
+        <div>
+            <p>The code of this webapp can be found on <a href="https://github.com/feedm3/unhypem" target="_blank">Github</a></p>
+        </div>
     );
 };
 
