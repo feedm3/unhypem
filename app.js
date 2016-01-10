@@ -4,6 +4,7 @@ require('dotenv').load();
 require('./app/config/log'); // configure logger
 
 import express from 'express';
+import cors from 'cors';
 
 const app = express();
 const lessMiddleware = require('less-middleware');
@@ -29,22 +30,23 @@ app.use(express.static(path.join(__dirname, 'public')));
  */
 import db from './app/config/db';
 const migration = require('./app/config/migration');
-migration.up(db.knex).then(function() {
+migration.up(db.knex).then(function () {
     logger.info('Database is ready to use');
     hypemService.start();
     databaseManager.deleteChartsHistoryEveryHour();
-}).catch(function(err) {
+}).catch(function (err) {
     logger.error('No connection to database or error creating tables. ' + err);
 });
 
 /**
  * Routes
  */
+app.use(cors());
 app.use('/songs', songsRoute);
 app.use('/popular', popularRoute);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     const requestedUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
     const err = new Error('Not Found - ' + requestedUrl);
     err.status = 404;
@@ -57,7 +59,7 @@ app.use(function(req, res, next) {
  * Will send the error object back to the user
  */
 if (process.env.NODE_ENV === 'development') {
-    app.use(function(err, req, res, next) {
+    app.use(function (err, req, res, next) {
         logger.error(err.status + ' ' + err.message);
         res.status(err.status || 500);
         res.json(err);
@@ -69,7 +71,7 @@ if (process.env.NODE_ENV === 'development') {
  *
  * Will only send the status code back to the user
  */
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
     logger.error(err.status + ' ' + err.message);
     res.sendStatus(err.status || 500);
 });
