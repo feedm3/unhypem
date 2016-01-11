@@ -10,7 +10,8 @@ class SongTable extends React.Component {
     constructor() {
         super();
         this.state = {
-            songs: []
+            songs: [],
+            selectedSongId: 0
         };
     }
 
@@ -22,9 +23,28 @@ class SongTable extends React.Component {
         });
     }
 
+    selectSong(song) {
+        if (song.id !== this.state.selectedSongId) {
+            // get the current selected row. could be 'undefined' on the first click
+            const selectedRow = this.refs[`${this.state.selectedSongId}`];
+            if (selectedRow) selectedRow.setSelected(false);
+
+            // select the specific row
+            this.refs[`${song.id}`].setSelected(true);
+            this.setState({
+                selectedSongId: song.id
+            });
+        }
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        // only re-render the whole table when the songs have changed
+        return nextState.songs !== this.state.songs;
+    }
+
     render() {
-        const songTableRows = this.state.songs.map(function(song, index) {
-            return <SongTableRow song={song} key={index}/>;
+        const songTableRows = this.state.songs.map((song, index) => {
+            return <SongTableRow song={song} key={song.position} ref={song.id} onClick={this.selectSong.bind(this, song)}/>;
         });
         return (
             <div>
