@@ -4,7 +4,7 @@
 
 import React from 'react';
 import SongTableRow from './song-table-row';
-import request from 'superagent';
+import getSongs from '../../api/songs-api';
 
 class SongTable extends React.Component {
     constructor() {
@@ -15,17 +15,15 @@ class SongTable extends React.Component {
     }
 
     componentDidMount() {
-        request.get("http://localhost:3000/popular")
-            .end((err, response)  => {
-                const popular = JSON.parse(response.text);
-                this.setState({
-                    'songs': popular.songs
-                });
+        getSongs(songs => {
+            this.setState({
+                'songs': songs
             });
+        });
     }
 
     render() {
-        const songTableRows = this.state.songs.map(function (song, index) {
+        const songTableRows = this.state.songs.map(function(song, index) {
             return <SongTableRow song={song} key={index}/>;
         });
         return (
