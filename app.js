@@ -7,7 +7,6 @@ import express from 'express';
 import cors from 'cors';
 
 const app = express();
-const lessMiddleware = require('less-middleware');
 const favicon = require('serve-favicon');
 const path = require('path');
 const logger = require('winston');
@@ -22,7 +21,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(favicon(__dirname + '/public/assets/img/favicon.ico'));
-app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 /**
