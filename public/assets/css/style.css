@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700,300');
+
+body {
+    margin: 0;
+    font-family: 'Lato', sans-serif !important;
+    padding-bottom: 105px;
+}
+
+#welcome-header {
+    font-size: 1.5em;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.soundcloud-logo {
+    background: url("../img/soundcloud-icon.svg");
+    -webkit-background-size: 32px 32px;
+    background-size: 32px 32px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+.no-soundcloud-url {
+    opacity: 0.2;
+}
+
+.bottom {
+    border-top: 1px solid black;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #ffffff;
+
+    -webkit-box-shadow: 0 -1px 3px 0 rgba(0,0,0,0.8);
+    -moz-box-shadow: 0 -1px 3px 0 rgba(0,0,0,0.8);
+    box-shadow: 0 -1px 3px 0  rgba(0,0,0,0.8);
+}
+
+.table tbody > tr > td.vertical-center {
+    vertical-align: middle;
+}
+
+.no-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.horizontal-center img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
