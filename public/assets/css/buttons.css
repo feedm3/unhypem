@@ -1,0 +1,35 @@
+.button {
+    background-size: contain;
+    background: no-repeat center;
+    width: 32px;
+    height: 32px;
+    opacity: 0.8;
+}
+
+.button:hover {
+    opacity: 1;
+}
+
+.button:focus {
+    outline: 0;
+}
+
+.button-play,
+.button-play:active {
+    background-image: url("../img/play-icon-32.png");
+}
+
+.button-stop,
+.button-stop:active {
+    background-image: url("../img/pause-icon-32.png");
+}
+
+.button-forward,
+.button-forward:active {
+    background-image: url("../img/forward-icon-32.png");
+}
+
+.button-rewind,
+.button-rewind:active {
+    background-image: url("../img/rewind-icon-32.png");
+}
