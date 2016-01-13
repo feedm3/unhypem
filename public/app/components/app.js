@@ -6,7 +6,7 @@
 
 import React from 'react';
 import Template from './tempalte';
-import SongTable from './player/song-table';
+import SongTable from './songs/song-table';
 import About from './about/about';
 import Imprint from './imprint/imprint';
 import { Router, Route, IndexRoute } from 'react-router';
