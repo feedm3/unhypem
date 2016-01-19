@@ -19,8 +19,8 @@ describe('Resolve all songs on the popular list', function() {
     // request the same songs again
     let popularSongs;
 
-    it('should return an array with 50 elements', function(done) {
-        hypemCrawler.getAllPopularSongs(function(err, songs) {
+    it('should return an array with 50 elements', (done) => {
+        hypemCrawler.getAllPopularSongs((err, songs) => {
             if (err) throw err;
             songs.should.be.an('array');
             songs.should.have.length(50);
@@ -29,8 +29,8 @@ describe('Resolve all songs on the popular list', function() {
         });
     });
 
-    it('every object should contain song informations', function(done) {
-        _.forEach(popularSongs, function(song) {
+    it('every object should contain song informations', (done) => {
+        _.forEach(popularSongs, (song) => {
             /* note that at this point a song does have all fields from hypem */
             song.position.should.be.within(1, 50);
 
