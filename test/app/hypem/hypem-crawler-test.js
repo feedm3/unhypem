@@ -15,28 +15,30 @@ const _ = require('lodash');
 describe('Resolve all songs on the popular list', function() {
     this.timeout(20000);
 
+    // we save the popular songs after the first test to not have to
+    // request the same songs again
+    let popularSongs;
+
     it('should return an array with 50 elements', function(done) {
         hypemCrawler.getAllPopularSongs(function(err, songs) {
             if (err) throw err;
             songs.should.be.an('array');
             songs.should.have.length(50);
+            popularSongs = songs;
             done();
         });
     });
 
     it('every object should contain song informations', function(done) {
-        hypemCrawler.getAllPopularSongs(function(err, songs) {
-            if (err) throw err;
-            _.forEach(songs, function(song) {
-                /* note that at this point a song does have all fields from hypem */
-                song.position.should.be.within(1, 50);
+        _.forEach(popularSongs, function(song) {
+            /* note that at this point a song does have all fields from hypem */
+            song.position.should.be.within(1, 50);
 
-                song.artist.should.be.a('string');
-                song.title.should.be.a('string');
-                song.loved_count.should.be.a('number');
-                song.mediaid.should.be.a('string');
-            });
-            done();
+            song.artist.should.be.a('string');
+            song.title.should.be.a('string');
+            song.loved_count.should.be.a('number');
+            song.mediaid.should.be.a('string');
         });
+        done();
     });
 });
