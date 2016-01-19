@@ -128,7 +128,12 @@ const HypemCrawler = function() {
     function addStreamingUrlAndSoundcloudInfoToAllSongs(songs, done) {
         async.forEach(songs, function(song, done) {
             hypemResolver.getById(song.mediaid, function(err, url) {
-                if (err) throw err;
+                if (err) {
+                    // if an error happens here the song is typically offline everywhere and cannot be played
+                    logger.error('Could not resolve song on hypem with url http://hypem.com/track/' + song.mediaid, err.message);
+                    done();
+                    return;
+                }
                 if (util.isSoundcloudUrl(url)) {
                     getSoundcloudProperties(url, function(err, properties) {
                         song.soundcloudUrl = url;
