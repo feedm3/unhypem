@@ -1,10 +1,13 @@
 /**
+ * This component is used to display all songs in a table.
+ *
  * @author Fabian Dietenberger
  */
 
 import React from 'react';
 import SongTableRow from './song-table-row';
 import getSongs from '../../api/songs-api';
+import Player from '../../player/player';
 
 class SongTable extends React.Component {
     constructor() {
@@ -24,6 +27,7 @@ class SongTable extends React.Component {
     }
 
     selectSong(song) {
+        Player.play(song.id);
         if (song.id !== this.state.selectedSongId) {
             // get the current selected row. could be 'undefined' on the first click
             const selectedRow = this.refs[`${this.state.selectedSongId}`];
@@ -44,7 +48,8 @@ class SongTable extends React.Component {
 
     render() {
         const songTableRows = this.state.songs.map((song, index) => {
-            return <SongTableRow song={song} key={song.position} ref={song.id} onClick={this.selectSong.bind(this, song)}/>;
+            return <SongTableRow song={song} key={song.position} ref={song.id}
+                                 onClick={this.selectSong.bind(this, song)}/>;
         });
         return (
             <div>

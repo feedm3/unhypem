@@ -1,4 +1,9 @@
 /**
+ * This component is used to display a song as a table row. It also displays the songs streaming url status with a
+ * corresponding background color.
+ *
+ * The component does not implement any click handler logic. It can only delegate to a click handler from the properties.
+ *
  * @author Fabian Dietenberger
  */
 
