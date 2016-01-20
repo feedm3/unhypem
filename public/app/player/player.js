@@ -9,7 +9,6 @@ import _ from 'lodash';
 import getSongs from '../api/songs-api';
 
 class Player {
-
     constructor() {
         this.isPlaying = false;
         this.currentSongId = '';
