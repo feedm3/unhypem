@@ -7,6 +7,8 @@
 import React from 'react';
 import getSongs from '../../api/songs-api';
 import PlayButton from './play-button';
+import ForwardButton from './forward-button';
+import RewindButton from './rewind-button';
 import VolumeBar from './volume-bar';
 
 class SongPlayer extends React.Component {
@@ -37,9 +39,7 @@ class SongPlayer extends React.Component {
                             <VolumeBar />
                         </div>
                         <div className="player-control-two">
-                            <button type="button" className="btn button button-rewind no-select" ng-click="rewind()">
-                                <span className="hidden">Rewind</span>
-                            </button>
+                            <RewindButton />
                             <PlayButton />
                         </div>
                         <div className="player-waveform-container" ng-click="onProgressbarClick($event)">
@@ -48,9 +48,7 @@ class SongPlayer extends React.Component {
                                              max="100" type="info"></uib-progressbar>
                         </div>
                         <div className="player-control-one">
-                            <button type="button" className="btn button button-forward no-select" ng-click="forward()">
-                                <span className="hidden">Forward</span>
-                            </button>
+                            <ForwardButton />
                         </div>
                         <div className="player-secondary">
                             <div className="duration">
@@ -68,9 +66,9 @@ class SongPlayer extends React.Component {
                     </div>
                 </div>
             </div>
-    );
+        );
     }
-    }
+}
 
-    export default SongPlayer;
+export default SongPlayer;
 
