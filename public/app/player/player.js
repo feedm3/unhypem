@@ -5,14 +5,18 @@
 'use strict';
 
 import { SoundManager } from 'soundmanager2';
+import _ from 'lodash';
+import getSongs from '../api/songs-api';
 
-const soundManager = new SoundManager();
+class Player {
 
-const Player = {
-    init() {
-        console.log(SoundManager);
+    constructor() {
+        this.isPlaying = false;
+        this.currentSongId = '';
+        this.soundManager = new SoundManager();
+        this.smSound = null; // soundManager creates a smSound for every song. this object holds the playing smSound
 
-        soundManager.setup({
+        this.soundManager.setup({
             url: '/swfs/',
             flashVersion: 9,
             useFlashBlock: false,
@@ -21,32 +25,61 @@ const Player = {
             waitForWindowLoad: true,
             debugMode: false,
             onready: () => {
-                soundManager.createSound({
-                    id: 'mySound',
-                    url: 'https://api.soundcloud.com/tracks/240881664/stream?client_id=ae22eeed80859593bd5159ce968b1d38',
-                    autoLoad: true,
-                    autoPlay: false,
-                    onload: () => {
-                        console.log('Song loaded');
-                    }
+                getSongs((songs) => {
+                    this.preloadSongs(songs);
                 });
             }
         });
-    },
-
-    play(songId) {
-        soundManager.play('mySound');
-    },
-
-    stop(songId) {
-        soundManager.stop(songId);
-    },
-
-    setVolume(percent = 100) {
-        soundManager.setVolume(percent);
     }
 
-};
-Player.init();
+    preloadSongs(songs) {
+        _.forEach(songs, (song) => {
+            if (!_.isString(song.streamUrl)) {
+                return;
+            }
+            this.soundManager.createSound({
+                url: song.streamUrl,
+                id: song.id,
+                stream: true
+            });
+        });
+    }
 
-export default Player;
+    play(songId) {
+        // If same ID wants to be played, just pause the song
+        if (this.currentSongId === songId) {
+            if (this.smSound.paused === true) {
+                this.smSound.play();
+            } else {
+                this.smSound.pause();
+            }
+        } else {
+            // If new song wants to be played
+            // reset the previous so it doesn't start
+            // playing in the last position if restarted
+            this.currentSongId = songId;
+            if (this.smSound) {
+                this.smSound.stop();
+            }
+            this.smSound = this.soundManager.getSoundById(songId);
+            this.smSound.play();
+        }
+    }
+
+    stop(songId) {
+        this.soundManager.stop(songId);
+    }
+
+    setVolume(percent = 100) {
+        this.soundManager.setVolume(percent);
+    }
+}
+
+const player = new Player();
+player.soundManager.onready(() => {
+    getSongs((songs) => {
+        player.preloadSongs(songs);
+    });
+});
+
+export default new Player();
