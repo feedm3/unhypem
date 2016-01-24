@@ -7,7 +7,7 @@
 import React from 'react';
 import SongTableRow from './song-table-row';
 import getSongs from '../../api/songs-api';
-import Player from '../../player/player';
+import PlayerMediator from '../../player/player-mediator';
 
 class SongTable extends React.Component {
     constructor() {
@@ -19,6 +19,7 @@ class SongTable extends React.Component {
     }
 
     componentDidMount() {
+        PlayerMediator.registerOnSongChangeCallback(this.onSongChang.bind(this));
         getSongs(songs => {
             this.setState({
                 'songs': songs
@@ -26,8 +27,7 @@ class SongTable extends React.Component {
         });
     }
 
-    selectSong(song) {
-        Player.play(song.id);
+    onSongChang(song) {
         if (song.id !== this.state.selectedSongId) {
             // get the current selected row. could be 'undefined' on the first click
             const selectedRow = this.refs[`${this.state.selectedSongId}`];
@@ -41,6 +41,12 @@ class SongTable extends React.Component {
         }
     }
 
+    handleRowClick(song) {
+        PlayerMediator.setSelectedSong(song);
+        PlayerMediator.playSelectedSong();
+        this.onSongChang(song);
+    }
+
     shouldComponentUpdate(nextProps, nextState) {
         // only re-render the whole table when the songs have changed
         return nextState.songs !== this.state.songs;
@@ -49,7 +55,7 @@ class SongTable extends React.Component {
     render() {
         const songTableRows = this.state.songs.map((song, index) => {
             return <SongTableRow song={song} key={song.position} ref={song.id}
-                                 onClick={this.selectSong.bind(this, song)}/>;
+                                 onClick={this.handleRowClick.bind(this, song)}/>;
         });
         return (
             <div>

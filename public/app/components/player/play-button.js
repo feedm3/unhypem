@@ -5,7 +5,7 @@
 'use strict';
 
 import React from 'react';
-import Player from '../../player/player';
+import PlayerMediator from '../../player/player-mediator';
 
 class PlayButton extends React.Component {
     constructor() {
@@ -15,17 +15,19 @@ class PlayButton extends React.Component {
         };
     }
 
-    togglePlay() {
-        console.log(this.state);
+    handleClick() {
+        PlayerMediator.playSelectedSong();
+        this.onTogglePlay();
+    }
 
-        if (this.state.isPlaying) {
-            Player.stop('mySound');
-        } else {
-            Player.play('mySound');
-        }
+    onTogglePlay() {
         this.setState({
-            isPlaying: !this.state.isPlaying
+            isPlaying: PlayerMediator.isPlaying()
         });
+    }
+
+    componentDidMount() {
+        PlayerMediator.registerOnTogglePauseCallback(this.onTogglePlay.bind(this));
     }
 
     render() {
@@ -36,7 +38,7 @@ class PlayButton extends React.Component {
             buttonStyle += ' button-play';
         }
         return (
-            <button type="button" onClick={this.togglePlay.bind(this)} className={buttonStyle}>
+            <button type="button" onClick={this.handleClick.bind(this)} className={buttonStyle}>
                 <span className="hide">Play</span>
             </button>
         );
