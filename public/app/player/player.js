@@ -10,7 +10,7 @@ import getSongs from '../api/songs-api';
 
 class Player {
     constructor() {
-        this.isPlaying = false;
+        this.onDurationLoadedCallbacks = [];
         this.currentSongId = '';
         this.soundManager = new SoundManager();
         this.smSound = null; // soundManager creates a smSound for every song. this object holds the playing smSound
@@ -39,7 +39,26 @@ class Player {
             this.soundManager.createSound({
                 url: song.streamUrl,
                 id: song.id,
-                stream: true
+                stream: true,
+                onload: () => {
+                    /**
+                     * readyState
+                     * 0 = uninitialised
+                     * 1 = loading
+                     * 2 = failed/error
+                     * 3 = loaded/success
+                     */
+                    if (this.smSound.readyState === 3) {
+                        const seconds = parseInt(this.smSound.duration / 1000, 10);
+                        this.onDurationLoadedCallbacks.forEach(c => c(seconds));
+                    }
+                },
+                whileplaying: () => {
+                    console.log('Progress in seconds: ' + this.smSound.position);
+                },
+                onfinish: () => {
+                    console.log('Song finished.');
+                }
             });
         });
     }
@@ -47,11 +66,7 @@ class Player {
     play(songId) {
         // If same ID wants to be played, just pause the song
         if (this.currentSongId === songId) {
-            if (this.smSound.paused === true) {
-                this.smSound.play();
-            } else {
-                this.smSound.pause();
-            }
+            this.smSound.togglePause();
         } else {
             // If new song wants to be played
             // reset the previous so it doesn't start
@@ -65,12 +80,34 @@ class Player {
         }
     }
 
+    getProgressInSeconds() {
+        return this.smSound.position / 1000;
+    }
+
+    setProgressInPercent(percent) {
+        // song duration / 100 * percent
+        this.smSound.setPosition(0);
+    }
+
+    isPlaying() {
+        return !this.smSound.paused;
+    }
+
     stop(songId) {
         this.soundManager.stop(songId);
     }
 
     setVolume(percent = 100) {
         this.soundManager.setVolume(percent);
+    }
+
+    /**
+     * Get notified when the duration of the song is loaded.
+     *
+     * @param callback to call with the duration in seconds
+     */
+    registerDurationLoadedCallback(callback) {
+        this.onDurationLoadedCallbacks.push(callback);
     }
 }
 
