@@ -11,6 +11,7 @@ import getSongs from '../api/songs-api';
 class Player {
     constructor() {
         this.onDurationLoadedCallbacks = [];
+        this.onProgressCallbacks = [];
         this.currentSongId = '';
         this.soundManager = new SoundManager();
         this.smSound = null; // soundManager creates a smSound for every song. this object holds the playing smSound
@@ -54,7 +55,10 @@ class Player {
                     }
                 },
                 whileplaying: () => {
-                    console.log('Progress in seconds: ' + this.smSound.position);
+                    if (this.onProgressCallbacks) {
+                        const millis = this.smSound.position;
+                        this.onProgressCallbacks.forEach(c => c(millis));
+                    }
                 },
                 onfinish: () => {
                     console.log('Song finished.');
@@ -80,13 +84,12 @@ class Player {
         }
     }
 
-    getProgressInSeconds() {
+    getPositionInSeconds() {
         return this.smSound.position / 1000;
     }
 
-    setProgressInPercent(percent) {
-        // song duration / 100 * percent
-        this.smSound.setPosition(0);
+    setPositionInPercent(percent) {
+        this.smSound.setPosition(this.smSound.duration / 100 * percent);
     }
 
     isPlaying() {
@@ -104,10 +107,19 @@ class Player {
     /**
      * Get notified when the duration of the song is loaded.
      *
-     * @param callback to call with the duration in seconds
+     * @param callback the callback which gets called with the duration in seconds
      */
     registerDurationLoadedCallback(callback) {
         this.onDurationLoadedCallbacks.push(callback);
+    }
+
+    /**
+     * Get notified when the position changes while the song plays.
+     *
+     * @param callback the callback which gets called with the current position in millis
+     */
+    registerOnProgressCallback(callback) {
+        this.onProgressCallbacks.push(callback);
     }
 }
 

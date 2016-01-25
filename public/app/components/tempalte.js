@@ -6,7 +6,7 @@
 
 import React from 'react';
 import Header from './header/header';
-import SongPlayer from './player/song-player';
+import SongPlayer from './player/player-panel';
 
 export default (props) => {
     return (

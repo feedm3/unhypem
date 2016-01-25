@@ -48,8 +48,8 @@ const SongsManager = {
     },
 
     rewind() {
-        if (Player.getProgressInSeconds() > 5) {
-            Player.setProgressInPercent(0);
+        if (Player.getPositionInSeconds() > 5) {
+            Player.setPositionInPercent(0);
         } else {
             if (selectedSongPosition === 1) {
                 this.setSelectedSong(songs[49]);
@@ -71,6 +71,10 @@ const SongsManager = {
         onTogglePauseCallbacks.forEach(c => c());
     },
 
+    setPosition(percent) {
+        Player.setPositionInPercent(percent);
+    },
+
     registerOnTogglePauseCallback(callback) {
         onTogglePauseCallbacks.push(callback);
     },
@@ -81,6 +85,10 @@ const SongsManager = {
 
     registerOnDurationLoadedCallback(callback) {
         Player.registerDurationLoadedCallback(callback);
+    },
+
+    registerOnProgressCallback(callback) {
+        Player.registerOnProgressCallback(callback);
     }
 };
 
