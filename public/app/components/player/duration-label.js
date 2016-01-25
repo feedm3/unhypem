@@ -11,19 +11,25 @@ class DurationLabel extends React.Component {
     constructor() {
         super();
         this.state = {
-            position: 0,
-            duration: 0
+            duration: 0,
+            position: 0
         };
     }
 
     onDurationChange(seconds) {
-        console.log(seconds);
         this.setState({
             duration: seconds
         });
     }
 
+    onPositionChange(millis) {
+        this.setState({
+            position: millis / 1000
+        });
+    }
+
     componentDidMount() {
+        PlayerMediator.registerOnProgressCallback(this.onPositionChange.bind(this));
         PlayerMediator.registerOnDurationLoadedCallback(this.onDurationChange.bind(this));
     }
 

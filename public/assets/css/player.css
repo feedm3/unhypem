@@ -98,6 +98,12 @@
     background-color: black;
 }
 
+.player-progressbar-progress {
+    width: 0;
+    height: 100%;
+    transition: .4s width;
+}
+
 .player-secondary {
     flex: 0 0 100px;
 }

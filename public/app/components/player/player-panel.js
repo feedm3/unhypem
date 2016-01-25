@@ -6,10 +6,11 @@
 
 import React from 'react';
 import getSongs from '../../api/songs-api';
-import PlayButton from './play-button';
-import ForwardButton from './forward-button';
-import RewindButton from './rewind-button';
 import VolumeBar from './volume-bar';
+import RewindButton from './rewind-button';
+import PlayButton from './play-button';
+import WaveformPanel from './waveform-panel';
+import ForwardButton from './forward-button';
 import DurationLabel from './duration-label';
 import PlayerMediator from '../../player/player-mediator';
 
@@ -51,11 +52,7 @@ class SongPlayer extends React.Component {
                             <RewindButton />
                             <PlayButton />
                         </div>
-                        <div className="player-waveform-container" ng-click="onProgressbarClick($event)">
-                            <div className="player-waveform" ng-style="waveformStyle"></div>
-                            <uib-progressbar id="progressbar" className="player-progressbar" value="progressInPercent"
-                                             max="100" type="info"></uib-progressbar>
-                        </div>
+                        <WaveformPanel />
                         <div className="player-control-one">
                             <ForwardButton />
                         </div>
