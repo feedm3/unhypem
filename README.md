@@ -1,9 +1,8 @@
 # [Unhypem](https://unhypem.com)
 
-[![Heroku](http://heroku-badge.herokuapp.com/?app=unhypem&style=flat)](http://unhypem.com)
-[![Build Status](https://semaphoreci.com/api/v1/projects/71955a11-54eb-4082-9cd7-7b6730ed659e/534353/shields_badge.svg)](https://semaphoreci.com/feed-me/unhypem)
-[![Build Status](https://travis-ci.org/feedm3/unhypem.svg?branch=master)](https://travis-ci.org/feedm3/unhypem)
-[![Dependency Status](https://david-dm.org/feedm3/unhypem.svg)](https://david-dm.org/feedm3/unhypem)
+[![Heroku](http://heroku-badge.herokuapp.com/?app=unhypem?style=flat)](http://unhypem.com)
+[![Build Status](https://img.shields.io/travis/feedm3/unhypem.svg?branch=feature-react-es6&style=flat-square)](https://travis-ci.org/feedm3/unhypem)
+[![Dependency Status](https://img.shields.io/david/feedm3/unhypem.svg?style=flat-square)](https://david-dm.org/feedm3/unhypem)
 
 Hear the [hypem charts](http://hypem.com/popular) with the waveform from soundcloud to explore great music faster than ever.
 
