@@ -18,16 +18,7 @@ class SongTable extends React.Component {
         };
     }
 
-    componentDidMount() {
-        PlayerMediator.registerOnSongChangeCallback(this.onSongChang.bind(this));
-        getSongs(songs => {
-            this.setState({
-                'songs': songs
-            });
-        });
-    }
-
-    onSongChang(song) {
+    handleSongChang(song) {
         if (song.id !== this.state.selectedSongId) {
             // get the current selected row. could be 'undefined' on the first click
             const selectedRow = this.refs[`${this.state.selectedSongId}`];
@@ -44,7 +35,7 @@ class SongTable extends React.Component {
     handleRowClick(song) {
         PlayerMediator.setSelectedSong(song);
         PlayerMediator.playSelectedSong();
-        this.onSongChang(song);
+        this.handleSongChang(song);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -57,6 +48,7 @@ class SongTable extends React.Component {
             return <SongTableRow song={song} key={song.position} ref={song.id}
                                  onClick={this.handleRowClick.bind(this, song)}/>;
         });
+
         return (
             <div>
                 <table className="table table-hover">
@@ -76,6 +68,19 @@ class SongTable extends React.Component {
                 <div className="text-center" title="{{dateTime}}">Last updated Bla</div>
             </div>
         );
+    }
+
+    componentDidUpdate() {
+        PlayerMediator.setSelectedSong(this.state.songs[0]);
+    }
+
+    componentDidMount() {
+        PlayerMediator.registerOnSongChangeCallback(this.handleSongChang.bind(this));
+        getSongs(songs => {
+            this.setState({
+                'songs': songs
+            });
+        });
     }
 }
 

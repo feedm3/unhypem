@@ -10,14 +10,16 @@ import getSongs from '../api/songs-api';
 
 class Player {
     constructor() {
-        this.onDurationLoadedCallbacks = [];
+        this.ID_PREFIX = 'UH_'; // soundmanager2 id needs to start with an non-numeric char
+        this.isReady = false;
+        this.onLoadedCallbacks = [];
         this.onProgressCallbacks = [];
+        this.onFinishedCallbacks = [];
         this.currentSongId = '';
         this.soundManager = new SoundManager();
         this.smSound = null; // soundManager creates a smSound for every song. this object holds the playing smSound
 
         this.soundManager.setup({
-            url: '/swfs/',
             flashVersion: 9,
             useFlashBlock: false,
             useHighPerformance: true,
@@ -25,8 +27,10 @@ class Player {
             waitForWindowLoad: true,
             debugMode: false,
             onready: () => {
+                this.isReady = true;
                 getSongs((songs) => {
                     this.preloadSongs(songs);
+                    this.load(songs[0].id);
                 });
             }
         });
@@ -39,7 +43,7 @@ class Player {
             }
             this.soundManager.createSound({
                 url: song.streamUrl,
-                id: song.id,
+                id: this.ID_PREFIX + song.id,
                 stream: true,
                 onload: () => {
                     /**
@@ -50,8 +54,8 @@ class Player {
                      * 3 = loaded/success
                      */
                     if (this.smSound.readyState === 3) {
-                        const seconds = parseInt(this.smSound.duration / 1000, 10);
-                        this.onDurationLoadedCallbacks.forEach(c => c(seconds));
+                        this.smSound = this.soundManager.getSoundById(this.currentSongId);
+                        this.onLoadedCallbacks.forEach(c => c());
                     }
                 },
                 whileplaying: () => {
@@ -61,13 +65,35 @@ class Player {
                     }
                 },
                 onfinish: () => {
-                    console.log('Song finished.');
+                    if (this.onFinishedCallbacks) {
+                        this.onFinishedCallbacks.forEach(c => c());
+                    }
                 }
             });
         });
     }
 
+    load(songId) {
+        if (!this.isReady) {
+            return;
+        }
+
+        songId = this.ID_PREFIX + songId;
+        if (this.currentSongId === songId) {
+            return;
+        }
+        this.currentSongId = songId;
+
+        if (this.smSound) {
+            this.smSound.stop();
+            this.smSound.unload();
+        }
+        this.smSound = this.soundManager.getSoundById(songId);
+        this.soundManager.load(songId);
+    }
+
     play(songId) {
+        songId = this.ID_PREFIX + songId;
         // If same ID wants to be played, just pause the song
         if (this.currentSongId === songId) {
             this.smSound.togglePause();
@@ -78,10 +104,16 @@ class Player {
             this.currentSongId = songId;
             if (this.smSound) {
                 this.smSound.stop();
+                this.smSound.unload();
             }
             this.smSound = this.soundManager.getSoundById(songId);
             this.smSound.play();
         }
+    }
+
+    getDuration() {
+        const seconds = parseInt(this.smSound.duration / 1000, 10);
+        return seconds;
     }
 
     getPositionInSeconds() {
@@ -93,24 +125,17 @@ class Player {
     }
 
     isPlaying() {
+        // todo returns wrong value after loading
         return !this.smSound.paused;
     }
 
     stop(songId) {
+        songId = this.ID_PREFIX + songId;
         this.soundManager.stop(songId);
     }
 
     setVolume(percent = 100) {
         this.soundManager.setVolume(percent);
-    }
-
-    /**
-     * Get notified when the duration of the song is loaded.
-     *
-     * @param callback the callback which gets called with the duration in seconds
-     */
-    registerDurationLoadedCallback(callback) {
-        this.onDurationLoadedCallbacks.push(callback);
     }
 
     /**
@@ -121,13 +146,19 @@ class Player {
     registerOnProgressCallback(callback) {
         this.onProgressCallbacks.push(callback);
     }
-}
 
-const player = new Player();
-player.soundManager.onready(() => {
-    getSongs((songs) => {
-        player.preloadSongs(songs);
-    });
-});
+    /**
+     * Get notified when the song is played.
+     *
+     * @param callback
+     */
+    registerOnFinishedCallback(callback) {
+        this.onFinishedCallbacks.push(callback);
+    }
+
+    registerOnLoadedCallback(callback) {
+        this.onLoadedCallbacks.push(callback);
+    }
+}
 
 export default new Player();
