@@ -22,18 +22,9 @@ class SongPlayer extends React.Component {
         };
     }
 
-    onSongChange(song) {
+    handleSongChange(song) {
         this.setState({
             'song': song
-        });
-    }
-
-    componentDidMount() {
-        PlayerMediator.registerOnSongChangeCallback(this.onSongChange.bind(this));
-        getSongs(songs => {
-            this.setState({
-                'song': songs[0]
-            });
         });
     }
 
@@ -69,6 +60,10 @@ class SongPlayer extends React.Component {
                 </div>
             </div>
         );
+    }
+
+    componentDidMount() {
+        PlayerMediator.registerOnSongChangeCallback(this.handleSongChange.bind(this));
     }
 }
 

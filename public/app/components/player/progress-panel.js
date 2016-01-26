@@ -8,30 +8,24 @@ import React from 'react';
 import PlayerMediator from '../../player/player-mediator';
 
 class ProgressPanel extends React.Component {
-
     constructor() {
         super();
         this.state = {
             duration: 0,
             position: 0
-        }
+        };
     }
 
-    onDurationChange(seconds) {
+    handleSongLoaded() {
         this.setState({
-            duration: seconds
+            duration: PlayerMediator.getDuration()
         });
     }
 
-    onPositionChange(milliseconds) {
+    handlePositionChange(milliseconds) {
         this.setState({
             position: milliseconds
         });
-    }
-
-    componentDidMount() {
-        PlayerMediator.registerOnDurationLoadedCallback(this.onDurationChange.bind(this));
-        PlayerMediator.registerOnProgressCallback(this.onPositionChange.bind(this));
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -43,7 +37,12 @@ class ProgressPanel extends React.Component {
         let percentProgress = 0;
 
         if (duration !== 0) {
-            percentProgress = (position / 1000) / duration * 100;
+            if (position / 1000 >= duration - 1) {
+                // go to 0 before the last seconds
+                percentProgress = 0;
+            } else {
+                percentProgress = (position / 1000) / duration * 100;
+            }
         }
 
         return (
@@ -51,6 +50,11 @@ class ProgressPanel extends React.Component {
                 <div className="player-progressbar-progress" style={{width: percentProgress + '%'}}></div>
             </div>
         );
+    }
+
+    componentDidMount() {
+        PlayerMediator.registerOnLoadedCallback(this.handleSongLoaded.bind(this));
+        PlayerMediator.registerOnProgressCallback(this.handlePositionChange.bind(this));
     }
 }
 

@@ -16,21 +16,16 @@ class DurationLabel extends React.Component {
         };
     }
 
-    onDurationChange(seconds) {
+    handleSongLoaded() {
         this.setState({
-            duration: seconds
+            duration: PlayerMediator.getDuration()
         });
     }
 
-    onPositionChange(millis) {
+    handlePositionChange(millis) {
         this.setState({
             position: millis / 1000
         });
-    }
-
-    componentDidMount() {
-        PlayerMediator.registerOnProgressCallback(this.onPositionChange.bind(this));
-        PlayerMediator.registerOnDurationLoadedCallback(this.onDurationChange.bind(this));
     }
 
     render() {
@@ -41,6 +36,11 @@ class DurationLabel extends React.Component {
                 <span>{position} / {duration}</span>
             </div>
         );
+    }
+
+    componentDidMount() {
+        PlayerMediator.registerOnLoadedCallback(this.handleSongLoaded.bind(this));
+        PlayerMediator.registerOnProgressCallback(this.handlePositionChange.bind(this));
     }
 }
 

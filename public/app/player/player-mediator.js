@@ -15,11 +15,18 @@ let selectedSongPosition = 1;
 const onTogglePauseCallbacks = [];
 const onSongChangeCallbacks = [];
 
-getSongs((popularSongs) => {
-    songs = popularSongs;
-});
-
 const SongsManager = {
+
+    init() {
+        getSongs((popularSongs) => {
+            songs = popularSongs;
+        });
+
+        Player.registerOnFinishedCallback(() => {
+            this.forward();
+        });
+    },
+
     getSongs() {
         return songs;
     },
@@ -34,6 +41,7 @@ const SongsManager = {
         });
         selectedSongPosition = song.position;
         onSongChangeCallbacks.forEach(c => c(song));
+        Player.load(song.id);
     },
 
     forward() {
@@ -75,6 +83,14 @@ const SongsManager = {
         Player.setPositionInPercent(percent);
     },
 
+    getDuration() {
+        return Player.getDuration();
+    },
+
+    registerOnLoadedCallback(callback) {
+        Player.registerOnLoadedCallback(callback);
+    },
+
     registerOnTogglePauseCallback(callback) {
         onTogglePauseCallbacks.push(callback);
     },
@@ -83,13 +99,10 @@ const SongsManager = {
         onSongChangeCallbacks.push(callback);
     },
 
-    registerOnDurationLoadedCallback(callback) {
-        Player.registerDurationLoadedCallback(callback);
-    },
-
     registerOnProgressCallback(callback) {
         Player.registerOnProgressCallback(callback);
     }
 };
 
+SongsManager.init();
 export default SongsManager;

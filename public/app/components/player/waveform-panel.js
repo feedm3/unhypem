@@ -9,7 +9,6 @@ import ProgressPanel from './progress-panel';
 import PlayerMediator from '../../player/player-mediator';
 
 class WaveformPanel extends React.Component {
-
     constructor() {
         super();
         this.state = {
@@ -17,7 +16,7 @@ class WaveformPanel extends React.Component {
         };
     }
 
-    onSongChang(song) {
+    handleSongChange(song) {
         this.setState({
             waveformUrl: song.waveformUrl
         });
@@ -31,10 +30,6 @@ class WaveformPanel extends React.Component {
         PlayerMediator.setPosition(percent);
     }
 
-    componentDidMount() {
-        PlayerMediator.registerOnSongChangeCallback(this.onSongChang.bind(this));
-    }
-
     render() {
         const waveformStyle = {backgroundImage: `url('${this.state.waveformUrl}')`};
 
@@ -44,6 +39,10 @@ class WaveformPanel extends React.Component {
                 <ProgressPanel />
             </div>
         );
+    }
+
+    componentDidMount() {
+        PlayerMediator.registerOnSongChangeCallback(this.handleSongChange.bind(this));
     }
 }
 

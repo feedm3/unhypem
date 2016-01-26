@@ -26,10 +26,6 @@ class PlayButton extends React.Component {
         });
     }
 
-    componentDidMount() {
-        PlayerMediator.registerOnTogglePauseCallback(this.onTogglePlay.bind(this));
-    }
-
     render() {
         let buttonStyle = 'btn button button-play no-select';
         if (this.state.isPlaying) {
@@ -42,6 +38,10 @@ class PlayButton extends React.Component {
                 <span className="hide">Play</span>
             </button>
         );
+    }
+
+    componentDidMount() {
+        PlayerMediator.registerOnTogglePauseCallback(this.onTogglePlay.bind(this));
     }
 }
 
