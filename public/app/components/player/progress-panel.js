@@ -18,7 +18,8 @@ class ProgressPanel extends React.Component {
 
     handleSongLoaded() {
         this.setState({
-            duration: PlayerMediator.getDuration()
+            duration: PlayerMediator.getDuration(),
+            position: 0
         });
     }
 
