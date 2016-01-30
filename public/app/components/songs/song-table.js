@@ -18,7 +18,7 @@ class SongTable extends React.Component {
         };
     }
 
-    handleSongChang(song) {
+    handleSongChange(song) {
         if (song.id !== this.state.selectedSongId) {
             // get the current selected row. could be 'undefined' on the first click
             const selectedRow = this.refs[`${this.state.selectedSongId}`];
@@ -35,7 +35,7 @@ class SongTable extends React.Component {
     handleRowClick(song) {
         PlayerMediator.setSelectedSong(song);
         PlayerMediator.playSelectedSong();
-        this.handleSongChang(song);
+        this.handleSongChange(song);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -75,7 +75,7 @@ class SongTable extends React.Component {
     }
 
     componentDidMount() {
-        PlayerMediator.registerOnSongChangeCallback(this.handleSongChang.bind(this));
+        PlayerMediator.registerOnSongChangeCallback(this.handleSongChange.bind(this));
         getSongs(songs => {
             this.setState({
                 'songs': songs

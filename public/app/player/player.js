@@ -12,6 +12,7 @@ class Player {
     constructor() {
         this.ID_PREFIX = 'UH_'; // soundmanager2 id needs to start with an non-numeric char
         this.isReady = false;
+        this.isSongPlaying = false; // smSound.paused doesn't work correctly so we have to manually keep track of the playing state
         this.onLoadedCallbacks = [];
         this.onProgressCallbacks = [];
         this.onFinishedCallbacks = [];
@@ -45,6 +46,7 @@ class Player {
                 url: song.streamUrl,
                 id: this.ID_PREFIX + song.id,
                 stream: true,
+                autoPlay: false,
                 onload: () => {
                     /**
                      * readyState
@@ -97,6 +99,7 @@ class Player {
         // If same ID wants to be played, just pause the song
         if (this.currentSongId === songId) {
             this.smSound.togglePause();
+            this.isSongPlaying = !this.smSound.paused;
         } else {
             // If new song wants to be played
             // reset the previous so it doesn't start
@@ -108,6 +111,7 @@ class Player {
             }
             this.smSound = this.soundManager.getSoundById(songId);
             this.smSound.play();
+            this.isSongPlaying = true;
         }
     }
 
@@ -125,8 +129,8 @@ class Player {
     }
 
     isPlaying() {
-        // todo returns wrong value after loading
-        return !this.smSound.paused;
+        // !this.smSound.paused doesn't work correctly!
+        return this.isSongPlaying;
     }
 
     stop(songId) {
