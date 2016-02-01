@@ -6,7 +6,7 @@
   "author": "Fabian Dietenberger <piano.fabian@t-online.de>",
   "private": true,
   "scripts": {
-    "build": "npm run build-front",
+    "postinstall": "npm run build-front",
     "start": "node ./bin/www6",
     "start-watch": "nodemon ./bin/www6 --ignore public/ --ignore test/ --exec babel-node --presets es2015",
     "start-front": "webpack-dev-server",
