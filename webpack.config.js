@@ -2,11 +2,27 @@
  * @author Fabian Dietenberger
  */
 
+'use strict';
+
+require('dotenv').load();
+
 const path = require('path');
-// const webpack = require('webpack');
+const webpack = require('webpack');
+
+const plugins = [];
+let devtool = 'eval-source-map';
+
+console.log(process.env.NODE_ENV);
+
+if (process.env.NODE_ENV === 'production') {
+    plugins.push(new webpack.optimize.UglifyJsPlugin({minimize: true, compress: { warnings: false }}));
+    plugins.push(new webpack.optimize.DedupePlugin());
+    plugins.push(new webpack.optimize.OccurrenceOrderPlugin());
+    devtool = 'source-map';
+}
 
 module.exports = {
-    devtool: 'eval-source-map',
+    devtool: devtool,
     entry: './public/app/main.js',
     output: {
         path: path.resolve(__dirname, './public'),
@@ -18,9 +34,7 @@ module.exports = {
         port: 3333,
         contentBase: 'public'
     },
-    // plugins: [ // uncomment to minimize
-    //    new webpack.optimize.UglifyJsPlugin({minimize: true})
-    // ],
+    plugins: plugins,
     module: {
         loaders: [
             {
