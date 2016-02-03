@@ -24,7 +24,14 @@ function requestSongs(done) {
     callbacks.push(done);
     if (callbacks.length >= 2) return;
 
-    request.get('http://localhost:3000/popular')
+    // in production the host is the same as the page but in development mode the host is
+    // on a different port
+    let host = '/';
+    if (window.location.hostname === 'localhost') {
+        host = 'http://localhost:3000/';
+    }
+
+    request.get(host + 'popular')
         .end((err, response) => {
             if (err) throw err;
 
