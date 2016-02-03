@@ -10,8 +10,8 @@ import ChartsModel from '../model/charts-model';
 import ChartsSongsModel from '../model/charts-songs-model';
 
 /**
- * Delete every chart entry in the database except the 10 latest.
- * Does not effect the songs!
+ * Delete every chart entry in the database except the latest 10.
+ * This does not effect the songs!
  *
  * @param numberOfChartsToKeep {number} the number of charts to keep (latest)
  * @param {Function}[done] gets called when all charts are deleted
@@ -22,6 +22,7 @@ function deleteChartsHistory(numberOfChartsToKeep, done) {
         .latest()
         .fetch()
         .then(function(chart) {
+            if (chart === 'undefined') return;
             const chartId = chart.get('id');
             const chartsToDelete = chartId - numberOfChartsToKeep + 1;
             ChartsSongsModel
