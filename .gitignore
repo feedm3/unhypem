@@ -80,3 +80,4 @@ node_modules
 ### Custom
 .env
 public/bundle.js
+public/bundle.js.map
