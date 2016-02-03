@@ -179,9 +179,14 @@ const HypemCrawler = function() {
         };
         request(options, function(error, response) {
             if (!error && response.statusCode === 200) {
-                callback(null, JSON.parse(response.body));
+                try {
+                    const bodyObject = JSON.parse(response.body);
+                    callback(null, bodyObject);
+                } catch(error) {
+                    callback(new Error('Could not parse response body from soundcloud. Url: ' + options.url));
+                }
             } else {
-                callback(new Error('Error resolving soundcloud properties from ' + soundcloudUrl));
+                callback(new Error('Error resolving soundcloud properties from ' + options.url));
             }
         });
     }
