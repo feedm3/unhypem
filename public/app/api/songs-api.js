@@ -24,7 +24,7 @@ function requestSongs(done) {
     callbacks.push(done);
     if (callbacks.length >= 2) return;
 
-    request.get('/popular')
+    request.get('http://localhost:3000/popular')
         .end((err, response) => {
             if (err) throw err;
 
