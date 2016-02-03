@@ -8,6 +8,7 @@ import { CronJob } from 'cron';
 import * as logger from 'winston';
 import ChartsModel from '../model/charts-model';
 import ChartsSongsModel from '../model/charts-songs-model';
+import _ from 'lodash';
 
 /**
  * Delete every chart entry in the database except the latest 10.
@@ -22,7 +23,7 @@ function deleteChartsHistory(numberOfChartsToKeep, done) {
         .latest()
         .fetch()
         .then(function(chart) {
-            if (chart === 'undefined') return;
+            if (_.isNull(chart)) return;
             const chartId = chart.get('id');
             const chartsToDelete = chartId - numberOfChartsToKeep + 1;
             ChartsSongsModel
