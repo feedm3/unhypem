@@ -26,6 +26,7 @@
     "async": "^1.5.2",
     "body-parser": "~1.14.2",
     "bookshelf": "^0.9.1",
+    "compression": "^1.6.1",
     "cookie-parser": "~1.4.1",
     "cors": "^2.7.1",
     "cron": "~1.1.0",
