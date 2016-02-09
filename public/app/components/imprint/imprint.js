@@ -5,16 +5,18 @@
 'use strict';
 
 import React from 'react';
+import contactAdressSrc from '../../../assets/img/contact_adress.png';
+import contactMailSrc from '../../../assets/img/contact_mail.png';
 
 export default () => {
     return (
         <div>
             <h1>Impressum</h1>
             <h2>Angaben gemäß § 5 TMG:</h2>
-            <img src={'assets/img/contact.png'}/>
+            <img src={contactAdressSrc}/>
             <h2>Kontakt:</h2>
             <span>E-Mail: </span>
-            <img src={'assets/img/mail.png'}/>
+            <img src={contactMailSrc}/>
             <p>Quelle: <em><a href={'http://www.e-recht24.de'} target={'_blank'}>http://www.e-recht24.de</a></em></p>
 
             <h1>Haftungsausschluss (Disclaimer)</h1>

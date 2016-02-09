@@ -7,7 +7,7 @@
 }
 
 .player-info {
-    flex: 0 0 130px; /*grow | shrink | basis*/
+    flex: 0 0 130px; /* grow | shrink | basis */
     max-width: 130px;
 }
 
@@ -30,9 +30,10 @@
 }
 
 .volumebar-icon-plus {
-    background-image: url("../img/volume-plus-icon-16.png");
     width: 16px;
     height: 16px;
+    background-image: url("../img/ic_volume_up_black_24px.svg");
+    background-size: 16px 16px;
 }
 
 .volumebar-progress {
@@ -54,22 +55,23 @@
     left: 0;
     transition: .4s width;
 }
-
 .volumebar-icon-minus {
-    background-image: url("../img/volume-minus-icon-16.png");
     width: 16px;
     height: 16px;
+    background-image: url("../img/ic_volume_mute_black_24px.svg");
+    background-size: 16px 16px;
 }
+
 
 .player-control-one {
     flex: 0 0 45px;
-    padding: 0 10px;
+    padding: 0 10px 0 5px;
     line-height: 80px;
 }
 
 .player-control-two {
-    flex: 0 0 90px;
-    padding: 0 10px;
+    flex: 0 0 95px;
+    padding: 0 5px 0 10px;
     line-height: 80px;
 }
 

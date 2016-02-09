@@ -29,7 +29,7 @@ class PlayButton extends React.Component {
     render() {
         let buttonStyle = 'btn button button-play no-select';
         if (this.state.isPlaying) {
-            buttonStyle += ' button-stop';
+            buttonStyle += ' button-pause';
         } else {
             buttonStyle += ' button-play';
         }
