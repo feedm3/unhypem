@@ -4,18 +4,19 @@
 
 'use strict';
 
-require('dotenv').load();
+require('dotenv').config();
 
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const plugins = [];
+let devtool = 'eval-source-map';
+
 plugins.push(new ExtractTextPlugin('styles.css', {
     publicPath: '/styles/',
     allChunks: true
 }));
-let devtool = 'eval-source-map';
 
 if (process.env.NODE_ENV === 'production') {
     plugins.push(new webpack.optimize.UglifyJsPlugin({minimize: true, compress: {warnings: false}}));

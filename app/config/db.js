@@ -4,7 +4,7 @@
 
 'use strict';
 
-require('dotenv').load();
+require('dotenv').config();
 
 const knex = require('knex')({
     pool: {

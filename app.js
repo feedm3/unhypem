@@ -1,6 +1,6 @@
 'use strict';
 
-require('dotenv').load();
+require('dotenv').config();
 require('./app/config/log'); // configure logger
 
 import express from 'express';
