@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "async": "^1.5.1",
-    "body-parser": "~1.14.1",
+    "body-parser": "~1.15.0",
     "bookshelf": "^0.9.1",
     "cookie-parser": "~1.4.0",
     "cron": "~1.1.0",
