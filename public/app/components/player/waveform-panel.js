@@ -42,7 +42,7 @@ class WaveformPanel extends React.Component {
     }
 
     componentDidMount() {
-        PlayerMediator.registerOnSongChangeCallback(this.handleSongChange.bind(this));
+        PlayerMediator.registerOnSongChangeCallback("WaveformPanel", this.handleSongChange.bind(this));
     }
 }
 

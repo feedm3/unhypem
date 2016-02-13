@@ -63,7 +63,7 @@ class SongPlayer extends React.Component {
     }
 
     componentDidMount() {
-        PlayerMediator.registerOnSongChangeCallback(this.handleSongChange.bind(this));
+        PlayerMediator.registerOnSongChangeCallback("PlayerPanel", this.handleSongChange.bind(this));
     }
 }
 
