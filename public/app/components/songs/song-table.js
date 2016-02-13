@@ -7,6 +7,7 @@
 import React from 'react';
 import SongTableRow from './song-table-row';
 import getSongs from '../../api/songs-api';
+import _ from 'lodash';
 import PlayerMediator from '../../player/player-mediator';
 
 class SongTable extends React.Component {
@@ -39,14 +40,13 @@ class SongTable extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        // only re-render the whole table when the songs have changed
-        return nextState.songs !== this.state.songs;
+        return !_.isEqual(this.state.songs, nextState.songs);
     }
 
     render() {
         const songTableRows = this.state.songs.map((song, index) => {
             return <SongTableRow song={song} key={song.position} ref={song.id}
-                                 onClick={this.handleRowClick.bind(this, song)}/>;
+                                 onClick={ () => this.handleRowClick(song) }/>;
         });
 
         return (
@@ -75,12 +75,16 @@ class SongTable extends React.Component {
     }
 
     componentDidMount() {
-        PlayerMediator.registerOnSongChangeCallback(this.handleSongChange.bind(this));
+        PlayerMediator.registerOnSongChangeCallback('SongTable', this.handleSongChange.bind(this));
         getSongs(songs => {
             this.setState({
                 'songs': songs
             });
         });
+    }
+
+    componentWillUnmount() {
+        PlayerMediator.removeOnSongChangeCallback('SongTable');
     }
 }
 

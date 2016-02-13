@@ -13,7 +13,7 @@ let songs = null;
 let selectedSongPosition = 1;
 
 const onTogglePauseCallbacks = [];
-const onSongChangeCallbacks = [];
+let onSongChangeCallbacks = [];
 
 const SongsManager = {
 
@@ -40,7 +40,7 @@ const SongsManager = {
             return song.id === songToSelect.id;
         });
         selectedSongPosition = song.position;
-        onSongChangeCallbacks.forEach(c => c(song));
+        onSongChangeCallbacks.forEach(c => c.callback(song));
         Player.load(song.id);
     },
 
@@ -95,8 +95,17 @@ const SongsManager = {
         onTogglePauseCallbacks.push(callback);
     },
 
-    registerOnSongChangeCallback(callback) {
-        onSongChangeCallbacks.push(callback);
+    registerOnSongChangeCallback(id, callback) {
+        onSongChangeCallbacks.push({id, callback});
+    },
+
+    removeOnSongChangeCallback(id) {
+        // TODO remove callbacks from destroy components on all arrays
+        onSongChangeCallbacks.forEach(storedCallback => {
+            if (storedCallback.id === id) {
+                onSongChangeCallbacks.splice(onSongChangeCallbacks.indexOf(storedCallback), 1);
+            }
+        });
     },
 
     registerOnProgressCallback(callback) {
