@@ -9,11 +9,11 @@ import Template from './tempalte';
 import SongTable from './songs/song-table';
 import About from './about/about';
 import Imprint from './imprint/imprint';
-import { Router, Route, IndexRoute } from 'react-router';
+import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 
 export default () => {
     return (
-        <Router>
+        <Router history={hashHistory}>
             <Route path="/" component={Template}>
                 <IndexRoute component={SongTable}/>
                 <Route path="about" component={About}/>
