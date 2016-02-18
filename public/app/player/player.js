@@ -5,7 +5,8 @@
 'use strict';
 
 import { SoundManager } from 'soundmanager2';
-import _ from 'lodash';
+import forEach from 'lodash/forEach';
+import isString from 'lodash/isString';
 import getSongs from '../api/songs-api';
 
 class Player {
@@ -38,8 +39,8 @@ class Player {
     }
 
     preloadSongs(songs) {
-        _.forEach(songs, (song) => {
-            if (!_.isString(song.streamUrl)) {
+        forEach(songs, (song) => {
+            if (!isString(song.streamUrl)) {
                 return;
             }
             this.soundManager.createSound({

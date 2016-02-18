@@ -7,7 +7,7 @@
 import React from 'react';
 import SongTableRow from './song-table-row';
 import getSongs from '../../api/songs-api';
-import _ from 'lodash';
+import isEqual from 'lodash/isEqual';
 import PlayerMediator from '../../player/player-mediator';
 
 class SongTable extends React.Component {
@@ -30,6 +30,7 @@ class SongTable extends React.Component {
             this.setState({
                 selectedSongId: song.id
             });
+            // gets called twice!
         }
     }
 
@@ -40,11 +41,16 @@ class SongTable extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return !_.isEqual(this.state.songs, nextState.songs);
+        return !isEqual(this.state.songs, nextState.songs);
     }
 
     render() {
+        console.log('Selected song: ' + this.state.selectedSongId);
+
         const songTableRows = this.state.songs.map((song, index) => {
+            if (index === this.state.selectedSongId) {
+                console.log('Song already selected: ' + index);
+            }
             return <SongTableRow song={song} key={song.position} ref={song.id}
                                  onClick={ () => this.handleRowClick(song) }/>;
         });
