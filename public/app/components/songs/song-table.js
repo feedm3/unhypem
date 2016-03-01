@@ -6,16 +6,18 @@
 
 import React from 'react';
 import SongTableRow from './song-table-row';
-import getSongs from '../../api/songs-api';
+import { getSongsAndTimestamp } from '../../api/songs-api';
 import isEqual from 'lodash/isEqual';
 import PlayerMediator from '../../player/player-mediator';
+import moment from 'moment/min/moment.min';
 
 class SongTable extends React.Component {
     constructor() {
         super();
         this.state = {
             songs: [],
-            selectedSongId: 0
+            selectedSongId: 0,
+            timestamp: ''
         };
     }
 
@@ -45,8 +47,7 @@ class SongTable extends React.Component {
     }
 
     render() {
-        console.log('Selected song: ' + this.state.selectedSongId);
-
+        const timestamp = this.state.timestamp;
         const songTableRows = this.state.songs.map((song, index) => {
             if (index === this.state.selectedSongId) {
                 console.log('Song already selected: ' + index);
@@ -71,7 +72,7 @@ class SongTable extends React.Component {
                     {songTableRows}
                     </tbody>
                 </table>
-                <div className="text-center" title="{{dateTime}}">Last updated Bla</div>
+                <div className="text-center" title={timestamp}>Last updated {moment(timestamp).fromNow()}</div>
             </div>
         );
     }
@@ -82,9 +83,10 @@ class SongTable extends React.Component {
 
     componentDidMount() {
         PlayerMediator.registerOnSongChangeCallback('SongTable', this.handleSongChange.bind(this));
-        getSongs(songs => {
+        getSongsAndTimestamp(songsAndTimestamp => {
             this.setState({
-                'songs': songs
+                'songs': songsAndTimestamp.songs,
+                'timestamp': songsAndTimestamp.timestamp
             });
         });
     }

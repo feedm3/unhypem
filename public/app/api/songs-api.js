@@ -7,6 +7,7 @@
 import request from 'superagent';
 
 let songs = [];
+let timestamp = '';
 let callbacks = [];
 
 /**
@@ -37,14 +38,27 @@ function requestSongs(done) {
 
             const popular = JSON.parse(response.text);
             songs = popular.songs;
+            timestamp = popular.timestamp;
 
             callbacks.forEach(done => done());
             callbacks = [];
         });
 }
 
+function requestSongsAndTimestamp(done) {
+    if (timestamp === '') {
+        requestSongs(() => {
+            done({timestamp, songs});
+        });
+    }
+}
+
 export default function getSongs(callback) {
     requestSongs(function() {
         callback(songs);
     });
+}
+
+export function getSongsAndTimestamp(callback) {
+    requestSongsAndTimestamp(callback);
 }
