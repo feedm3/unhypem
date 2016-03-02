@@ -5,6 +5,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import App from './components/app';
+//import SongDispatcher from './dispatcher/song-dispatcher';
 import '../assets/css/style.css';
 import '../assets/css/buttons.css';
 import '../assets/css/player.css';
