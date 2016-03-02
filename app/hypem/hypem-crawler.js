@@ -143,6 +143,7 @@ const HypemCrawler = function() {
                             if (properties.stream_url) {
                                 song.streamUrl = properties.stream_url;
                             }
+                            song.duration = properties.duration;
                             song.soundcloudId = properties.id;
                             song.waveformUrl = properties.waveform_url;
                         }

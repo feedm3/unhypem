@@ -150,6 +150,7 @@ function crawlAndSavePopularSongs(done) {
             const songToSave = {
                 artist: hypemSong.artist,
                 title: hypemSong.title,
+                duration: hypemSong.duration,
                 hypemMediaId: hypemSong.mediaid,
                 hypemLovedCount: hypemSong.loved_count,
                 streamUrl: hypemSong.streamUrl,
