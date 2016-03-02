@@ -14,6 +14,7 @@ const up = function(knex) {
                 table.increments('id').primary();
                 table.string('artist');
                 table.string('title');
+                table.integer('duration', 9);
                 table.string('hypemMediaId', 10);
                 table.integer('hypemLovedCount', 7); // must be in own table with timestamp (love history)
                 table.string('streamUrl');
