@@ -27,6 +27,10 @@ class SongPlayer extends React.Component {
         });
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextState.song.id !== this.state.song.id;
+    }
+
     render() {
         const { song } = this.state;
         return (

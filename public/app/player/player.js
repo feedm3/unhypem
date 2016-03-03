@@ -39,8 +39,6 @@ class Player {
     }
 
     handleCurrentSongUpdate(songInfo) {
-        console.log('handle');
-
         const newSong = songInfo.song;
         const newPlayingState = songInfo.state;
 
@@ -102,8 +100,6 @@ class Player {
      * Play the current selected song.
      */
     play() {
-        console.log('play start');
-
         const songId = this.ID_PREFIX + this.currentSong.id;
         if (!this.smSound || this.smSound.id !== songId) {
             if (this.smSound) {
@@ -122,7 +118,6 @@ class Player {
             }
         }
         this.isSongPlaying = true;
-        console.log('play ende');
     }
 
     /**
