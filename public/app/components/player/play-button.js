@@ -34,6 +34,10 @@ class PlayButton extends React.Component {
         });
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextState.songState !== this.state.songState;
+    }
+
     render() {
         let buttonStyle = 'btn button button-play no-select';
         if (this.state.songState === SONG_STATE.PLAYING) {
