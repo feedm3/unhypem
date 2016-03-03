@@ -14,12 +14,18 @@ export default {
     SELECT_SONG: 'SELECT_SONG',
 
     /**
-     * Select the position of the current song. Put the position (in millis) into the state.
+     * Select the position of the current song. Put the position (in percent) into the state.
      */
-    SELECT_POSITION: 'SELECT_POSITION',
+    SELECT_POSITION_IN_PERCENT: 'SELECT_POSITION_IN_PERCENT',
 
     /**
-     * Play the current song. Put the position (in millis) into the state.
+     * Select the position of the current song. This forces the player to play at the given song. Put the position (in
+     * percent) into the state.
+     */
+    FORCE_POSITION_IN_PERCENT: 'FORCE_POSITION_IN_PERCENT',
+
+    /**
+     * Play the current song. No state.
      */
     PLAY: 'PLAY_SONG',
 
@@ -27,6 +33,11 @@ export default {
      * Pause the current song. No state.
      */
     PAUSE: 'PAUSE_SONG',
+
+    /**
+     * If the song is playing pause it, if the song is paused play it. No state
+     */
+    TOGGLE_PLAY: 'TOGGLE_PLAY',
 
     /**
      * Play the next song. No state.
@@ -41,5 +52,10 @@ export default {
     /**
      * Change the volume of the player. Put the volume (in percent) into the state.
      */
-    CHANGE_VOLUME: 'CHANGE_VOLUME'
+    CHANGE_VOLUME: 'CHANGE_VOLUME',
+
+    /**
+     * Get the current popular song infos. No state
+     */
+    GET_ALL_SONGS: 'GET_ALL_SONGS'
 };

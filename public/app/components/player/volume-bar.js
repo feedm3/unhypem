@@ -5,7 +5,8 @@
 'use strict';
 
 import React from 'react';
-import Player from '../../player/player';
+import songDispatcher from '../../dispatcher/song-dispatcher';
+import ACTION from '../../constants/action';
 
 class VolumeBar extends React.Component {
     constructor() {
@@ -22,7 +23,7 @@ class VolumeBar extends React.Component {
         const clickedWidth = volumeBarRef.nativeEvent.layerX;
         const percent = clickedWidth / width * 100;
 
-        Player.setVolume(percent);
+        songDispatcher.dispatch(ACTION.CHANGE_VOLUME, percent);
 
         this.setState({
             volumePercent: percent

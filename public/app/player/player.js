@@ -4,20 +4,17 @@
 
 'use strict';
 
-import { SoundManager } from 'soundmanager2';
+import { SoundManager } from 'soundmanager2/script/soundmanager2-nodebug-jsmin';
 import forEach from 'lodash/forEach';
 import isString from 'lodash/isString';
-import getSongs from '../api/songs-api';
+import songDispatcher from '../dispatcher/song-dispatcher';
+import ACTION from '../constants/action';
+import SONG_STATE from '../constants/song-state';
 
 class Player {
     constructor() {
         this.ID_PREFIX = 'UH_'; // soundmanager2 id needs to start with an non-numeric char
-        this.isReady = false;
-        this.isSongPlaying = false; // smSound.paused doesn't work correctly so we have to manually keep track of the playing state
-        this.onLoadedCallbacks = [];
-        this.onProgressCallbacks = [];
-        this.onFinishedCallbacks = [];
-        this.currentSongId = '';
+        this.currentSong = {};
         this.soundManager = new SoundManager();
         this.smSound = null; // soundManager creates a smSound for every song. this object holds the playing smSound
 
@@ -30,12 +27,39 @@ class Player {
             debugMode: false,
             onready: () => {
                 this.isReady = true;
-                getSongs((songs) => {
-                    this.preloadSongs(songs);
-                    this.load(songs[0].id);
-                });
+                songDispatcher.registerOnAllSongsUpdate('Player', this.handleAllSongsUpdate.bind(this));
+                songDispatcher.registerOnCurrentSongUpdate('Player', this.handleCurrentSongUpdate.bind(this));
+                songDispatcher.dispatch(ACTION.GET_ALL_SONGS);
             }
         });
+    }
+
+    handleAllSongsUpdate(songsInfo) {
+        this.preloadSongs(songsInfo.songs);
+    }
+
+    handleCurrentSongUpdate(songInfo) {
+        console.log('handle');
+
+        const newSong = songInfo.song;
+        const newPlayingState = songInfo.state;
+
+        if (!this.currentSong || newSong.id !== this.currentSong.id) {
+            this.currentSong = newSong;
+        }
+        switch (newPlayingState) {
+            case SONG_STATE.PLAYING:
+                this.play();
+                break;
+            case SONG_STATE.PAUSED:
+                this.pause();
+                break;
+        }
+        if (songInfo.positionUpdate) {
+            console.log('update position', songInfo.positionUpdatePosition);
+            songInfo.positionUpdate = false;
+            this.setPositionInPercent(songInfo.positionUpdatePosition);
+        }
     }
 
     preloadSongs(songs) {
@@ -56,63 +80,57 @@ class Player {
                      * 2 = failed/error
                      * 3 = loaded/success
                      */
-                    if (this.smSound.readyState === 3) {
-                        this.smSound = this.soundManager.getSoundById(this.currentSongId);
-                        this.onLoadedCallbacks.forEach(c => c());
-                    }
+                    //if (this.smSound.readyState === 3) {
+                    //    this.smSound = this.soundManager.getSoundById(this.currentSongId);
+                    //    this.onLoadedCallbacks.forEach(c => c());
+                    //}
                 },
                 whileplaying: () => {
-                    if (this.onProgressCallbacks) {
-                        const millis = this.smSound.position;
-                        this.onProgressCallbacks.forEach(c => c(millis));
-                    }
+                    const durationInMillis = this.currentSong.duration;
+                    const positionInMillis = parseInt(this.smSound.position, 10);
+                    const positionInPercent = (positionInMillis / durationInMillis) * 100;
+                    songDispatcher.dispatch(ACTION.SELECT_POSITION_IN_PERCENT, positionInPercent);
                 },
                 onfinish: () => {
-                    if (this.onFinishedCallbacks) {
-                        this.onFinishedCallbacks.forEach(c => c());
-                    }
+                    songDispatcher.dispatch(ACTION.FORWARD);
                 }
             });
         });
     }
 
-    load(songId) {
-        if (!this.isReady) {
-            return;
-        }
+    /**
+     * Play the current selected song.
+     */
+    play() {
+        console.log('play start');
 
-        songId = this.ID_PREFIX + songId;
-        if (this.currentSongId === songId) {
-            return;
-        }
-        this.currentSongId = songId;
-
-        if (this.smSound) {
-            this.smSound.stop();
-            this.smSound.unload();
-        }
-        this.smSound = this.soundManager.getSoundById(songId);
-        this.soundManager.load(songId);
-    }
-
-    play(songId) {
-        songId = this.ID_PREFIX + songId;
-        // If same ID wants to be played, just pause the song
-        if (this.currentSongId === songId) {
-            this.smSound.togglePause();
-            this.isSongPlaying = !this.smSound.paused;
-        } else {
-            // If new song wants to be played
-            // reset the previous so it doesn't start
-            // playing in the last position if restarted
-            this.currentSongId = songId;
+        const songId = this.ID_PREFIX + this.currentSong.id;
+        if (!this.smSound || this.smSound.id !== songId) {
             if (this.smSound) {
                 this.smSound.stop();
                 this.smSound.unload();
             }
             this.smSound = this.soundManager.getSoundById(songId);
-            this.smSound.play();
+            if (this.smSound) {
+                this.smSound.play();
+            }
             this.isSongPlaying = true;
+        } else {
+            const isPlaying = !this.smSound.paused;
+            if (!isPlaying) {
+                this.smSound.play();
+            }
+        }
+        this.isSongPlaying = true;
+        console.log('play ende');
+    }
+
+    /**
+     * Pause the current selected song.
+     */
+    pause() {
+        if (this.smSound) {
+            this.smSound.pause();
         }
     }
 
@@ -129,40 +147,8 @@ class Player {
         this.smSound.setPosition(this.smSound.duration / 100 * percent);
     }
 
-    isPlaying() {
-        // !this.smSound.paused doesn't work correctly!
-        return this.isSongPlaying;
-    }
-
-    stop(songId) {
-        songId = this.ID_PREFIX + songId;
-        this.soundManager.stop(songId);
-    }
-
     setVolume(percent = 100) {
         this.soundManager.setVolume(percent);
-    }
-
-    /**
-     * Get notified when the position changes while the song plays.
-     *
-     * @param callback the callback which gets called with the current position in millis
-     */
-    registerOnProgressCallback(callback) {
-        this.onProgressCallbacks.push(callback);
-    }
-
-    /**
-     * Get notified when the song is played.
-     *
-     * @param callback
-     */
-    registerOnFinishedCallback(callback) {
-        this.onFinishedCallbacks.push(callback);
-    }
-
-    registerOnLoadedCallback(callback) {
-        this.onLoadedCallbacks.push(callback);
     }
 }
 

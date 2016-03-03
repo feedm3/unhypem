@@ -5,14 +5,13 @@
 'use strict';
 
 import React from 'react';
-import getSongs from '../../api/songs-api';
 import VolumeBar from './volume-bar';
 import RewindButton from './rewind-button';
 import PlayButton from './play-button';
 import WaveformPanel from './waveform-panel';
 import ForwardButton from './forward-button';
 import DurationLabel from './duration-label';
-import PlayerMediator from '../../player/player-mediator';
+import songDispatcher from '../../dispatcher/song-dispatcher';
 
 class SongPlayer extends React.Component {
     constructor() {
@@ -22,9 +21,9 @@ class SongPlayer extends React.Component {
         };
     }
 
-    handleSongChange(song) {
+    handleCurrentSongUpdate(songInfo) {
         this.setState({
-            'song': song
+            'song': songInfo.song
         });
     }
 
@@ -63,7 +62,7 @@ class SongPlayer extends React.Component {
     }
 
     componentDidMount() {
-        PlayerMediator.registerOnSongChangeCallback("PlayerPanel", this.handleSongChange.bind(this));
+        songDispatcher.registerOnCurrentSongUpdate('PlayerPanel', this.handleCurrentSongUpdate.bind(this));
     }
 }
 

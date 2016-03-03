@@ -6,56 +6,56 @@
 
 import React from 'react';
 import SongTableRow from './song-table-row';
-import { getSongsAndTimestamp } from '../../api/songs-api';
-import isEqual from 'lodash/isEqual';
-import PlayerMediator from '../../player/player-mediator';
+import songDispatcher from '../../dispatcher/song-dispatcher';
+import ACTION from '../../constants/action';
 import moment from 'moment/min/moment.min';
 
 class SongTable extends React.Component {
     constructor() {
         super();
+        this.currentSelectedSongId = 0;
         this.state = {
             songs: [],
-            selectedSongId: 0,
+            currentSong: {},
             timestamp: ''
         };
     }
 
-    handleSongChange(song) {
-        if (song.id !== this.state.selectedSongId) {
-            // get the current selected row. could be 'undefined' on the first click
-            const selectedRow = this.refs[`${this.state.selectedSongId}`];
-            if (selectedRow) selectedRow.setSelected(false);
+    handleAllSongsUpdate(songsInfo) {
+        this.setState({
+            songs: songsInfo.songs,
+            timestamp: songsInfo.timestamp
+        });
+    }
 
-            // select the specific row
-            this.refs[`${song.id}`].setSelected(true);
-            this.setState({
-                selectedSongId: song.id
-            });
-            // gets called twice!
-        }
+    handleCurrentSongUpdate(songInfo) {
+        // get the current selected row. could be 'undefined' on the first click
+        const selectedRow = this.refs[`${this.currentSelectedSongId}`];
+        if (selectedRow) selectedRow.setSelected(false);
+
+        // select the new one
+        this.currentSelectedSongId = songInfo.song.id;
+        this.refs[`${this.currentSelectedSongId}`].setSelected(true);
     }
 
     handleRowClick(song) {
-        PlayerMediator.setSelectedSong(song);
-        PlayerMediator.playSelectedSong();
-        this.handleSongChange(song);
+        if (this.currentSelectedSongId === song.id) {
+            songDispatcher.dispatch(ACTION.TOGGLE_PLAY);
+        } else {
+            songDispatcher.dispatch(ACTION.SELECT_SONG, song);
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return !isEqual(this.state.songs, nextState.songs);
+        return nextState.timestamp !== this.state.timestamp;
     }
 
     render() {
         const timestamp = this.state.timestamp;
-        const songTableRows = this.state.songs.map((song, index) => {
-            if (index === this.state.selectedSongId) {
-                console.log('Song already selected: ' + index);
-            }
+        const songTableRows = this.state.songs.map((song) => {
             return <SongTableRow song={song} key={song.position} ref={song.id}
                                  onClick={ () => this.handleRowClick(song) }/>;
         });
-
         return (
             <div>
                 <table className="table table-hover">
@@ -77,22 +77,15 @@ class SongTable extends React.Component {
         );
     }
 
-    componentDidUpdate() {
-        PlayerMediator.setSelectedSong(this.state.songs[0]);
-    }
-
     componentDidMount() {
-        PlayerMediator.registerOnSongChangeCallback('SongTable', this.handleSongChange.bind(this));
-        getSongsAndTimestamp(songsAndTimestamp => {
-            this.setState({
-                'songs': songsAndTimestamp.songs,
-                'timestamp': songsAndTimestamp.timestamp
-            });
-        });
+        songDispatcher.registerOnAllSongsUpdate('SongTable', this.handleAllSongsUpdate.bind(this));
+        songDispatcher.registerOnCurrentSongUpdate('SongTable', this.handleCurrentSongUpdate.bind(this));
+        songDispatcher.dispatch(ACTION.GET_ALL_SONGS); // TODO maybe notify every component directly after it is registered
     }
 
     componentWillUnmount() {
-        PlayerMediator.removeOnSongChangeCallback('SongTable');
+        songDispatcher.removeOnALlSongsUpdate('SongTable');
+        songDispatcher.removeOnCurrentSongUpdate('SongTable');
     }
 }
 

@@ -5,12 +5,13 @@
 'use strict';
 
 import React from 'react';
-import PlayerMediator from '../../player/player-mediator';
+import songDispatcher from '../../dispatcher/song-dispatcher';
+import ACTION from '../../constants/action';
 
 export default () => {
     return (
         <button type="button" className="btn button button-rewind no-select"
-                onClick={ () => { PlayerMediator.rewind(); }}>
+                onClick={ () => { songDispatcher.dispatch(ACTION.REWIND) }}>
             <span className="hidden">Rewind</span>
         </button>
     );
