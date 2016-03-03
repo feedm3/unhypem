@@ -8,6 +8,13 @@
  
 export default {
 
+    /**
+     * Song is playing. No state.
+     */
     PLAYING: 'PLAYING',
+
+    /**
+     * Song is paused. No state.
+     */
     PAUSED: 'PAUSED'
 };

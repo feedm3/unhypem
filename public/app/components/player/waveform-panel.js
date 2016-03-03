@@ -6,7 +6,8 @@
 
 import React from 'react';
 import ProgressPanel from './progress-panel';
-import PlayerMediator from '../../player/player-mediator';
+import songDispatcher from '../../dispatcher/song-dispatcher';
+import ACTION from '../../constants/action';
 
 class WaveformPanel extends React.Component {
     constructor() {
@@ -16,9 +17,9 @@ class WaveformPanel extends React.Component {
         };
     }
 
-    handleSongChange(song) {
+    handleCurrentSongUpdate(songInfo) {
         this.setState({
-            waveformUrl: song.waveformUrl
+            waveformUrl: songInfo.song.waveformUrl
         });
     }
 
@@ -27,7 +28,7 @@ class WaveformPanel extends React.Component {
         const width = document.getElementById('waveform-container').offsetWidth;
         const clickedWidth = waveformContainer.nativeEvent.layerX;
         const percent = clickedWidth / width * 100;
-        PlayerMediator.setPosition(percent);
+        songDispatcher.dispatch(ACTION.FORCE_POSITION_IN_PERCENT, percent);
     }
 
     render() {
@@ -42,7 +43,7 @@ class WaveformPanel extends React.Component {
     }
 
     componentDidMount() {
-        PlayerMediator.registerOnSongChangeCallback("WaveformPanel", this.handleSongChange.bind(this));
+        songDispatcher.registerOnCurrentSongUpdate('WaveformPanel', this.handleCurrentSongUpdate.bind(this));
     }
 }
 

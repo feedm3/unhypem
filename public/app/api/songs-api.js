@@ -6,9 +6,11 @@
 
 import request from 'superagent';
 
-let songs = [];
-let timestamp = '';
-let callbacks = [];
+const songsInfo = {
+    songs: [],
+    timestamp: ''
+};
+const callbacks = [];
 
 /**
  * Request the popular songs. Requests get cached, so there is only one
@@ -19,7 +21,7 @@ let callbacks = [];
  */
 function requestSongs(done) {
     // return songs if they are already requested
-    if (songs.length > 0) done();
+    if (songsInfo.songs.length > 0) done();
 
     // cache the done callback and only continue if this is the first execution
     callbacks.push(done);
@@ -37,28 +39,16 @@ function requestSongs(done) {
             if (err) throw err;
 
             const popular = JSON.parse(response.text);
-            songs = popular.songs;
-            timestamp = popular.timestamp;
+            songsInfo.songs = popular.songs;
+            songsInfo.timestamp = popular.timestamp;
 
             callbacks.forEach(done => done());
-            callbacks = [];
+            callbacks.length = 0; // clear the array
         });
 }
 
-function requestSongsAndTimestamp(done) {
-    if (timestamp === '') {
-        requestSongs(() => {
-            done({timestamp, songs});
-        });
-    }
-}
-
-export default function getSongs(callback) {
+export default function getSongsInfo(callback) {
     requestSongs(function() {
-        callback(songs);
+        callback(songsInfo);
     });
-}
-
-export function getSongsAndTimestamp(callback) {
-    requestSongsAndTimestamp(callback);
 }

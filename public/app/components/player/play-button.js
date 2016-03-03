@@ -5,30 +5,38 @@
 'use strict';
 
 import React from 'react';
-import PlayerMediator from '../../player/player-mediator';
+import songDispatcher from '../../dispatcher/song-dispatcher';
+import ACTION from '../../constants/action';
+import SONG_STATE from '../../constants/song-state';
 
 class PlayButton extends React.Component {
     constructor() {
         super();
         this.state = {
-            isPlaying: false
+            songState: SONG_STATE.PAUSED
         };
     }
 
     handleClick() {
-        PlayerMediator.playSelectedSong();
-        this.onTogglePlay();
+        switch (this.state.songState) {
+            case SONG_STATE.PAUSED:
+                songDispatcher.dispatch(ACTION.PLAY);
+                break;
+            case SONG_STATE.PLAYING:
+                songDispatcher.dispatch(ACTION.PAUSE);
+                break;
+        }
     }
 
-    onTogglePlay() {
+    handleCurrentSongUpdate(songInfo) {
         this.setState({
-            isPlaying: PlayerMediator.isPlaying()
+            songState: songInfo.state
         });
     }
 
     render() {
         let buttonStyle = 'btn button button-play no-select';
-        if (this.state.isPlaying) {
+        if (this.state.songState === SONG_STATE.PLAYING) {
             buttonStyle += ' button-pause';
         } else {
             buttonStyle += ' button-play';
@@ -41,7 +49,7 @@ class PlayButton extends React.Component {
     }
 
     componentDidMount() {
-        PlayerMediator.registerOnTogglePauseCallback(this.onTogglePlay.bind(this));
+        songDispatcher.registerOnCurrentSongUpdate('PlayButton', this.handleCurrentSongUpdate.bind(this));
     }
 }
 

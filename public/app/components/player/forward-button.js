@@ -5,12 +5,13 @@
 'use strict';
 
 import React from 'react';
-import PlayerMediator from '../../player/player-mediator';
+import songDispatcher from '../../dispatcher/song-dispatcher';
+import ACTION from '../../constants/action';
 
 export default () => {
     return (
         <button type="button" className="btn button button-forward no-select"
-                onClick={() => PlayerMediator.forward()}>
+                onClick={() => songDispatcher.dispatch(ACTION.FORWARD)}>
             <span className="hidden">Forward</span>
         </button>
     );

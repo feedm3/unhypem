@@ -5,7 +5,7 @@
 'use strict';
 
 import React from 'react';
-import PlayerMediator from '../../player/player-mediator';
+import songDispatcher from '../../dispatcher/song-dispatcher';
 
 class DurationLabel extends React.Component {
     constructor() {
@@ -16,15 +16,16 @@ class DurationLabel extends React.Component {
         };
     }
 
-    handleSongLoaded() {
-        this.setState({
-            duration: PlayerMediator.getDuration()
-        });
-    }
+    handleCurrentSongUpdate(songInfo) {
+        const durationInMillis = songInfo.song.duration;
+        const positionInPercent = songInfo.position;
 
-    handlePositionChange(millis) {
+        const durationInSeconds = durationInMillis / 1000;
+        const positionInSeconds = (durationInSeconds * positionInPercent) / 100;
+
         this.setState({
-            position: millis / 1000
+            duration: durationInSeconds,
+            position: positionInSeconds
         });
     }
 
@@ -39,8 +40,7 @@ class DurationLabel extends React.Component {
     }
 
     componentDidMount() {
-        PlayerMediator.registerOnLoadedCallback(this.handleSongLoaded.bind(this));
-        PlayerMediator.registerOnProgressCallback(this.handlePositionChange.bind(this));
+        songDispatcher.registerOnCurrentSongUpdate('DurationLabel', this.handleCurrentSongUpdate.bind(this));
     }
 }
 
