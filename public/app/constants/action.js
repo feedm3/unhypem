@@ -35,7 +35,7 @@ export default {
     PAUSE: 'PAUSE_SONG',
 
     /**
-     * If the song is playing pause it, if the song is paused play it. No state
+     * If the song is playing pause it, if the song is paused play it. No state.
      */
     TOGGLE_PLAY: 'TOGGLE_PLAY',
 
@@ -55,7 +55,12 @@ export default {
     CHANGE_VOLUME: 'CHANGE_VOLUME',
 
     /**
-     * Get the current popular song infos. No state
+     * Get the current popular song infos. No state.
      */
-    GET_ALL_SONGS: 'GET_ALL_SONGS'
+    GET_ALL_SONGS: 'GET_ALL_SONGS',
+
+    /**
+     * Get the current selected song. No state.
+     */
+    GET_CURRENT_SONG: 'GET_CURRENT_SONG'
 };
