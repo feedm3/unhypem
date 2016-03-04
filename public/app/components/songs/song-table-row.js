@@ -15,29 +15,30 @@ class SongTableRow extends React.Component {
     constructor() {
         super();
         this.state = {
-            isSelected: false
+            isSelected: false,
+            usePropsToSelect: true
         };
     }
 
     setSelected(isSelected) {
-        this.setState({isSelected: isSelected});
+        this.setState({
+            isSelected: isSelected,
+            usePropsToSelect: false
+        });
     }
 
     render() {
-        const { song, onClick } = this.props;
+        const { song, onClick, selected } = this.props;
 
         let rowStyle = 'warning';
         if (song.streamUrl) {
             rowStyle = 'white';
-            if (this.state.isSelected) {
+            if (this.state.isSelected || (this.state.usePropsToSelect && selected)) {
                 rowStyle = 'info';
             }
         }
 
-        let soundcloudLogoStyle = 'soundcloud-logo';
-        if (!song.soundcloudUrl) {
-            soundcloudLogoStyle += ' no-soundcloud-url';
-        }
+        const soundcloudLogoStyle = song.soundcloudUrl ? 'soundcloud-logo' : 'soundcloud-logo no-soundcloud-url';
 
         return (
             <tr className={rowStyle} onClick={onClick.bind(this)}>
@@ -55,7 +56,8 @@ class SongTableRow extends React.Component {
 
 SongTableRow.propTypes = {
     song: React.PropTypes.object.isRequired,
-    onClick: React.PropTypes.func.isRequired
+    onClick: React.PropTypes.func.isRequired,
+    selected: React.PropTypes.bool
 };
 
 export default SongTableRow;
