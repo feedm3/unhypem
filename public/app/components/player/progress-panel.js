@@ -16,8 +16,9 @@ class ProgressPanel extends React.Component {
     }
 
     handleCurrentSongUpdate(songInfo) {
+        const position = songInfo.positionUpdate ? songInfo.positionUpdatePosition : songInfo.position;
         this.setState({
-            position: songInfo.position
+            position: position
         });
     }
 
