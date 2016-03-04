@@ -78,10 +78,13 @@ class Player {
                      * 2 = failed/error
                      * 3 = loaded/success
                      */
-                    //if (this.smSound.readyState === 3) {
-                    //    this.smSound = this.soundManager.getSoundById(this.currentSongId);
-                    //    this.onLoadedCallbacks.forEach(c => c());
-                    //}
+                    if (this.smSound.readyState === 3) {
+                        if (!this.currentSong.duration) {
+                            // if the song is not hosted on soundcloud we have to update the duration from the soundmanager
+                            this.currentSong.duration = this.smSound.duration;
+                            songDispatcher.dispatch(ACTION.SELECT_SONG, this.currentSong);
+                        }
+                    }
                 },
                 whileplaying: () => {
                     const durationInMillis = this.currentSong.duration;
