@@ -26,7 +26,6 @@ class Player {
             waitForWindowLoad: true,
             debugMode: false,
             onready: () => {
-                this.isReady = true;
                 songDispatcher.registerOnAllSongsUpdate('Player', this.handleAllSongsUpdate.bind(this));
                 songDispatcher.registerOnCurrentSongUpdate('Player', this.handleCurrentSongUpdate.bind(this));
                 songDispatcher.dispatch(ACTION.GET_ALL_SONGS);
@@ -44,6 +43,7 @@ class Player {
 
         if (!this.currentSong || newSong.id !== this.currentSong.id) {
             this.currentSong = newSong;
+            this.load();
         }
         switch (newPlayingState) {
             case SONG_STATE.PLAYING:
@@ -54,7 +54,6 @@ class Player {
                 break;
         }
         if (songInfo.positionUpdate) {
-            console.log('update position', songInfo.positionUpdatePosition);
             songInfo.positionUpdate = false;
             this.setPositionInPercent(songInfo.positionUpdatePosition);
         }
@@ -100,27 +99,28 @@ class Player {
     }
 
     /**
-     * Play the current selected song.
+     * Load the current song into the smSound object.
      */
-    play() {
+    load() {
         const songId = this.ID_PREFIX + this.currentSong.id;
         if (!this.smSound || this.smSound.id !== songId) {
             if (this.smSound) {
                 this.smSound.stop();
                 this.smSound.unload();
             }
+            this.soundManager.load(songId);
             this.smSound = this.soundManager.getSoundById(songId);
-            if (this.smSound) {
-                this.smSound.play();
-            }
-            this.isSongPlaying = true;
-        } else {
-            const isPlaying = !this.smSound.paused;
-            if (!isPlaying) {
-                this.smSound.play();
-            }
+            this.smSound.paused = true;
         }
-        this.isSongPlaying = true;
+    }
+
+    /**
+     * Play the current selected song. Dont forget to load() it before.
+     */
+    play() {
+        if (this.smSound && this.smSound.paused) {
+            this.smSound.play();
+        }
     }
 
     /**
@@ -130,15 +130,6 @@ class Player {
         if (this.smSound) {
             this.smSound.pause();
         }
-    }
-
-    getDuration() {
-        const seconds = parseInt(this.smSound.duration / 1000, 10);
-        return seconds;
-    }
-
-    getPositionInSeconds() {
-        return this.smSound.position / 1000;
     }
 
     setPositionInPercent(percent) {
