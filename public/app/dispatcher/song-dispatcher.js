@@ -52,6 +52,7 @@ const SongDispatcher = {
             case ACTION.FORCE_POSITION_IN_PERCENT:
                 currentSongInfo.positionUpdatePosition = state;
                 currentSongInfo.positionUpdate = true;
+                currentSongInfo.position = state;
                 this.notifyCurrentSongUpdate();
                 break;
             case ACTION.PLAY:
@@ -71,9 +72,13 @@ const SongDispatcher = {
                 this.notifyCurrentSongUpdate();
                 break;
             case ACTION.REWIND:
-                currentIndex = this.getIndexOfCurrentSong();
-                currentIndex = currentIndex === 0 ? 49 : currentIndex - 1;
-                this.dispatch(ACTION.SELECT_SONG, songsInfo.songs[currentIndex]);
+                if (this.getPositionInSeconds() > 5) {
+                    this.dispatch(ACTION.FORCE_POSITION_IN_PERCENT, 0);
+                } else {
+                    currentIndex = this.getIndexOfCurrentSong();
+                    currentIndex = currentIndex === 0 ? 49 : currentIndex - 1;
+                    this.dispatch(ACTION.SELECT_SONG, songsInfo.songs[currentIndex]);
+                }
                 break;
             case ACTION.FORWARD:
                 currentIndex = this.getIndexOfCurrentSong();
@@ -85,6 +90,9 @@ const SongDispatcher = {
                 break;
             case ACTION.GET_ALL_SONGS:
                 this.notifyAllSongsUpdate();
+                break;
+            case ACTION.GET_CURRENT_SONG:
+                this.notifyCurrentSongUpdate();
                 break;
         }
     },
@@ -129,6 +137,10 @@ const SongDispatcher = {
 
     getIndexOfCurrentSong() {
         return songsInfo.songs.map(song => song.id).indexOf(currentSongInfo.song.id);
+    },
+
+    getPositionInSeconds() {
+        return parseInt(((currentSongInfo.song.duration * currentSongInfo.position) / 100) / 1000, 10);
     },
 
     checkCallbackArgument(id, callback) {
