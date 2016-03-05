@@ -1,4 +1,4 @@
-# [Unhypem](https://unhypem.com)
+# Unhypem
 
 [![Heroku](http://heroku-badge.herokuapp.com/?app=unhypem&style=flat)](http://unhypem.com)
 [![Build Status](https://img.shields.io/travis/feedm3/unhypem.svg?branch=feature-react-es6&style=flat-square)](https://travis-ci.org/feedm3/unhypem)
