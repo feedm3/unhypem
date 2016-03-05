@@ -14,7 +14,7 @@ import SONG_STATE from '../constants/song-state';
 class Player {
     constructor() {
         this.ID_PREFIX = 'UH_'; // soundmanager2 id needs to start with an non-numeric char
-        this.currentSong = {};
+        this.currentSongInfo = {};
         this.soundManager = new SoundManager();
         this.smSound = null; // soundManager creates a smSound for every song. this object holds the playing smSound
 
@@ -38,11 +38,12 @@ class Player {
     }
 
     handleCurrentSongUpdate(songInfo) {
+        const currentSong = this.currentSongInfo.song;
         const newSong = songInfo.song;
         const newPlayingState = songInfo.state;
 
-        if (!this.currentSong || newSong.id !== this.currentSong.id) {
-            this.currentSong = newSong;
+        if (!currentSong || (newSong.id !== currentSong.id)) {
+            Object.assign(this.currentSongInfo, songInfo);
             this.load();
         }
         switch (newPlayingState) {
@@ -77,19 +78,28 @@ class Player {
                      * 2 = failed/error
                      * 3 = loaded/success
                      */
+                    const currentSong = this.currentSongInfo.song;
                     if (this.smSound.readyState === 3) {
-                        if (!this.currentSong.duration) {
+                        if (!currentSong.duration) {
                             // if the song is not hosted on soundcloud we have to update the duration from the soundmanager
-                            this.currentSong.duration = this.smSound.duration;
+                            currentSong.duration = this.smSound.duration;
                             songDispatcher.dispatch(ACTION.SELECT_SONG, this.currentSong);
                         }
                     }
                 },
                 whileplaying: () => {
-                    const durationInMillis = this.currentSong.duration;
+                    const durationInMillis = this.currentSongInfo.song.duration;
                     const positionInMillis = parseInt(this.smSound.position, 10);
                     const positionInPercent = (positionInMillis / durationInMillis) * 100;
                     songDispatcher.dispatch(ACTION.SELECT_POSITION_IN_PERCENT, positionInPercent);
+                    /**
+                     * TODO there's a bug in the soundmanager which causes onfinish() not to call so we have to make a
+                     * little workaround and call the next song when the current ones position is greater than 99.9
+                     * percent.
+                     */
+                    if (positionInPercent > 99.9) {
+                        songDispatcher.dispatch(ACTION.FORWARD);
+                    }
                 },
                 onfinish: () => {
                     songDispatcher.dispatch(ACTION.FORWARD);
@@ -102,7 +112,7 @@ class Player {
      * Load the current song into the smSound object.
      */
     load() {
-        const songId = this.ID_PREFIX + this.currentSong.id;
+        const songId = this.ID_PREFIX + this.currentSongInfo.song.id;
         if (!this.smSound || this.smSound.id !== songId) {
             if (this.smSound) {
                 this.smSound.stop();
@@ -127,7 +137,7 @@ class Player {
      * Pause the current selected song.
      */
     pause() {
-        if (this.smSound) {
+        if (this.smSound && !this.smSound.paused) {
             this.smSound.pause();
         }
     }
