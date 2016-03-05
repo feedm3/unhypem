@@ -11,6 +11,8 @@ import PlayButton from './play-button';
 import WaveformPanel from './waveform-panel';
 import ForwardButton from './forward-button';
 import DurationLabel from './duration-label';
+import ACTION from '../../constants/action';
+import KEY_CODE from '../../constants/key-code';
 import songDispatcher from '../../dispatcher/song-dispatcher';
 
 class SongPlayer extends React.Component {
@@ -25,6 +27,25 @@ class SongPlayer extends React.Component {
         this.setState({
             'song': songInfo.song
         });
+    }
+
+    handleKeyDownEvent(event) {
+        switch (event.keyCode) {
+            case KEY_CODE.RIGHT:
+            case KEY_CODE.DOWN:
+                songDispatcher.dispatch(ACTION.FORWARD);
+                event.preventDefault();
+                break;
+            case KEY_CODE.LEFT:
+            case KEY_CODE.UP:
+                songDispatcher.dispatch(ACTION.REWIND);
+                event.preventDefault();
+                break;
+            case KEY_CODE.SPACE:
+                songDispatcher.dispatch(ACTION.TOGGLE_PLAY);
+                event.preventDefault();
+                break;
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -66,6 +87,7 @@ class SongPlayer extends React.Component {
     }
 
     componentDidMount() {
+        document.addEventListener('keydown', this.handleKeyDownEvent.bind(this));
         songDispatcher.registerOnCurrentSongUpdate('PlayerPanel', this.handleCurrentSongUpdate.bind(this));
     }
 }
