@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import ReactDom from 'react-dom';
 import SongTableRow from './song-table-row';
 import songDispatcher from '../../dispatcher/song-dispatcher';
 import ACTION from '../../constants/action';
@@ -38,11 +39,38 @@ class SongTable extends React.Component {
 
             // select the new one
             const rowToSelect = this.refs[`${newSongId}`];
-            if (rowToSelect) rowToSelect.setSelected(true);
+            if (rowToSelect) {
+                rowToSelect.setSelected(true);
+                this.scrollToRow(rowToSelect);
+            }
 
             this.setState({
                 currentSong: songInfo.song
             });
+        }
+    }
+
+    /**
+     * Scoll to the given row IF NECESSARY. If the component is slightly below the visible
+     * end of the table or slightly above the end of the visible table it will scroll the
+     * body lower or higher.
+     *
+     * @param row the row component to scroll to
+     */
+    scrollToRow(row) {
+        const rowToSelectDomNode = ReactDom.findDOMNode(row);
+
+        const currentScrollPosition = document.body.scrollTop; // 0 = on top of the body
+        const currentWindowHeight = window.innerHeight;
+        const selectedRowPosition = rowToSelectDomNode.offsetTop; // 0 = on top of the table
+        const distanceToBottom = 300;
+
+        if (currentScrollPosition + currentWindowHeight < selectedRowPosition + distanceToBottom) {
+            // row is slighly above the current visible window
+            document.body.scrollTop = selectedRowPosition + distanceToBottom - currentWindowHeight;
+        } else if (currentScrollPosition > selectedRowPosition) {
+            // row is above the current visible window
+            document.body.scrollTop = selectedRowPosition;
         }
     }
 
