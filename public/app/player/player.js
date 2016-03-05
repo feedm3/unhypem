@@ -48,6 +48,7 @@ class Player {
         }
         switch (newPlayingState) {
             case SONG_STATE.PLAYING:
+                if (!this.smSound) songDispatcher.dispatch(ACTION.FORWARD);
                 this.play();
                 break;
             case SONG_STATE.PAUSED:
@@ -62,7 +63,7 @@ class Player {
 
     preloadSongs(songs) {
         forEach(songs, (song) => {
-            if (!isString(song.streamUrl)) {
+            if (!song.streamUrl) {
                 return;
             }
             this.soundManager.createSound({
@@ -120,7 +121,11 @@ class Player {
             }
             this.soundManager.load(songId);
             this.smSound = this.soundManager.getSoundById(songId);
-            this.smSound.paused = true;
+            if (this.smSound) {
+                // if it loads a song which was not preloaded (no streaming url)
+                // than the smSound object will be empty
+                this.smSound.paused = true;
+            }
         }
     }
 
@@ -143,7 +148,9 @@ class Player {
     }
 
     setPositionInPercent(percent) {
-        this.smSound.setPosition(this.smSound.duration / 100 * percent);
+        if (this.smSound) {
+            this.smSound.setPosition(this.smSound.duration / 100 * percent);
+        }
     }
 
     setVolume(percent = 100) {
