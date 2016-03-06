@@ -16,7 +16,8 @@ const _ = require('lodash');
  * GET the latest popular songs.
  */
 router.get('/', function(req, res) {
-    logger.info('Popular route requested');
+    const random = randomInt(0, 10000);
+    logger.info('Popular route requested. ID: ' + random);
     ChartsModel
         .forge()
         .latest()
@@ -30,6 +31,7 @@ router.get('/', function(req, res) {
             ]
         })
         .then(function(chart) {
+            logger.info('Popular data fetched. ID: ' + random);
             const result = chart.toJSON();
             _.forEach(result.songs, function(song) {
                 song.position = song._pivot_position;
@@ -41,7 +43,7 @@ router.get('/', function(req, res) {
             });
 
             delete result.id;
-
+            logger.info('Popular data returned. ID: ' + random);
             res.json(result);
         }).catch(function(err) {
             throw err;
@@ -55,3 +57,8 @@ function appendSoundcloudClientId(song) { // Todo put in model
         song.streamUrl += '?client_id=' + process.env.SOUNDCLOUD_CLIENT_ID;
     }
 }
+
+function randomInt (low, high) {
+    return Math.floor(Math.random() * (high - low + 1) + low);
+}
+
