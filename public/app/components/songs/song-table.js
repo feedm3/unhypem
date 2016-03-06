@@ -110,7 +110,7 @@ class SongTable extends React.Component {
                     {songTableRows}
                     </tbody>
                 </table>
-                <div className="text-center" title={timestamp}>Last updated {moment(timestamp).fromNow()}</div>
+                <div className="last-updated text-center" title={timestamp}>Last updated {moment(timestamp).fromNow()}</div>
             </div>
         );
     }

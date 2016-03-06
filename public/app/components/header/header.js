@@ -8,7 +8,7 @@ import React from 'react';
 
 export default () => {
     return (
-        <div className="navbar navbar-default navbar-static-top">
+        <div className="navbar navbar-default navbar-color navbar-static-top">
             <div className="container">
                 <div className="navbar-header">
                     <a href="#/" className="navbar-brand">Unhypem</a>

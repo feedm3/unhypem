@@ -26,16 +26,20 @@ body {
     opacity: 0.2;
 }
 
+.navbar-color {
+    background-color: #FFFFFF;
+}
+
+.last-updated {
+    margin-bottom: 20px;
+}
+
 .bottom {
     border-top: 1px solid black;
+    background-color: #F6F6FF;
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: #ffffff;
-
-    -webkit-box-shadow: 0 -1px 3px 0 rgba(0,0,0,0.8);
-    -moz-box-shadow: 0 -1px 3px 0 rgba(0,0,0,0.8);
-    box-shadow: 0 -1px 3px 0  rgba(0,0,0,0.8);
 }
 
 .table tbody > tr > td.vertical-center {
