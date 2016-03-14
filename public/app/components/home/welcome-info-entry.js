@@ -9,7 +9,7 @@ import InfoEntry from './info-entry';
 
 export default (props) => {
     const body = <div>The charts are based on the
-        <a className='no-link-style' href='http://hypem.com/popular' target='_blank'>hypem popular</a> charts.
+         <a className='no-link-style' href='http://hypem.com/popular' target='_blank'>hypem popular</a> charts.
         Last update was {props.timestamp}.</div>;
 
     return (
