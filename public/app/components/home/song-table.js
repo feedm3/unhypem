@@ -9,23 +9,13 @@ import ReactDom from 'react-dom';
 import SongTableRow from './song-table-row';
 import songDispatcher from '../../dispatcher/song-dispatcher';
 import ACTION from '../../constants/action';
-import moment from 'moment/min/moment.min';
 
 class SongTable extends React.Component {
     constructor() {
         super();
         this.state = {
-            songs: [],
-            currentSong: {},
-            timestamp: ''
+            currentSong: {}
         };
-    }
-
-    handleAllSongsUpdate(songsInfo) {
-        this.setState({
-            songs: songsInfo.songs,
-            timestamp: songsInfo.timestamp
-        });
     }
 
     handleCurrentSongUpdate(songInfo) {
@@ -82,14 +72,10 @@ class SongTable extends React.Component {
         }
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return nextState.timestamp !== this.state.timestamp;
-    }
-
     render() {
-        const { timestamp, currentSong } = this.state;
+        const currentSong = this.state.currentSong;
 
-        const songTableRows = this.state.songs.map((song) => {
+        const songTableRows = this.props.songs.map((song) => {
             return <SongTableRow song={song} selected={currentSong.id === song.id} key={song.position} ref={song.id}
                                  onClick={ () => this.handleRowClick(song) }/>;
         });
@@ -110,20 +96,16 @@ class SongTable extends React.Component {
                     {songTableRows}
                     </tbody>
                 </table>
-                <div className="last-updated text-center" title={timestamp}>Last updated {moment(timestamp).fromNow()}</div>
             </div>
         );
     }
 
     componentDidMount() {
-        songDispatcher.registerOnAllSongsUpdate('SongTable', this.handleAllSongsUpdate.bind(this));
         songDispatcher.registerOnCurrentSongUpdate('SongTable', this.handleCurrentSongUpdate.bind(this));
-        songDispatcher.dispatch(ACTION.GET_ALL_SONGS);
         songDispatcher.dispatch(ACTION.GET_CURRENT_SONG);
     }
 
     componentWillUnmount() {
-        songDispatcher.removeOnALlSongsUpdate('SongTable');
         songDispatcher.removeOnCurrentSongUpdate('SongTable');
     }
 }

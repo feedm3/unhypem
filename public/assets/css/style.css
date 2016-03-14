@@ -30,10 +30,6 @@ body {
     background-color: #FFFFFF;
 }
 
-.last-updated {
-    margin-bottom: 20px;
-}
-
 .bottom {
     border-top: 1px solid black;
     background-color: #F6F6FF;
@@ -58,4 +54,33 @@ body {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.info-entry-header {
+    text-transform: uppercase;
+    opacity: 0.7;
+}
+
+.info-entry-body {
+    margin-bottom: 20px;
+}
+
+.no-link-style {
+    color: inherit;
+}
+
+.shortcuts-info-entry {
+    border-spacing: 5px;
+    border-collapse: separate;
+}
+
+.shortcuts-info-entry > tbody > tr > td:first-child {
+    text-align: right;
+}
+
+kbd {
+    color: #555;
+    background-color: #fcfcfc;
+    border: 1px solid #cccccc;
+    border-radius: 2px;
 }
