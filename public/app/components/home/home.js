@@ -21,8 +21,6 @@ class Home extends React.Component {
     }
 
     handleAllSongsUpdate(songsInfo) {
-        console.log(songsInfo);
-        
         this.setState({
             songs: songsInfo.songs,
             timestamp: songsInfo.timestamp
@@ -38,12 +36,12 @@ class Home extends React.Component {
 
         return (
             <div className='row'>
-                <div className="col-md-9">
-                    <SongTable songs={songs} />
-                </div>
-                <div className="col-md-3">
+                <div className='col-md-3 col-md-push-9'>
                     <WelcomeInfoEntry timestamp={moment(timestamp).fromNow()}/>
-                    <ShortcutsInfoEntry />
+                    <ShortcutsInfoEntry/>
+                </div>
+                <div className='col-md-9 col-md-pull-3'>
+                    <SongTable songs={songs} />
                 </div>
             </div>
         );
@@ -55,8 +53,6 @@ class Home extends React.Component {
     }
 
     componentWillUnmount() {
-        console.log('cwu');
-
         songDispatcher.removeOnALlSongsUpdate('Home');
     }
 }
