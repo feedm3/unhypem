@@ -70,12 +70,13 @@ body {
 }
 
 .shortcuts-info-entry {
-    border-spacing: 5px;
+    border-spacing: 0 5px;
     border-collapse: separate;
 }
 
 .shortcuts-info-entry > tbody > tr > td:first-child {
     text-align: right;
+    padding-right: 5px;
 }
 
 kbd {
