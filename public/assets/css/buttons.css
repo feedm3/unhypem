@@ -40,3 +40,27 @@
     background-size: 30px 30px;
     background-image: url("../img/ic_fast_rewind_black_24px.svg");
 }
+
+.button-shuffle,
+.button-shuffle:active {
+    width: 30px;
+    height: 80px;
+    background-size: 30px 30px;
+    background-image: url("../img/ic_shuffle_black_24px.svg");
+}
+
+.button-repeat,
+.button-repeat:active {
+    width: 30px;
+    height: 80px;
+    background-size: 30px 30px;
+    background-image: url("../img/ic_repeat_one_black_24px.svg");
+}
+
+.button-share,
+.button-share:active {
+    width: 30px;
+    height: 80px;
+    background-size: 30px 30px;
+    background-image: url("../img/ic_share_black_24px.svg");
+}
