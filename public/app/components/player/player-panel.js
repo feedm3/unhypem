@@ -5,12 +5,15 @@
 'use strict';
 
 import React from 'react';
-import VolumeBar from './volume-bar';
+import DurationPanel from './duration-panel';
 import RewindButton from './rewind-button';
 import PlayButton from './play-button';
 import WaveformPanel from './waveform-panel';
 import ForwardButton from './forward-button';
-import DurationLabel from './duration-label';
+import RepeatButton from './repeat-button';
+import ShuffleButton from './shuffle-button';
+import ShareButton from './share-button';
+import VolumeButton from './volume-button';
 import ACTION from '../../constants/action';
 import KEY_CODE from '../../constants/key-code';
 import songDispatcher from '../../dispatcher/song-dispatcher';
@@ -61,41 +64,31 @@ class SongPlayer extends React.Component {
                         <div className="player-panel-col player-panel-col-song-position">
                             <strong>{song.position}</strong>
                         </div>
-                        <div className="player-panel-col player-panel-col-duration">
-                            <div>00:00</div>
-                            <div>03:35</div>
+                        <div className="player-panel-col-duration">
+                            <DurationPanel />
                         </div>
-                        <div>
+                        <div className="player-panel-col-btn" style={{'padding': '0'}}>
                             <RewindButton />
                         </div>
-                        <div className="player-panel-col player-panel-col-btn-play">
+                        <div className="player-panel-col-btn player-panel-col-btn-play">
                             <PlayButton />
                         </div>
                         <WaveformPanel />
-                        <div className="player-panel-col" style={{'padding-left': '10px'}}>
+                        <div className="player-panel-col-btn" style={{'paddingLeft': '5px'}}>
                             <ForwardButton />
                         </div>
-                        <div className="player-panel-col">
-                            <button type="button" className="icon-btn icon-btn-repeat no-select">
-                                <span className="hide">Repeat</span>
-                            </button>
+                        <div className="player-panel-col-btn">
+                            <ShuffleButton />
                         </div>
-                        <div className="player-panel-col">
-                            <button type="button" className="icon-btn icon-btn-shuffle no-select">
-                                <span className="hide">Repeat</span>
-                            </button>
+                        <div className="player-panel-col-btn">
+                            <RepeatButton />
                         </div>
-                        <div className="player-panel-col">
-                            <button type="button" className="icon-btn icon-btn-share no-select">
-                                <span className="hide">Repeat</span>
-                            </button>
+                        <div className="player-panel-col-btn">
+                            <ShareButton />
                         </div>
-                        <div className="player-panel-col">
-                            <button type="button" className="icon-btn icon-btn-volume no-select">
-                                <span className="hide">Repeat</span>
-                            </button>
+                        <div className="player-panel-col-btn" style={{'padding': '0'}}>
+                            <VolumeButton />
                         </div>
-
                     </div>
                 </div>
             </div>

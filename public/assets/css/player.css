@@ -7,14 +7,17 @@
     color: #000;
 }
 
-.player-panel-col {
+.player-panel-col-btn {
     padding-right: 10px;
+    line-height: 80px;
 }
 
 .player-panel-col-song-position {
     line-height: 80px;
-    width: 45px;
+    width: 52px;
+    padding-right: 20px;
     font-size: 28px;
+    text-align: center;
 }
 
 .player-panel-col-duration {
@@ -22,66 +25,11 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    padding-right: 20px;
 }
 
 .player-panel-col-btn-play {
     line-height: 80px;
-}
-
-.player-info {
-    flex: 0 0 130px; /* grow | shrink | basis */
-    max-width: 130px;
-}
-
-.player-info > * {
-    display: block;
-    line-height: 1.5em;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.volumebar-container {
-    margin-top: 10px;
-    line-height: 16px;
-}
-
-.volumebar-container > * {
-    display: inline-block;
-    vertical-align: middle;
-}
-
-.volumebar-icon-plus {
-    width: 16px;
-    height: 16px;
-    background-image: url("../img/ic_volume_up_black_24px.svg");
-    background-size: 16px 16px;
-}
-
-.volumebar-progress {
-    position: relative;
-    width: 75px;
-    height: 18px;
-    margin: 0 5px;
-    background-color: #AAAAAA;
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-.volumebar-progress-bar {
-    position: absolute;
-    background-color: #2675A6;
-    width: 100%;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    transition: .4s width;
-}
-.volumebar-icon-minus {
-    width: 16px;
-    height: 16px;
-    background-image: url("../img/ic_volume_mute_black_24px.svg");
-    background-size: 16px 16px;
 }
 
 .player-waveform-container {

@@ -5,7 +5,7 @@
 'use strict';
 
 import React from 'react';
-import ProgressPanel from './progress-panel';
+import WaveformProgressPanel from './waveform-progress-panel';
 import songDispatcher from '../../dispatcher/song-dispatcher';
 import ACTION from '../../constants/action';
 
@@ -43,7 +43,7 @@ class WaveformPanel extends React.Component {
         return (
             <div id='waveform-container' className='player-waveform-container' onClick={this.handleClick.bind(this)}>
                 <div className='player-waveform' style={waveformStyle}></div>
-                <ProgressPanel />
+                <WaveformProgressPanel />
             </div>
         );
     }

@@ -2,6 +2,7 @@
     background: no-repeat center;
     background-size: contain;
     background-origin: border-box;
+    vertical-align: middle;
     padding: 0;
     margin: 0;
     border: 0 none;
@@ -17,15 +18,15 @@
 
 .icon-btn-play,
 .icon-btn-play:active {
-    height: 80px;
     width: 48px;
+    height: 48px;
     padding: 0; /* play icon itself has lots of padding */
     background-image: url("../img/ic_play_circle_filled_black_24px.svg");
 }
 
 .icon-btn-pause,
 .icon-btn-pause:active {
-    height: 80px;
+    height: 48px;
     width: 48px;
     padding: 0; /* play icon itself has lots of padding */
     background-image: url("../img/ic_pause_circle_filled_black_24px.svg");
@@ -33,42 +34,42 @@
 
 .icon-btn-forward,
 .icon-btn-forward:active {
-    height: 80px;
-    width: 24px;
+    height: 36px;
+    width: 36px;
     background-image: url("../img/ic_skip_next_black_24px.svg");
 }
 
 .icon-btn-rewind,
 .icon-btn-rewind:active {
-    height: 80px;
-    width: 24px;
+    height: 36px;
+    width: 36px;
     background-image: url("../img/ic_skip_previous_black_24px.svg");
 }
 
 .icon-btn-shuffle,
 .icon-btn-shuffle:active {
-    height: 80px;
+    height: 24px;
     width: 24px;
     background-image: url("../img/ic_shuffle_black_24px.svg");
 }
 
 .icon-btn-repeat,
 .icon-btn-repeat:active {
-    height: 80px;
+    height: 24px;
     width: 24px;
     background-image: url("../img/ic_repeat_one_black_24px.svg");
 }
 
 .icon-btn-share,
 .icon-btn-share:active {
-    height: 80px;
+    height: 24px;
     width: 24px;
     background-image: url("../img/ic_share_black_24px.svg");
 }
 
 .icon-btn-volume,
 .icon-btn-volume:active {
-    height: 80px;
+    height: 24px;
     width: 24px;
     background-image: url("../img/ic_volume_down_black_24px.svg");
 }
