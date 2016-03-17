@@ -39,11 +39,11 @@ class PlayButton extends React.Component {
     }
 
     render() {
-        let buttonStyle = 'btn button button-play no-select';
+        let buttonStyle = 'icon-btn icon-btn-play no-select';
         if (this.state.songState === SONG_STATE.PLAYING) {
-            buttonStyle += ' button-pause';
+            buttonStyle += ' icon-btn-pause';
         } else {
-            buttonStyle += ' button-play';
+            buttonStyle += ' icon-btn-play';
         }
         return (
             <button type="button" onClick={this.handleClick.bind(this)} className={buttonStyle}>

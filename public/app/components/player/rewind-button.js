@@ -10,7 +10,7 @@ import ACTION from '../../constants/action';
 
 export default () => {
     return (
-        <button type="button" className="btn button button-rewind no-select"
+        <button type="button" className="icon-btn icon-btn-rewind no-select"
                 onClick={ () => { songDispatcher.dispatch(ACTION.REWIND); }}>
             <span className="hidden">Rewind</span>
         </button>

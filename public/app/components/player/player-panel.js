@@ -57,29 +57,45 @@ class SongPlayer extends React.Component {
         return (
             <div>
                 <div className="container">
-                    <div className="player-flex-wrapper">
-                        <div className="player-info hidden-xs">
-                            <strong>{song.title}</strong>
-                            <span>{song.artist}</span>
-                            <VolumeBar />
+                    <div className="player-panel">
+                        <div className="player-panel-col player-panel-col-song-position">
+                            <strong>{song.position}</strong>
                         </div>
-                        <div className="player-control-two">
+                        <div className="player-panel-col player-panel-col-duration">
+                            <div>00:00</div>
+                            <div>03:35</div>
+                        </div>
+                        <div>
                             <RewindButton />
+                        </div>
+                        <div className="player-panel-col player-panel-col-btn-play">
                             <PlayButton />
                         </div>
                         <WaveformPanel />
-                        <div className="player-control-one">
+                        <div className="player-panel-col" style={{'padding-left': '10px'}}>
                             <ForwardButton />
                         </div>
-                        <div className="player-secondary">
-                            <DurationLabel />
-                            <div className="link">
-                                <a href={`http://hypem.com/track/${song.hypemMediaId}`} target="_blank">Hypem</a>
-                            </div>
-                            <div className="link">
-                                <a href={song.soundcloudUrl} target="_blank">Soundcloud</a>
-                            </div>
+                        <div className="player-panel-col">
+                            <button type="button" className="icon-btn icon-btn-repeat no-select">
+                                <span className="hide">Repeat</span>
+                            </button>
                         </div>
+                        <div className="player-panel-col">
+                            <button type="button" className="icon-btn icon-btn-shuffle no-select">
+                                <span className="hide">Repeat</span>
+                            </button>
+                        </div>
+                        <div className="player-panel-col">
+                            <button type="button" className="icon-btn icon-btn-share no-select">
+                                <span className="hide">Repeat</span>
+                            </button>
+                        </div>
+                        <div className="player-panel-col">
+                            <button type="button" className="icon-btn icon-btn-volume no-select">
+                                <span className="hide">Repeat</span>
+                            </button>
+                        </div>
+
                     </div>
                 </div>
             </div>

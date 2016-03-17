@@ -1,66 +1,74 @@
-.button {
-    background-size: contain;
+.icon-btn {
     background: no-repeat center;
-    opacity: 0.85;
+    background-size: contain;
+    background-origin: border-box;
+    padding: 0;
+    margin: 0;
+    border: 0 none;
 }
 
-.button:hover {
+.icon-btn:hover {
     opacity: 1;
 }
 
-.button:focus {
+.icon-btn:focus {
     outline: 0;
 }
 
-.button-play,
-.button-play:active {
-    width: 50px;
+.icon-btn-play,
+.icon-btn-play:active {
     height: 80px;
-    background-size: 50px 50px;
-    background-image: url("../img/ic_play_arrow_black_24px.svg");
+    width: 48px;
+    padding: 0; /* play icon itself has lots of padding */
+    background-image: url("../img/ic_play_circle_filled_black_24px.svg");
 }
 
-.button-pause,
-.button-pause:active {
-    background-image: url("../img/ic_pause_black_24px.svg");
+.icon-btn-pause,
+.icon-btn-pause:active {
+    height: 80px;
+    width: 48px;
+    padding: 0; /* play icon itself has lots of padding */
+    background-image: url("../img/ic_pause_circle_filled_black_24px.svg");
 }
 
-.button-forward,
-.button-forward:active {
-    width: 30px;
+.icon-btn-forward,
+.icon-btn-forward:active {
     height: 80px;
-    background-size: 30px 30px;
-    background-image: url("../img/ic_fast_forward_black_24px.svg");
+    width: 24px;
+    background-image: url("../img/ic_skip_next_black_24px.svg");
 }
 
-.button-rewind,
-.button-rewind:active {
-    width: 30px;
+.icon-btn-rewind,
+.icon-btn-rewind:active {
     height: 80px;
-    background-size: 30px 30px;
-    background-image: url("../img/ic_fast_rewind_black_24px.svg");
+    width: 24px;
+    background-image: url("../img/ic_skip_previous_black_24px.svg");
 }
 
-.button-shuffle,
-.button-shuffle:active {
-    width: 30px;
+.icon-btn-shuffle,
+.icon-btn-shuffle:active {
     height: 80px;
-    background-size: 30px 30px;
+    width: 24px;
     background-image: url("../img/ic_shuffle_black_24px.svg");
 }
 
-.button-repeat,
-.button-repeat:active {
-    width: 30px;
+.icon-btn-repeat,
+.icon-btn-repeat:active {
     height: 80px;
-    background-size: 30px 30px;
+    width: 24px;
     background-image: url("../img/ic_repeat_one_black_24px.svg");
 }
 
-.button-share,
-.button-share:active {
-    width: 30px;
+.icon-btn-share,
+.icon-btn-share:active {
     height: 80px;
-    background-size: 30px 30px;
+    width: 24px;
     background-image: url("../img/ic_share_black_24px.svg");
+}
+
+.icon-btn-volume,
+.icon-btn-volume:active {
+    height: 80px;
+    width: 24px;
+    background-image: url("../img/ic_volume_down_black_24px.svg");
 }

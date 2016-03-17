@@ -41,8 +41,8 @@ class WaveformPanel extends React.Component {
         const waveformStyle = {backgroundImage: waveformBackgroundStyle};
 
         return (
-            <div id='waveform-container' className="player-waveform-container" onClick={this.handleClick.bind(this)}>
-                <div className="player-waveform" style={waveformStyle}></div>
+            <div id='waveform-container' className='player-waveform-container' onClick={this.handleClick.bind(this)}>
+                <div className='player-waveform' style={waveformStyle}></div>
                 <ProgressPanel />
             </div>
         );

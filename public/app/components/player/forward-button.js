@@ -10,7 +10,7 @@ import ACTION from '../../constants/action';
 
 export default () => {
     return (
-        <button type="button" className="btn button button-forward no-select"
+        <button type="button" className="icon-btn icon-btn-forward no-select"
                 onClick={() => songDispatcher.dispatch(ACTION.FORWARD)}>
             <span className="hidden">Forward</span>
         </button>
