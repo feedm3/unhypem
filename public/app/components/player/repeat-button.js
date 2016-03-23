@@ -37,8 +37,9 @@ export default class RepeatButton extends React.Component {
         const isDeactiveStyle = isActive ? {'': ''} : {'opacity': '0.5'};
 
         return (
-            <button type="button" onClick={this.handleClick.bind(this)} className="icon-btn icon-btn-repeat no-select "
-                    style={isDeactiveStyle}>
+            <button type="button" onClick={this.handleClick.bind(this)}
+                    className="icon-btn icon-btn-repeat no-select " style={isDeactiveStyle}
+                    data-toggle="tooltip" data-placement="top" title="Repeat current song">
                 <span className="hide">Repeat</span>
             </button>
         );
