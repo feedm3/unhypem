@@ -16,14 +16,24 @@ import ShareButton from './share-button';
 import VolumeButton from './volume-button';
 import ACTION from '../../constants/action';
 import KEY_CODE from '../../constants/key-code';
+import PLAYLIST_STATE from '../../constants/playlist-state';
 import songDispatcher from '../../dispatcher/song-dispatcher';
 
-class SongPlayer extends React.Component {
+class PlayerPanel extends React.Component {
     constructor() {
         super();
         this.state = {
             song: {}
         };
+    }
+
+    handleAllSongsUpdate(songsInfo) {
+        this.refs.repeatButton.setState({
+            playlistState: songsInfo.playlistState
+        });
+        this.refs.shuffleButton.setState({
+            playlistState: songsInfo.playlistState
+        });
     }
 
     handleCurrentSongUpdate(songInfo) {
@@ -56,7 +66,7 @@ class SongPlayer extends React.Component {
     }
 
     render() {
-        const { song } = this.state;
+        const {song} = this.state;
         return (
             <div>
                 <div className="container">
@@ -78,10 +88,10 @@ class SongPlayer extends React.Component {
                             <ForwardButton />
                         </div>
                         <div className="player-panel-col-btn">
-                            <ShuffleButton />
+                            <ShuffleButton ref='shuffleButton' />
                         </div>
                         <div className="player-panel-col-btn">
-                            <RepeatButton />
+                            <RepeatButton ref='repeatButton' />
                         </div>
                         <div className="player-panel-col-btn">
                             <ShareButton />
@@ -98,8 +108,9 @@ class SongPlayer extends React.Component {
     componentDidMount() {
         document.addEventListener('keydown', this.handleKeyDownEvent.bind(this));
         songDispatcher.registerOnCurrentSongUpdate('PlayerPanel', this.handleCurrentSongUpdate.bind(this));
+        songDispatcher.registerOnAllSongsUpdate('PlayerPanel', this.handleAllSongsUpdate.bind(this));
     }
 }
 
-export default SongPlayer;
+export default PlayerPanel;
 

@@ -35,7 +35,7 @@ class PlayButton extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return nextState.songState !== this.state.songState;
+        return this.state.songState !== nextState.songState;
     }
 
     render() {

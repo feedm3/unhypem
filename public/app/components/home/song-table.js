@@ -109,5 +109,8 @@ class SongTable extends React.Component {
         songDispatcher.removeOnCurrentSongUpdate('SongTable');
     }
 }
+SongTable.propTypes = {
+    songs: React.PropTypes.array.isRequired
+};
 
 export default SongTable;

@@ -8,17 +8,23 @@ import getSongsInfo from '../api/songs-api';
 import Player from '../player/player';
 import ACTION from '../constants/action';
 import SONG_STATE from '../constants/song-state';
+import PLAYLIST_STATE from '../constants/playlist-state';
+import _ from 'lodash';
 
+// the 'global' state
 const songsInfo = {
     songs: [],
-    timestamp: ''
+    timestamp: '',
+    playlistState: PLAYLIST_STATE.NEXT_POSITION
 };
+// the current song state
 const currentSongInfo = {
     song: {},
     state: SONG_STATE.PAUSED,
     positionUpdate: false,
     positionUpdatePosition: 0,
-    position: 0
+    position: 0,
+    actionOnBroken: ACTION.FORWARD
 };
 const onAllSongsUpdateCallbacks = []; // get called once when popular songs arrive
 const onCurrentSongUpdateCallbacks = []; // gets called every time the song, position or state of the song changes
@@ -72,17 +78,13 @@ const SongDispatcher = {
                 this.notifyCurrentSongUpdate();
                 break;
             case ACTION.REWIND:
-                if (this.getPositionInSeconds() > 5) {
-                    this.dispatch(ACTION.FORCE_POSITION_IN_PERCENT, 0);
-                } else {
-                    currentIndex = this.getIndexOfCurrentSong();
-                    currentIndex = currentIndex === 0 ? 49 : currentIndex - 1;
-                    this.dispatch(ACTION.SELECT_SONG, songsInfo.songs[currentIndex]);
-                }
+                currentIndex = this.getPreviousSongIndexBasedOnCurrentState();
+                // currentSongInfo.actionOnBroken = ACTION.REWIND;
+                this.dispatch(ACTION.SELECT_SONG, songsInfo.songs[currentIndex]);
                 break;
             case ACTION.FORWARD:
-                currentIndex = this.getIndexOfCurrentSong();
-                currentIndex = currentIndex === 49 ? 0 : currentIndex + 1;
+                currentIndex = this.getNextSongIndexBasedOnCurrentState();
+                // currentSongInfo.actionOnBroken = ACTION.FORWARD;
                 this.dispatch(ACTION.SELECT_SONG, songsInfo.songs[currentIndex]);
                 break;
             case ACTION.CHANGE_VOLUME:
@@ -93,6 +95,10 @@ const SongDispatcher = {
                 break;
             case ACTION.GET_CURRENT_SONG:
                 this.notifyCurrentSongUpdate();
+                break;
+            case ACTION.CHANGE_PLAYLIST_STATE:
+                songsInfo.playlistState = state;
+                this.notifyAllSongsUpdate();
                 break;
         }
     },
@@ -149,6 +155,40 @@ const SongDispatcher = {
         }
         if (callback === null) {
             throw new Error('callback must not be null');
+        }
+    },
+
+    getPreviousSongIndexBasedOnCurrentState() {
+        if (this.getPositionInSeconds() > 5) {
+            this.dispatch(ACTION.FORCE_POSITION_IN_PERCENT, 0);
+        }
+
+        let previousSongIndex = 0;
+        switch (songsInfo.playlistState) {
+            case PLAYLIST_STATE.NEXT_POSITION:
+                previousSongIndex = this.getIndexOfCurrentSong();
+                previousSongIndex = previousSongIndex === 0 ? 49 : previousSongIndex - 1;
+                return previousSongIndex;
+            case PLAYLIST_STATE.REPEAT_CURRENT_SONG:
+                this.dispatch(ACTION.FORCE_POSITION_IN_PERCENT, 0);
+                return this.getIndexOfCurrentSong();
+            case PLAYLIST_STATE.SHUFFLE_NEXT_SONG:
+                return _.random(0, 49);
+        }
+    },
+
+    getNextSongIndexBasedOnCurrentState() {
+        let nextSongIndex = 0;
+        switch (songsInfo.playlistState) {
+            case PLAYLIST_STATE.NEXT_POSITION:
+                nextSongIndex = this.getIndexOfCurrentSong();
+                nextSongIndex = nextSongIndex === 49 ? 0 : nextSongIndex + 1;
+                return nextSongIndex;
+            case PLAYLIST_STATE.REPEAT_CURRENT_SONG:
+                this.dispatch(ACTION.FORCE_POSITION_IN_PERCENT, 0);
+                return this.getIndexOfCurrentSong();
+            case PLAYLIST_STATE.SHUFFLE_NEXT_SONG:
+                return _.random(0, 49);
         }
     }
 };

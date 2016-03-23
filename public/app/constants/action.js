@@ -42,7 +42,7 @@ export default {
     /**
      * Play the next song. No state.
      */
-    FORWARD: 'NEXT_SONG',
+    FORWARD: 'NEXT_POSITION',
 
     /**
      * Play the song from the beginning or select the previous song. No state.
@@ -62,5 +62,10 @@ export default {
     /**
      * Get the current selected song. No state.
      */
-    GET_CURRENT_SONG: 'GET_CURRENT_SONG'
+    GET_CURRENT_SONG: 'GET_CURRENT_SONG',
+
+    /**
+     * Change the playlist state. The playlist state as state.
+     */
+    CHANGE_PLAYLIST_STATE: 'CHANGE_PLAYLIST_STATE'
 };

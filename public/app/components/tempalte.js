@@ -25,5 +25,5 @@ export default class Template extends React.Component {
     }
 }
 Template.propTypes = {
-    children: React.PropTypes.node
+    children: React.PropTypes.node.isRequired
 };
