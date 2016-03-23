@@ -5,8 +5,7 @@
 'use strict';
 
 import { SoundManager } from 'soundmanager2/script/soundmanager2-nodebug-jsmin';
-import forEach from 'lodash/forEach';
-import isString from 'lodash/isString';
+import _ from 'lodash';
 import songDispatcher from '../dispatcher/song-dispatcher';
 import ACTION from '../constants/action';
 import SONG_STATE from '../constants/song-state';
@@ -62,7 +61,7 @@ class Player {
     }
 
     preloadSongs(songs) {
-        forEach(songs, (song) => {
+        _.forEach(songs, (song) => {
             if (!song.streamUrl) {
                 return;
             }
