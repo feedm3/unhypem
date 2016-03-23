@@ -79,12 +79,12 @@ const SongDispatcher = {
                 break;
             case ACTION.REWIND:
                 currentIndex = this.getPreviousSongIndexBasedOnCurrentState();
-                // currentSongInfo.actionOnBroken = ACTION.REWIND;
+                currentSongInfo.actionOnBroken = ACTION.REWIND;
                 this.dispatch(ACTION.SELECT_SONG, songsInfo.songs[currentIndex]);
                 break;
             case ACTION.FORWARD:
                 currentIndex = this.getNextSongIndexBasedOnCurrentState();
-                // currentSongInfo.actionOnBroken = ACTION.FORWARD;
+                currentSongInfo.actionOnBroken = ACTION.FORWARD;
                 this.dispatch(ACTION.SELECT_SONG, songsInfo.songs[currentIndex]);
                 break;
             case ACTION.CHANGE_VOLUME:

@@ -40,6 +40,7 @@ class Player {
         const currentSong = this.currentSongInfo.song;
         const newSong = songInfo.song;
         const newPlayingState = songInfo.state;
+        const actionOnBroken = songInfo.actionOnBroken;
 
         if (!currentSong || (newSong.id !== currentSong.id)) {
             Object.assign(this.currentSongInfo, songInfo);
@@ -47,7 +48,7 @@ class Player {
         }
         switch (newPlayingState) {
             case SONG_STATE.PLAYING:
-                if (!this.smSound) songDispatcher.dispatch(ACTION.FORWARD);
+                if (!this.smSound) songDispatcher.dispatch(actionOnBroken);
                 this.play();
                 break;
             case SONG_STATE.PAUSED:
