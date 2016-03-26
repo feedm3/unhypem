@@ -14,9 +14,9 @@ import RepeatButton from './repeat-button';
 import ShuffleButton from './shuffle-button';
 import ShareButton from './share-button';
 import VolumeButton from './volume-button';
+import Tooltip from './tooltip';
 import ACTION from '../../constants/action';
 import KEY_CODE from '../../constants/key-code';
-import PLAYLIST_STATE from '../../constants/playlist-state';
 import songDispatcher from '../../dispatcher/song-dispatcher';
 
 class PlayerPanel extends React.Component {
@@ -72,7 +72,9 @@ class PlayerPanel extends React.Component {
                 <div className="container">
                     <div className="player-panel">
                         <div className="player-panel-col player-panel-col-song-position">
-                            <strong>{song.position}</strong>
+                            <Tooltip text={`${song.artist} - ${song.title}`}>
+                                <strong>{song.position}</strong>
+                            </Tooltip>
                         </div>
                         <div className="player-panel-col-duration">
                             <DurationPanel />
@@ -88,10 +90,10 @@ class PlayerPanel extends React.Component {
                             <ForwardButton />
                         </div>
                         <div className="player-panel-col-btn">
-                            <ShuffleButton ref='shuffleButton' />
+                            <ShuffleButton ref='shuffleButton'/>
                         </div>
                         <div className="player-panel-col-btn">
-                            <RepeatButton ref='repeatButton' />
+                            <RepeatButton ref='repeatButton'/>
                         </div>
                         <div className="player-panel-col-btn">
                             <ShareButton />
