@@ -72,7 +72,7 @@ class PlayerPanel extends React.Component {
                 <div className="container">
                     <div className="player-panel">
                         <div className="player-panel-col player-panel-col-song-position">
-                            <Tooltip text={`${song.artist} - ${song.title}`}>
+                            <Tooltip text={`${song.artist} - ${song.title}`} direction='right'>
                                 <strong>{song.position}</strong>
                             </Tooltip>
                         </div>

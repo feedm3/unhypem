@@ -13,8 +13,12 @@ export default class Tooltip extends React.Component {
     }
 
     render() {
+        let styles = 'tooltip-top-160';
+        if (this.props.direction === 'right') {
+            styles += ' tooltip-top-160-right';
+        }
         return (
-            <div className='tooltip-top-160' data-text={this.props.text}>
+            <div className={styles} data-text={this.props.text}>
                 {this.props.children}
             </div>
         );
@@ -22,5 +26,6 @@ export default class Tooltip extends React.Component {
 }
 Tooltip.propTypes = {
     children: React.PropTypes.node.isRequired,
-    text: React.PropTypes.string
+    text: React.PropTypes.string,
+    direction: React.PropTypes.oneOf(['right'])
 };
