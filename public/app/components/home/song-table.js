@@ -7,6 +7,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import SongTableRow from './song-table-row';
+import Utils from '../common/utils';
 import songDispatcher from '../../dispatcher/song-dispatcher';
 import ACTION from '../../constants/action';
 
@@ -50,17 +51,17 @@ class SongTable extends React.Component {
     scrollToRow(row) {
         const rowToSelectDomNode = ReactDom.findDOMNode(row);
 
-        const currentScrollPosition = getScrollTop(); // 0 = on top of the body
+        const currentScrollPosition = Utils.getScrollTop(); // 0 = on top of the body
         const currentWindowHeight = window.innerHeight;
         const selectedRowPosition = rowToSelectDomNode.offsetTop; // 0 = on top of the table
         const distanceToBottom = 300;
 
         if (currentScrollPosition + currentWindowHeight < selectedRowPosition + distanceToBottom) {
             // row is slighly above the current visible window
-            setScrollTop(selectedRowPosition + distanceToBottom - currentWindowHeight);
+            Utils.setScrollTop(selectedRowPosition + distanceToBottom - currentWindowHeight);
         } else if (currentScrollPosition > selectedRowPosition) {
             // row is above the current visible window
-            setScrollTop(selectedRowPosition);
+            Utils.setScrollTop(selectedRowPosition);
         }
     }
 
@@ -113,23 +114,3 @@ SongTable.propTypes = {
 };
 
 export default SongTable;
-
-/**
- * Get the scrollTop position of the browser. This works on FF, Chrome and Edge.
- *
- * @returns {number}
- */
-function getScrollTop() {
-    // the || operator will return the 'not 0' value
-    return document.documentElement.scrollTop || document.body.scrollTop;
-}
-
-/**
- * Set the scrollTop position of the browser. This works on FF, Chrome and Edge.
- *
- * @param value
- */
-function setScrollTop(value) {
-    document.documentElement.scrollTop = value; // ff
-    document.body.scrollTop = value; // chrome and edge
-}

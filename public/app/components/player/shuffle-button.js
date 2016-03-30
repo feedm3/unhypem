@@ -5,7 +5,7 @@
 'use strict';
 
 import React from 'react';
-import Tooltip from './tooltip';
+import Tooltip from './../common/tooltip';
 import ACTION from '../../constants/action';
 import PLAYLIST_STATE from '../../constants/playlist-state';
 import songDispatcher from '../../dispatcher/song-dispatcher';

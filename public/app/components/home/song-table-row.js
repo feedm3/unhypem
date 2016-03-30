@@ -10,7 +10,7 @@
 'use strict';
 
 import React from 'react';
-import Tooltip from '../player/tooltip';
+import Tooltip from '../common/tooltip';
 
 class SongTableRow extends React.Component {
     constructor() {
@@ -55,7 +55,6 @@ class SongTableRow extends React.Component {
         );
     }
 }
-
 SongTableRow.propTypes = {
     song: React.PropTypes.object.isRequired,
     onClick: React.PropTypes.func.isRequired,

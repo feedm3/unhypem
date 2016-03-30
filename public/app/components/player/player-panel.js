@@ -14,7 +14,7 @@ import RepeatButton from './repeat-button';
 import ShuffleButton from './shuffle-button';
 import ShareButton from './share-button';
 import VolumeButton from './volume-button';
-import Tooltip from './tooltip';
+import Tooltip from './../common/tooltip';
 import ACTION from '../../constants/action';
 import KEY_CODE from '../../constants/key-code';
 import songDispatcher from '../../dispatcher/song-dispatcher';
