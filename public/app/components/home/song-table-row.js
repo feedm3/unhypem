@@ -10,6 +10,7 @@
 'use strict';
 
 import React from 'react';
+import Tooltip from '../player/tooltip';
 
 class SongTableRow extends React.Component {
     constructor() {
@@ -28,7 +29,7 @@ class SongTableRow extends React.Component {
     }
 
     render() {
-        const { song, onClick, selected } = this.props;
+        const {song, onClick, selected} = this.props;
 
         let rowStyle = 'warning';
         if (song.streamUrl) {
@@ -42,7 +43,9 @@ class SongTableRow extends React.Component {
 
         return (
             <tr className={rowStyle} onClick={onClick.bind(this)}>
-                <td className="vertical-center text-center">{song.position}</td>
+                <td className="vertical-center text-center">
+                    <Tooltip text={`❤ ${song.hypemLovedCount}`} size='s'>{song.position}</Tooltip>
+                </td>
                 <td className="vertical-center hidden-xs">
                     <a className={soundcloudLogoStyle} target="_blank" href={song.soundcloudUrl}/>
                 </td>

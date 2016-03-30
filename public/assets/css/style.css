@@ -84,19 +84,17 @@ body {
     text-align: right;
 }
 
-.tooltip-top-160 {
+.tooltip-top {
     position: relative;
     display: inline;
 }
 
-.tooltip-top-160:hover:after {
+.tooltip-top:hover:after {
     position: absolute;
     display: block;
-    width: 160px;
     line-height: initial;
-    font-size: 14px;
+    font-size: 12px;
     margin-bottom: 6px; /* same size as triangle heights */
-    margin-left: -74px;
     background: #000;
     border-radius: 5px;
     color: #FFF;
@@ -107,7 +105,7 @@ body {
     z-index: 98;
 }
 
-.tooltip-top-160:hover:before {
+.tooltip-top:hover:before {
     border: solid;
     border-color: #000 transparent;
     border-width: 6px 6px 0 6px;
@@ -119,7 +117,17 @@ body {
     z-index: 99;
 }
 
-.tooltip-top-160-right:hover:after {
+.tooltip-top-80:hover:after {
+    width: 80px;
+    margin-left: -30px;
+}
+
+.tooltip-top-160:hover:after {
+    width: 160px;
+    margin-left: -68px;
+}
+
+.tooltip-top-right:hover:after {
     margin-left: 0;
 }
 
