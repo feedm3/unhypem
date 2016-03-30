@@ -89,7 +89,6 @@ class SongTable extends React.Component {
                         <th className="hidden-xs"/>
                         <th>Artist</th>
                         <th>Title</th>
-                        <th className="hidden-xs">Love</th>
                     </tr>
                     </thead>
                     <tbody>

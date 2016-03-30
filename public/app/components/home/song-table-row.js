@@ -51,7 +51,6 @@ class SongTableRow extends React.Component {
                 </td>
                 <td className="vertical-center">{song.artist}</td>
                 <td className="vertical-center"><strong>{song.title}</strong></td>
-                <td className="vertical-center hidden-xs">{song.hypemLovedCount}</td>
             </tr>
         );
     }
