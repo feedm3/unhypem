@@ -67,5 +67,10 @@ export default {
     /**
      * Change the playlist state. The playlist state as state.
      */
-    CHANGE_PLAYLIST_STATE: 'CHANGE_PLAYLIST_STATE'
+    CHANGE_PLAYLIST_STATE: 'CHANGE_PLAYLIST_STATE',
+
+    /**
+     * Let the Player repeat the current song. Boolean as state.
+     */
+    REPEAT_CURRENT_SONG: 'REPEAT_CURRENT_SONG'
 };

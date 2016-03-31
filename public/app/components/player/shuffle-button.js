@@ -15,18 +15,21 @@ export default class ShuffleButton extends React.Component {
     constructor() {
         super();
         this.state = {
-            playlistState: PLAYLIST_STATE.NEXT_POSITION
+            playlistState: {}
         };
     }
 
     handleClick() {
-        switch (this.state.playlistState) {
-            case PLAYLIST_STATE.SHUFFLE_NEXT_SONG:
-                songDispatcher.dispatch(ACTION.CHANGE_PLAYLIST_STATE, PLAYLIST_STATE.NEXT_POSITION);
-                break;
-            default:
-                songDispatcher.dispatch(ACTION.CHANGE_PLAYLIST_STATE, PLAYLIST_STATE.SHUFFLE_NEXT_SONG);
-                break;
+        if (this.state.playlistState === PLAYLIST_STATE.SHUFFLE_NEXT_SONG) {
+            this.setState({
+                playlistState: {}
+            });
+            songDispatcher.dispatch(ACTION.CHANGE_PLAYLIST_STATE, PLAYLIST_STATE.NEXT_POSITION);
+        } else {
+            this.setState({
+                playlistState: PLAYLIST_STATE.SHUFFLE_NEXT_SONG
+            });
+            songDispatcher.dispatch(ACTION.CHANGE_PLAYLIST_STATE, PLAYLIST_STATE.SHUFFLE_NEXT_SONG);
         }
     }
 

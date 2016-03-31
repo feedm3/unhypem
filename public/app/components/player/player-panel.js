@@ -27,15 +27,6 @@ class PlayerPanel extends React.Component {
         };
     }
 
-    handleAllSongsUpdate(songsInfo) {
-        this.refs.repeatButton.setState({
-            playlistState: songsInfo.playlistState
-        });
-        this.refs.shuffleButton.setState({
-            playlistState: songsInfo.playlistState
-        });
-    }
-
     handleCurrentSongUpdate(songInfo) {
         this.setState({
             'song': songInfo.song
@@ -90,10 +81,10 @@ class PlayerPanel extends React.Component {
                             <ForwardButton />
                         </div>
                         <div className="player-panel-col-btn">
-                            <ShuffleButton ref='shuffleButton'/>
+                            <ShuffleButton />
                         </div>
                         <div className="player-panel-col-btn">
-                            <RepeatButton ref='repeatButton'/>
+                            <RepeatButton />
                         </div>
                         <div className="player-panel-col-btn">
                             <ShareButton />
@@ -110,7 +101,6 @@ class PlayerPanel extends React.Component {
     componentDidMount() {
         document.addEventListener('keydown', this.handleKeyDownEvent.bind(this));
         songDispatcher.registerOnCurrentSongUpdate('PlayerPanel', this.handleCurrentSongUpdate.bind(this));
-        songDispatcher.registerOnAllSongsUpdate('PlayerPanel', this.handleAllSongsUpdate.bind(this));
     }
 }
 

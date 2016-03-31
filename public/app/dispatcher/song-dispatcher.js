@@ -15,7 +15,8 @@ import _ from 'lodash';
 const songsInfo = {
     songs: [],
     timestamp: '',
-    playlistState: PLAYLIST_STATE.NEXT_POSITION
+    playlistState: PLAYLIST_STATE.NEXT_POSITION,
+    repeatCurrentSong: false
 };
 // the current song state
 const currentSongInfo = {
@@ -100,6 +101,10 @@ const SongDispatcher = {
                 songsInfo.playlistState = state;
                 this.notifyAllSongsUpdate();
                 break;
+            case ACTION.REPEAT_CURRENT_SONG:
+                songsInfo.repeatCurrentSong = state;
+                this.notifyAllSongsUpdate();
+                break;
         }
     },
 
@@ -169,9 +174,6 @@ const SongDispatcher = {
                 previousSongIndex = this.getIndexOfCurrentSong();
                 previousSongIndex = previousSongIndex === 0 ? 49 : previousSongIndex - 1;
                 return previousSongIndex;
-            case PLAYLIST_STATE.REPEAT_CURRENT_SONG:
-                this.dispatch(ACTION.FORCE_POSITION_IN_PERCENT, 0);
-                return this.getIndexOfCurrentSong();
             case PLAYLIST_STATE.SHUFFLE_NEXT_SONG:
                 return _.random(0, 49);
         }
@@ -184,9 +186,6 @@ const SongDispatcher = {
                 nextSongIndex = this.getIndexOfCurrentSong();
                 nextSongIndex = nextSongIndex === 49 ? 0 : nextSongIndex + 1;
                 return nextSongIndex;
-            case PLAYLIST_STATE.REPEAT_CURRENT_SONG:
-                this.dispatch(ACTION.FORCE_POSITION_IN_PERCENT, 0);
-                return this.getIndexOfCurrentSong();
             case PLAYLIST_STATE.SHUFFLE_NEXT_SONG:
                 return _.random(0, 49);
         }

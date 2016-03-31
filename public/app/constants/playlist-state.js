@@ -16,10 +16,5 @@ export default {
     /**
      * Play a random next song.
      */
-    SHUFFLE_NEXT_SONG: 'SHUFFLE_NEXT_SONG',
-
-    /**
-     * Repeat the current song.
-     */
-    REPEAT_CURRENT_SONG: 'REPEAT_CURRENT_SONG'
+    SHUFFLE_NEXT_SONG: 'SHUFFLE_NEXT_SONG'
 };

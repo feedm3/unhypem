@@ -16,6 +16,7 @@ class Player {
         this.currentSongInfo = {};
         this.soundManager = new SoundManager();
         this.smSound = null; // soundManager creates a smSound for every song. this object holds the playing smSound
+        this.repeatCurrentSong = false;
 
         this.soundManager.setup({
             flashVersion: 9,
@@ -34,6 +35,7 @@ class Player {
 
     handleAllSongsUpdate(songsInfo) {
         this.preloadSongs(songsInfo.songs);
+        this.repeatCurrentSong = songsInfo.repeatCurrentSong;
     }
 
     handleCurrentSongUpdate(songInfo) {
@@ -98,12 +100,12 @@ class Player {
                      * little workaround and call the next song when the current ones position is greater than 99.9
                      * percent.
                      */
-                    if (positionInPercent > 99.9) {
-                        songDispatcher.dispatch(ACTION.FORWARD);
+                    if (positionInPercent > 99.5) {
+                        this.onFinish();
                     }
                 },
                 onfinish: () => {
-                    songDispatcher.dispatch(ACTION.FORWARD);
+                    this.onFinish();
                 }
             });
         });
@@ -155,6 +157,14 @@ class Player {
 
     setVolume(percent = 100) {
         this.soundManager.setVolume(percent);
+    }
+
+    onFinish() {
+        if (this.repeatCurrentSong) {
+            songDispatcher.dispatch(ACTION.FORCE_POSITION_IN_PERCENT, 0);
+        } else {
+            songDispatcher.dispatch(ACTION.FORWARD);
+        }
     }
 }
 
