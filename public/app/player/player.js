@@ -86,7 +86,7 @@ class Player {
                         if (!currentSong.duration) {
                             // if the song is not hosted on soundcloud we have to update the duration from the soundmanager
                             currentSong.duration = this.smSound.duration;
-                            songDispatcher.dispatch(ACTION.SELECT_SONG, this.currentSong);
+                            songDispatcher.dispatch(ACTION.SELECT_SONG, currentSong);
                         }
                     }
                 },
