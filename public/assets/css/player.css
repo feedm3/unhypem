@@ -50,12 +50,17 @@
 
 .player-progressbar {
     height: 80px;
-    background-color: #2675A6;
     line-height: 80px;
+    background-color: #A7B8D1;
+    -webkit-transition: background-color 200ms ease-in-out;
+    -moz-transition: background-color 200ms ease-in-out;
+    -o-transition: background-color 200ms ease-in-out;
+    -ms-transition: background-color 200ms ease-in-out;
+    transition: background-color 200ms ease-in-out;
 }
 
 .player-progressbar > div {
-    background-color: black;
+    background-color: #0070D2;
 }
 
 .player-progressbar-progress {

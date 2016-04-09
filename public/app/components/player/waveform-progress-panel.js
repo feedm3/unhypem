@@ -11,27 +11,25 @@ class ProgressPanel extends React.Component {
     constructor() {
         super();
         this.state = {
-            position: 0
+            position: 0,
+            color: ''
         };
     }
+    
+    updatePosition(position) {
+        this.setState({position: position});
+    }
 
-    handleCurrentSongUpdate(songInfo) {
-        const position = songInfo.positionUpdate ? songInfo.positionUpdatePosition : songInfo.position;
-        this.setState({
-            position: position
-        });
+    updateColor(color) {
+        this.setState({color: color});
     }
 
     render() {
         return (
-            <div className="player-progressbar">
+            <div className="player-progressbar" style={{backgroundColor: this.state.color}}>
                 <div className="player-progressbar-progress" style={{width: this.state.position + '%'}}></div>
             </div>
         );
-    }
-
-    componentDidMount() {
-        songDispatcher.registerOnCurrentSongUpdate('ProgressPanel', this.handleCurrentSongUpdate.bind(this));
     }
 }
 

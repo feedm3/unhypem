@@ -21,6 +21,9 @@ class WaveformPanel extends React.Component {
         this.setState({
             waveformUrl: songInfo.song.waveformUrl
         });
+
+        const position = songInfo.positionUpdate ? songInfo.positionUpdatePosition : songInfo.position;
+        this.refs.waveformProgressPanel.updatePosition(position);
     }
 
     handleClick(waveformContainer) {
@@ -29,6 +32,14 @@ class WaveformPanel extends React.Component {
         const clickedWidth = waveformContainer.nativeEvent.layerX;
         const percent = clickedWidth / width * 100;
         songDispatcher.dispatch(ACTION.FORCE_POSITION_IN_PERCENT, percent);
+    }
+
+    handleMouseOver() {
+        this.refs.waveformProgressPanel.updateColor('#899AB3');
+    }
+
+    handleMouseOut() {
+        this.refs.waveformProgressPanel.updateColor('');
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -41,9 +52,10 @@ class WaveformPanel extends React.Component {
         const waveformStyle = {backgroundImage: waveformBackgroundStyle};
 
         return (
-            <div id='waveform-container' className='player-waveform-container' onClick={this.handleClick.bind(this)}>
+            <div id='waveform-container' className='player-waveform-container' onClick={this.handleClick.bind(this)}
+                 onMouseOver={this.handleMouseOver.bind(this)} onMouseOut={this.handleMouseOut.bind(this)}>
                 <div className='player-waveform' style={waveformStyle}></div>
-                <WaveformProgressPanel />
+                <WaveformProgressPanel ref="waveformProgressPanel"/>
             </div>
         );
     }
