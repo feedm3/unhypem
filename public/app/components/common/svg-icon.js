@@ -10,8 +10,12 @@ import React from 'react';
 
 export default class SvgIcon extends React.Component {
     render() {
+        let iconStyleNames = this.props.className + ' svg-icon';
+        if (this.props.onClick) {
+            iconStyleNames += ' svg-icon-clickable';
+        }
         return (
-            <svg className={this.props.className + ' svg-icon'}
+            <svg className={iconStyleNames}
                  width={this.props.width}
                  height={this.props.height}
                  onClick={this.props.onClick}

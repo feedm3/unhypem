@@ -11,6 +11,7 @@
 
 import React from 'react';
 import Tooltip from '../common/tooltip';
+import SvgIcon from '../common/svg-icon';
 
 class SongTableRow extends React.Component {
     constructor() {
@@ -35,19 +36,26 @@ class SongTableRow extends React.Component {
         if (song.streamUrl) {
             rowStyle = 'white';
             if (this.state.isSelected || (this.state.usePropsToSelect && selected)) {
-                rowStyle = 'info';
+                rowStyle = 'clr-primary';
             }
         }
 
         const soundcloudLogoStyle = song.soundcloudUrl ? 'soundcloud-logo' : 'soundcloud-logo no-soundcloud-url';
 
+        // TODO add no-soundcloud style to soundcloud svg icon
         return (
             <tr className={rowStyle} onClick={onClick.bind(this)}>
                 <td className="vertical-center text-center">
                     <Tooltip text={`❤ ${song.hypemLovedCount}`} size='s'>{song.position}</Tooltip>
                 </td>
                 <td className="vertical-center hidden-xs">
-                    <a className={soundcloudLogoStyle} target="_blank" href={song.soundcloudUrl}/>
+                    <SvgIcon
+                        src='../../../assets/img/ic_soundcloud-black.svg#soundcloud-icon'
+                        title='Soundcloud'
+                        width='32'
+                        height='32'
+                        onClick={() => { window.open(song.soundcloudUrl, '_blank', null, null); }}
+                    />
                 </td>
                 <td className="vertical-center">{song.artist}</td>
                 <td className="vertical-center"><strong>{song.title}</strong></td>

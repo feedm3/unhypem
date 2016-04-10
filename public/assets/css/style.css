@@ -20,15 +20,6 @@ body {
     margin-bottom: 20px;
 }
 
-.soundcloud-logo {
-    background: url("../img/ic_soundcloud-black.svg");
-    -webkit-background-size: 32px 32px;
-    background-size: 32px 32px;
-    width: 32px;
-    height: 32px;
-    display: block;
-}
-
 .clr-primary {
     color: #0070D2;
 }
@@ -139,6 +130,10 @@ body {
 .svg-icon {
     display: inline;
     vertical-align: middle;
+}
+
+.svg-icon-clickable:hover {
+    cursor: pointer;
 }
 
 kbd {

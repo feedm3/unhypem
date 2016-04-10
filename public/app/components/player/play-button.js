@@ -53,7 +53,7 @@ class PlayButton extends React.Component {
                 width='48'
                 height='48'
                 className={playIconClass}
-                onClick={this.handleClick.bind(this)}/>
+                onClick={() => { this.handleClick(); }}/>
         );
     }
 

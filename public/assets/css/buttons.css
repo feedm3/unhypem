@@ -16,14 +16,6 @@
     outline: 0;
 }
 
-.icon-btn-play,
-.icon-btn-play:active {
-    width: 48px;
-    height: 48px;
-    padding: 0; /* play icon itself has lots of padding */
-    background-image: url("../img/ic_play_circle_filled_black_24px.svg");
-}
-
 .icon-btn-pause,
 .icon-btn-pause:active {
     height: 48px;
