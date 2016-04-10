@@ -8,6 +8,7 @@ import React from 'react';
 import songDispatcher from '../../dispatcher/song-dispatcher';
 import ACTION from '../../constants/action';
 import SONG_STATE from '../../constants/song-state';
+import SvgIcon from '../common/svg-icon';
 
 class PlayButton extends React.Component {
     constructor() {
@@ -39,16 +40,20 @@ class PlayButton extends React.Component {
     }
 
     render() {
-        let buttonStyle = 'icon-btn icon-btn-play no-select';
+        let playOrPauseIcon = '../../../assets/img/ic_play_circle_filled_black_24px.svg#player-icon';
+        let playIconClass = 'clr-primary';
         if (this.state.songState === SONG_STATE.PLAYING) {
-            buttonStyle += ' icon-btn-pause';
-        } else {
-            buttonStyle += ' icon-btn-play';
+            playOrPauseIcon = '../../../assets/img/ic_pause_circle_filled_black_24px.svg#pause-icon';
+            playIconClass = '';
         }
         return (
-            <button type="button" onClick={this.handleClick.bind(this)} className={buttonStyle}>
-                <span className="hide">Play</span>
-            </button>
+            <SvgIcon
+                src={playOrPauseIcon}
+                title='Play'
+                width='48'
+                height='48'
+                className={playIconClass}
+                onClick={this.handleClick.bind(this)}/>
         );
     }
 
