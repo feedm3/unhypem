@@ -29,6 +29,10 @@ body {
     display: block;
 }
 
+.clr-primary {
+    color: #0070D2;
+}
+
 .no-soundcloud-url {
     opacity: 0.2;
 }
@@ -130,6 +134,11 @@ body {
 
 .tooltip-top-right:hover:after {
     margin-left: 0;
+}
+
+.svg-icon {
+    display: inline;
+    vertical-align: middle;
 }
 
 kbd {
