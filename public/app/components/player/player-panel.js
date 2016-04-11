@@ -76,8 +76,10 @@ class PlayerPanel extends React.Component {
                         <div className="player-panel-col-btn player-panel-col-btn-play">
                             <PlayButton />
                         </div>
-                        <WaveformPanel />
-                        <div className="player-panel-col-btn" style={{'paddingLeft': '5px'}}>
+                        <div className="player-panel-col-waveform hidden-xs">
+                            <WaveformPanel />
+                        </div>
+                        <div className="player-panel-col-btn">
                             <ForwardButton />
                         </div>
                         <div className="player-panel-col-btn">
@@ -89,7 +91,7 @@ class PlayerPanel extends React.Component {
                         <div className="player-panel-col-btn">
                             <ShareButton />
                         </div>
-                        <div className="player-panel-col-btn" style={{'padding': '0'}}>
+                        <div className="player-panel-col-btn hidden-xs" style={{'padding': '0'}}>
                             <VolumeButton />
                         </div>
                     </div>

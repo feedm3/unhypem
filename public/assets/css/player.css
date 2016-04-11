@@ -30,11 +30,14 @@
 
 .player-panel-col-btn-play {
     line-height: 80px;
+    padding-right: 0;
 }
 
-.player-waveform-container {
+.player-panel-col-waveform {
     position: relative;
     flex: 3 3 250px;
+    margin-left: 10px;
+    margin-right: 5px;
 }
 
 .player-waveform {
@@ -45,7 +48,6 @@
     width: 100%;
     filter: brightness(0) invert(0.965); /* invert property is set that the calculation results in the background color */
     -webkit-filter: brightness(0) invert(0.965);
-
 }
 
 .player-progressbar {
