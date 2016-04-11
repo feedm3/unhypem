@@ -31,13 +31,17 @@ class SongTableRow extends React.Component {
 
     render() {
         const {song, onClick, selected} = this.props;
+        const {isSelected, usePropsToSelect} = this.state;
 
-        let rowStyle = 'song-table-row-no-streaming-url';
-        if (song.streamUrl) {
-            rowStyle = 'white';
-            if (this.state.isSelected || (this.state.usePropsToSelect && selected)) {
-                rowStyle = 'song-table-row-selected';
-            }
+        let rowStyle = 'white';
+        let tooltip = '';
+        if (!song.streamUrl) {
+            rowStyle = 'song-table-row-no-streaming-url';
+            tooltip = 'Song cant be streamed';
+        }
+
+        if (song.streamUrl && (isSelected || (usePropsToSelect && selected))) {
+            rowStyle = 'song-table-row-selected';
         }
 
         let soundcloudLogoStyle;
@@ -51,7 +55,7 @@ class SongTableRow extends React.Component {
         }
 
         return (
-            <tr className={rowStyle} onClick={onClick.bind(this)}>
+            <tr className={rowStyle} onClick={onClick.bind(this)} title={tooltip}>
                 <td className="vertical-center text-center">
                     <Tooltip text={`❤ ${song.hypemLovedCount}`} size='s'>{song.position}</Tooltip>
                 </td>
