@@ -24,10 +24,6 @@ body {
     color: #0070D2;
 }
 
-.no-soundcloud-url {
-    opacity: 0.2;
-}
-
 .navbar-color {
     background-color: #FFFFFF;
 }
@@ -42,6 +38,34 @@ body {
 
 .table tbody > tr > td.vertical-center {
     vertical-align: middle;
+}
+
+.song-table {
+    color: #000000;
+}
+
+.song-table tbody > tr:hover {
+    color: #000000;
+}
+
+.song-table-cell-no-soundcloud-url {
+    opacity: 0.2;
+}
+
+.song-table-row-selected {
+    color: #0070D2;
+}
+
+.song-table-row-selected:hover {
+    color: #0070D2 !important;
+}
+
+.song-table-row-no-streaming-url {
+    color: #A7B8D1;
+}
+
+.song-table-row-no-streaming-url:hover {
+    color: #000000;
 }
 
 .no-select {

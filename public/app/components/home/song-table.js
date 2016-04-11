@@ -83,7 +83,7 @@ class SongTable extends React.Component {
 
         return (
             <div>
-                <table className="table table-hover">
+                <table className="table table-hover song-table">
                     <thead>
                     <tr className="white">
                         <th />

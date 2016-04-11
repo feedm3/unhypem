@@ -32,17 +32,24 @@ class SongTableRow extends React.Component {
     render() {
         const {song, onClick, selected} = this.props;
 
-        let rowStyle = 'warning';
+        let rowStyle = 'song-table-row-no-streaming-url';
         if (song.streamUrl) {
             rowStyle = 'white';
             if (this.state.isSelected || (this.state.usePropsToSelect && selected)) {
-                rowStyle = 'clr-primary';
+                rowStyle = 'song-table-row-selected';
             }
         }
 
-        const soundcloudLogoStyle = song.soundcloudUrl ? 'soundcloud-logo' : 'soundcloud-logo no-soundcloud-url';
+        let soundcloudLogoStyle;
+        let soundcloudClickHandler;
+        if (song.soundcloudUrl) {
+            soundcloudClickHandler = () => {
+                window.open(song.soundcloudUrl, '_blank', null, null);
+            };
+        } else {
+            soundcloudLogoStyle = 'song-table-cell-no-soundcloud-url';
+        }
 
-        // TODO add no-soundcloud style to soundcloud svg icon
         return (
             <tr className={rowStyle} onClick={onClick.bind(this)}>
                 <td className="vertical-center text-center">
@@ -54,7 +61,8 @@ class SongTableRow extends React.Component {
                         title='Soundcloud'
                         width='32'
                         height='32'
-                        onClick={() => { window.open(song.soundcloudUrl, '_blank', null, null); }}
+                        className={soundcloudLogoStyle}
+                        onClick={soundcloudClickHandler}
                     />
                 </td>
                 <td className="vertical-center">{song.artist}</td>
