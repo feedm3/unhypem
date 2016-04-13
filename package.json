@@ -41,7 +41,7 @@
     "pg": "~4.5.1",
     "react": "~0.14.7",
     "react-dom": "~0.14.7",
-    "react-router": "~2.0.0",
+    "react-router": "~2.2.0",
     "request": "~2.69.0",
     "serve-favicon": "~2.3.0",
     "soundmanager2": "~2.97.20150601-a",
