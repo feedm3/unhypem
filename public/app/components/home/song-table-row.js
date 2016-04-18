@@ -47,8 +47,9 @@ class SongTableRow extends React.Component {
         let soundcloudLogoStyle;
         let soundcloudClickHandler;
         if (song.soundcloudUrl) {
-            soundcloudClickHandler = () => {
+            soundcloudClickHandler = (e) => {
                 window.open(song.soundcloudUrl, '_blank', null, null);
+                e.stopPropagation();
             };
         } else {
             soundcloudLogoStyle = 'song-table-cell-no-soundcloud-url';
