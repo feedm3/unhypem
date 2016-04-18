@@ -62,6 +62,7 @@ body {
 
 .song-table-row-no-streaming-url {
     color: #A7B8D1;
+    cursor: not-allowed;
 }
 
 .song-table-row-no-streaming-url:hover {
