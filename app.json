@@ -1,0 +1,38 @@
+{
+  "name": "unhypem",
+  "scripts": {
+  },
+  "env": {
+    "LOGGLY_ENABLED": {
+      "required": true
+    },
+    "NPM_CONFIG_PRODUCTION": {
+      "required": true
+    },
+    "SOUNDCLOUD_CLIENT_ID": {
+      "required": true
+    },
+    "DATABASE_URL": {
+      "required": true
+    },
+    "PAPERTRAIL_API_TOKEN": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "loaderio",
+    "papertrail",
+    "pgstudio",
+    "heroku-postgresql"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
