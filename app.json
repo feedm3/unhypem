@@ -27,7 +27,6 @@
   "addons": [
     "loaderio",
     "papertrail",
-    "pgstudio",
     "heroku-postgresql"
   ],
   "buildpacks": [
