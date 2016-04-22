@@ -70,3 +70,19 @@
     height: 100%;
     transition: .4s width;
 }
+
+.volume-popup {
+    position: absolute;
+    width: 25px;
+    height: 100px;
+    margin-top: -120px;
+    border: 1px solid #000000;
+    background-color: #ffffff;
+    padding: 1px;
+}
+
+.volume-popup-progress {
+    width: 100%;
+    height: 100%;
+    background-color: #0070D2;
+}

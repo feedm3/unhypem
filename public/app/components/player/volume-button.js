@@ -5,11 +5,28 @@
 'use strict';
 
 import React from 'react';
+import VolumePopup from './volume-popup';
 
-export default () => {
-    return (
-        <button type="button" className="icon-btn icon-btn-volume no-select">
-            <span className="hide">Volume</span>
-        </button>
-    );
-};
+export default class VolumeButton extends React.Component {
+
+    constructor() {
+        super();
+    }
+
+    toggleVolumePopup() {
+        const volumePopup = this.refs.volumePopup;
+        const isVisisble = volumePopup.state.visible;
+        volumePopup.setState({visible: !isVisisble});
+    }
+
+    render() {
+        return (
+            <button type="button"
+                    onClick={() => { this.toggleVolumePopup(); }}
+                    className="icon-btn icon-btn-volume no-select">
+                <span className="hide">Volume</span>
+                <VolumePopup ref='volumePopup' onMouseLeave={() => { this.toggleVolumePopup(); }}/>
+            </button>
+        );
+    }
+}
