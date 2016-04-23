@@ -3,7 +3,7 @@
  */
 
 'use strict';
- 
+
 import React from 'react';
 
 export default class VolumePopup extends React.Component {
@@ -17,33 +17,33 @@ export default class VolumePopup extends React.Component {
     }
 
     handleClick(ref) {
-        console.log("Servs", ref);
-        ref.stopPropagation();
-        // volumeBarRef.persist(); // to get all values from the event from react
-        //
-        // const width = document.getElementById('volumebar').offsetWidth;
-        // const clickedWidth = volumeBarRef.nativeEvent.layerX;
-        // const percent = clickedWidth / width * 100;
-        //
-        // songDispatcher.dispatch(ACTION.CHANGE_VOLUME, percent);
-        //
-        // this.setState({
-        //     volumePercent: percent
-        // });
+        ref.persist();
 
+        const height = document.getElementById('volume-popup').offsetHeight;
+        const percent = height - ref.nativeEvent.offsetY;
+
+        if (this.props.onProgressChange) this.props.onProgressChange(percent);
+        this.setState({
+            progressPercent: percent
+        });
+
+        ref.stopPropagation();
     }
 
     render() {
         if (!this.state.visible) return null;
+        const negativeProgress = 100 - this.state.progressPercent;
 
         return (
-            <div className='volume-popup' onClick={(e) => { this.handleClick(e); }} onMouseLeave={this.props.onMouseLeave}>
-                <div className='volume-popup-progress'></div>
+            <div id='volume-popup' className='volume-popup' onClick={(e) => { this.handleClick(e); }}
+                 onMouseLeave={this.props.onMouseLeave}>
+                <div className='volume-popup-progress-negative' style={{height: negativeProgress + '%'}}></div>
             </div>
         );
     }
 }
 VolumePopup.propTypes = {
-    onMouseLeave: React.PropTypes.func
+    onMouseLeave: React.PropTypes.func,
+    onProgressChange: React.PropTypes.func
 };
 

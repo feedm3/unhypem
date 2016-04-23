@@ -77,12 +77,12 @@
     height: 100px;
     margin-top: -120px;
     border: 1px solid #000000;
-    background-color: #ffffff;
-    padding: 1px;
+    background-color: #0070D2;
 }
 
-.volume-popup-progress {
+.volume-popup-progress-negative {
+    position: relative;
     width: 100%;
     height: 100%;
-    background-color: #0070D2;
+    background-color: #ffffff;
 }
