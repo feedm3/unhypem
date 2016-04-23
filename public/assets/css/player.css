@@ -85,4 +85,9 @@
     width: 100%;
     height: 100%;
     background-color: #ffffff;
+    -webkit-transition: 200ms height;
+    -moz-transition: 200ms height;
+    -o-transition: 200ms height;
+    -ms-transition: 200ms height;
+    transition: 200ms height;
 }
