@@ -27,7 +27,7 @@ export default class VolumeButton extends React.Component {
 
     render() {
         return (
-            <div style={{position:'relative', display:'inline'}}>
+            <div className='volume-popup-wrapper'>
                 <button type="button"
                         onClick={() => { this.toggleVolumePopup(); }}
                         className="icon-btn icon-btn-volume no-select">

@@ -71,6 +71,11 @@
     transition: .4s width;
 }
 
+.volume-popup-wrapper {
+    position: relative;
+    display: inline;
+}
+
 .volume-popup {
     position: absolute;
     bottom: 0;
