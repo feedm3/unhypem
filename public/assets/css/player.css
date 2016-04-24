@@ -73,9 +73,10 @@
 
 .volume-popup {
     position: absolute;
+    bottom: 0;
     width: 25px;
     height: 100px;
-    margin-top: -120px;
+    margin-bottom: 25px;
     border: 1px solid #000000;
     background-color: #0070D2;
 }

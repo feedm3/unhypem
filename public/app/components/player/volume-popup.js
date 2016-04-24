@@ -18,7 +18,8 @@ export default class VolumePopup extends React.Component {
 
     handleClick(ref) {
         ref.persist();
-
+        console.log('Test');
+        
         const height = document.getElementById('volume-popup').offsetHeight;
         const percent = height - ref.nativeEvent.offsetY;
 

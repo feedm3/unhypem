@@ -27,15 +27,17 @@ export default class VolumeButton extends React.Component {
 
     render() {
         return (
-            <button type="button"
-                    onClick={() => { this.toggleVolumePopup(); }}
-                    className="icon-btn icon-btn-volume no-select">
-                <span className="hide">Volume</span>
+            <div style={{position:'relative', display:'inline'}}>
+                <button type="button"
+                        onClick={() => { this.toggleVolumePopup(); }}
+                        className="icon-btn icon-btn-volume no-select">
+                    <span className="hide">Volume</span>
+                </button>
                 <VolumePopup
                     ref='volumePopup'
-                    onMouseLeave={() => { this.toggleVolumePopup(); }}
+                    // onMouseLeave={() => { this.toggleVolumePopup(); }}
                     onProgressChange={(percent) => { this.onVolumeChange(percent); }}/>
-            </button>
+            </div>
         );
     }
 }
