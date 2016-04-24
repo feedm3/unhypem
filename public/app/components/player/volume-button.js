@@ -35,7 +35,7 @@ export default class VolumeButton extends React.Component {
                 </button>
                 <VolumePopup
                     ref='volumePopup'
-                    // onMouseLeave={() => { this.toggleVolumePopup(); }}
+                    onMouseLeave={() => { this.toggleVolumePopup(); }}
                     onProgressChange={(percent) => { this.onVolumeChange(percent); }}/>
             </div>
         );
