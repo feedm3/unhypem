@@ -20,8 +20,8 @@ import KEY_CODE from '../../constants/key-code';
 import songDispatcher from '../../dispatcher/song-dispatcher';
 
 class PlayerPanel extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             song: {}
         };

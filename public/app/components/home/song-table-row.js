@@ -13,9 +13,9 @@ import React from 'react';
 import Tooltip from '../common/tooltip';
 import SvgIcon from '../common/svg-icon';
 
-class SongTableRow extends React.Component {
-    constructor() {
-        super();
+export default class SongTableRow extends React.Component {
+    constructor(props) {
+        super(props);
         this.state = {
             isSelected: false,
             usePropsToSelect: true
@@ -83,5 +83,3 @@ SongTableRow.propTypes = {
     onClick: React.PropTypes.func.isRequired,
     selected: React.PropTypes.bool
 };
-
-export default SongTableRow;

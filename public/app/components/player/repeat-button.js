@@ -10,8 +10,8 @@ import ACTION from '../../constants/action';
 import songDispatcher from '../../dispatcher/song-dispatcher';
 
 export default class RepeatButton extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             repeatCurrentSong: false
         };

@@ -7,9 +7,9 @@
 import React from 'react';
 import songDispatcher from '../../dispatcher/song-dispatcher';
 
-class ProgressPanel extends React.Component {
-    constructor() {
-        super();
+export default class ProgressPanel extends React.Component {
+    constructor(props) {
+        super(props);
         this.state = {
             position: 0,
             color: ''
@@ -32,5 +32,3 @@ class ProgressPanel extends React.Component {
         );
     }
 }
-
-export default ProgressPanel;

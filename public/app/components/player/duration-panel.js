@@ -8,8 +8,8 @@ import React from 'react';
 import songDispatcher from '../../dispatcher/song-dispatcher';
 
 class DurationLabel extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             duration: 0,
             position: 0

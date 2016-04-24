@@ -11,9 +11,9 @@ import Utils from '../common/utils';
 import songDispatcher from '../../dispatcher/song-dispatcher';
 import ACTION from '../../constants/action';
 
-class SongTable extends React.Component {
-    constructor() {
-        super();
+export default class SongTable extends React.Component {
+    constructor(props) {
+        super(props);
         this.state = {
             currentSong: {}
         };
@@ -112,5 +112,3 @@ class SongTable extends React.Component {
 SongTable.propTypes = {
     songs: React.PropTypes.array.isRequired
 };
-
-export default SongTable;

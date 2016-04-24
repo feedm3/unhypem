@@ -7,9 +7,8 @@
 import React from 'react';
 
 export default class VolumePopup extends React.Component {
-
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             visible: false,
             progressPercent: 100
@@ -18,8 +17,7 @@ export default class VolumePopup extends React.Component {
 
     handleClick(ref) {
         ref.persist();
-        console.log('Test');
-        
+
         const height = document.getElementById('volume-popup').offsetHeight;
         const percent = height - ref.nativeEvent.offsetY;
 

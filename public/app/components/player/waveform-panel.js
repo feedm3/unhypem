@@ -9,9 +9,9 @@ import WaveformProgressPanel from './waveform-progress-panel';
 import songDispatcher from '../../dispatcher/song-dispatcher';
 import ACTION from '../../constants/action';
 
-class WaveformPanel extends React.Component {
-    constructor() {
-        super();
+export default class WaveformPanel extends React.Component {
+    constructor(props) {
+        super(props);
         this.state = {
             waveformUrl: ''
         };
@@ -64,5 +64,3 @@ class WaveformPanel extends React.Component {
         songDispatcher.registerOnCurrentSongUpdate('WaveformPanel', this.handleCurrentSongUpdate.bind(this));
     }
 }
-
-export default WaveformPanel;

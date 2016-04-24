@@ -11,8 +11,8 @@ import SONG_STATE from '../../constants/song-state';
 import SvgIcon from '../common/svg-icon';
 
 class PlayButton extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             songState: SONG_STATE.PAUSED
         };

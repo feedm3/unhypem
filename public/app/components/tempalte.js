@@ -9,6 +9,10 @@ import Header from './header/header';
 import SongPlayer from './player/player-panel';
 
 export default class Template extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
             <div>

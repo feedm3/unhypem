@@ -10,9 +10,8 @@ import songDispatcher from '../../dispatcher/song-dispatcher';
 import ACTION from '../../constants/action';
 
 export default class VolumeButton extends React.Component {
-
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
     }
 
     toggleVolumePopup() {

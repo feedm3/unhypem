@@ -11,9 +11,8 @@ import PLAYLIST_STATE from '../../constants/playlist-state';
 import songDispatcher from '../../dispatcher/song-dispatcher';
 
 export default class ShuffleButton extends React.Component {
-
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             playlistState: {}
         };
