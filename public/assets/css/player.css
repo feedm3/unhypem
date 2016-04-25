@@ -83,17 +83,12 @@
     height: 100px;
     margin-bottom: 25px;
     border: 1px solid #000000;
-    background-color: #0070D2;
+    background-color: #fcfcfc;
 }
 
-.volume-popup-progress-negative {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    background-color: #ffffff;
-    -webkit-transition: 200ms height;
-    -moz-transition: 200ms height;
-    -o-transition: 200ms height;
-    -ms-transition: 200ms height;
-    transition: 200ms height;
+.volume-input-range {
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical;
+    height: 90px;
+    margin: 5px 0;
 }

@@ -15,28 +15,27 @@ export default class VolumePopup extends React.Component {
         };
     }
 
-    handleClick(ref) {
-        ref.persist();
+    handleInputChange(e) {
+        const progressPercent = e.target.value;
 
-        const height = document.getElementById('volume-popup').offsetHeight;
-        const percent = height - ref.nativeEvent.offsetY;
-
-        if (this.props.onProgressChange) this.props.onProgressChange(percent);
+        if (this.props.onProgressChange) this.props.onProgressChange(progressPercent);
         this.setState({
-            progressPercent: percent
+            progressPercent: progressPercent
         });
-
-        ref.stopPropagation();
     }
 
     render() {
         if (!this.state.visible) return null;
-        const negativeProgress = 100 - this.state.progressPercent;
-
         return (
-            <div id='volume-popup' className='volume-popup' onClick={(e) => { this.handleClick(e); }}
-                 onMouseLeave={this.props.onMouseLeave}>
-                <div className='volume-popup-progress-negative' style={{height: negativeProgress + '%'}}></div>
+            <div id='volume-popup' className='volume-popup' onMouseLeave={this.props.onMouseLeave}>
+                <input type="range"
+                       min="0"
+                       max="100"
+                       step="1"
+                       defaultValue={this.state.progressPercent}
+                       className="volume-input-range"
+                       orient="vertical"
+                       onChange={(e) => { this.handleInputChange(e); }}/>
             </div>
         );
     }
