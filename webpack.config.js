@@ -34,6 +34,7 @@ if (process.env.NODE_ENV === 'production') {
     plugins.push(new webpack.optimize.UglifyJsPlugin({minimize: true, compress: {warnings: false}}));
     plugins.push(new webpack.optimize.DedupePlugin());
     plugins.push(new webpack.optimize.OccurrenceOrderPlugin());
+    plugins.push(new webpack.DefinePlugin({'process.env': {NODE_ENV: JSON.stringify('production')}}))
     devtool = 'source-map';
 }
 
