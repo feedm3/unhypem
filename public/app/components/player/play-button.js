@@ -10,7 +10,7 @@ import ACTION from '../../constants/action';
 import SONG_STATE from '../../constants/song-state';
 import SvgIcon from '../common/svg-icon';
 
-class PlayButton extends React.Component {
+export default class PlayButton extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -61,5 +61,3 @@ class PlayButton extends React.Component {
         songDispatcher.registerOnCurrentSongUpdate('PlayButton', this.handleCurrentSongUpdate.bind(this));
     }
 }
-
-export default PlayButton;

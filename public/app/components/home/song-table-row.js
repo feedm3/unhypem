@@ -35,11 +35,9 @@ export default class SongTableRow extends React.Component {
 
         let rowStyle = 'white';
         let tooltip = '';
-        let externalOnClick = this.props.onClick;
         if (!song.streamUrl) {
             rowStyle = 'song-table-row-no-streaming-url';
             tooltip = 'Song cant be streamed';
-            externalOnClick = () => {};
         }
 
         if (song.streamUrl && (isSelected || (usePropsToSelect && selected))) {
@@ -58,7 +56,7 @@ export default class SongTableRow extends React.Component {
         }
 
         return (
-            <tr className={rowStyle} onClick={ () => { externalOnClick(); }} title={tooltip}>
+            <tr className={rowStyle} onClick={ () => { this.props.onClick(); }} title={tooltip}>
                 <td className="vertical-center text-center">
                     <Tooltip text={`❤ ${song.hypemLovedCount}`} size='s'>{song.position}</Tooltip>
                 </td>

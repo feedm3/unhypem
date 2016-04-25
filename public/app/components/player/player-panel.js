@@ -89,7 +89,7 @@ class PlayerPanel extends React.Component {
                             <RepeatButton />
                         </div>
                         <div className="player-panel-col-btn">
-                            <ShareButton />
+                            <ShareButton soundcloudUrl={song.soundcloudUrl} hypemMediaId={song.hypemMediaId}/>
                         </div>
                         <div className="player-panel-col-btn hidden-xs" style={{'padding': '0'}}>
                             <VolumeButton />
