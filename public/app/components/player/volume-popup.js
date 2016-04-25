@@ -16,7 +16,7 @@ export default class VolumePopup extends React.Component {
     }
 
     handleInputChange(e) {
-        const progressPercent = e.target.value;
+        const progressPercent = parseInt(e.target.value, 10);
 
         if (this.props.onProgressChange) this.props.onProgressChange(progressPercent);
         this.setState({
