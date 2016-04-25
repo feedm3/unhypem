@@ -43,7 +43,7 @@ export default class ShuffleButton extends React.Component {
         return (
             <Tooltip text='Random next song'>
                 <SvgIcon
-                    src='#ic_shuffle_black_24px'
+                    id='ic_shuffle_black_24px'
                     title='Shuffle'
                     width='24px'
                     height='24px'

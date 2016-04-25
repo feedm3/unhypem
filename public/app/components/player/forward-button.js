@@ -12,7 +12,7 @@ import ACTION from '../../constants/action';
 export default () => {
     return (
         <SvgIcon
-            src='#ic_skip_next_black_24px'
+            id='ic_skip_next_black_24px'
             title="Forward"
             width="36px"
             height="36px"

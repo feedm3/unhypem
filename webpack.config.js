@@ -21,7 +21,7 @@ plugins.push(new ExtractTextPlugin('styles.css', {
 
 plugins.push(new SvgStore(
     path.join(__dirname, '/public/assets', '**/*.svg'), // input path
-    'public', // output path
+    '', // output path
     { // options
         name: '[hash].sprite.svg',
         chunk: 'main',

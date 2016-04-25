@@ -12,7 +12,7 @@ import ACTION from '../../constants/action';
 export default () => {
     return (
         <SvgIcon
-            src='#ic_skip_previous_black_24px'
+            id='ic_skip_previous_black_24px'
             title="Rewind"
             width="36px"
             height="36px"

@@ -40,15 +40,15 @@ class PlayButton extends React.Component {
     }
 
     render() {
-        let playOrPauseIcon = '#ic_play_circle_filled_black_24px';
+        let playOrPauseIcon = 'ic_play_circle_filled_black_24px';
         let playIconClass = 'clr-primary';
         if (this.state.songState === SONG_STATE.PLAYING) {
-            playOrPauseIcon = '#ic_pause_circle_filled_black_24px';
+            playOrPauseIcon = 'ic_pause_circle_filled_black_24px';
             playIconClass = '';
         }
         return (
             <SvgIcon
-                src={playOrPauseIcon}
+                id={playOrPauseIcon}
                 title='Play'
                 width='48'
                 height='48'

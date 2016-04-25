@@ -33,7 +33,7 @@ export default class RepeatButton extends React.Component {
         return (
             <Tooltip text='Repeat current song'>
                 <SvgIcon
-                    src='#ic_repeat_one_black_24px'
+                    id='ic_repeat_one_black_24px'
                     title='Repeat'
                     width='24px'
                     height='24px'
