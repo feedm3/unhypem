@@ -5,6 +5,7 @@
 'use strict';
 
 import React from 'react';
+import SvgIcon from '../common/svg-icon';
 import Tooltip from './../common/tooltip';
 import ACTION from '../../constants/action';
 import songDispatcher from '../../dispatcher/song-dispatcher';
@@ -27,14 +28,17 @@ export default class RepeatButton extends React.Component {
 
     render() {
         const isActive = this.state.repeatCurrentSong;
-        const isDeactiveStyle = isActive ? {'': ''} : {'opacity': '0.5'};
+        const isActiveStyle = isActive ? {'': ''} : {'opacity': '0.5'};
 
         return (
             <Tooltip text='Repeat current song'>
-                <button type="button" onClick={this.handleClick.bind(this)}
-                        className='icon-btn icon-btn-repeat no-select' style={isDeactiveStyle}>
-                    <span className="hide">Repeat</span>
-                </button>
+                <SvgIcon
+                    src='#ic_repeat_one_black_24px'
+                    title='Repeat'
+                    width='24px'
+                    height='24px'
+                    style={isActiveStyle}
+                    onClick={() => this.handleClick() }/>
             </Tooltip>
         );
     }

@@ -64,7 +64,7 @@ export default class SongTableRow extends React.Component {
                 </td>
                 <td className="vertical-center hidden-xs">
                     <SvgIcon
-                        src='../../../assets/img/ic_soundcloud-black.svg#soundcloud-icon'
+                        src='#ic_soundcloud-black'
                         title='Soundcloud'
                         width='32'
                         height='32'

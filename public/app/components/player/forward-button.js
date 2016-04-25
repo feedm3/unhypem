@@ -5,14 +5,18 @@
 'use strict';
 
 import React from 'react';
+import SvgIcon from '../common/svg-icon';
 import songDispatcher from '../../dispatcher/song-dispatcher';
 import ACTION from '../../constants/action';
 
 export default () => {
     return (
-        <button type="button" className="icon-btn icon-btn-forward no-select"
-                onClick={() => songDispatcher.dispatch(ACTION.FORWARD)}>
-            <span className="hidden">Forward</span>
-        </button>
+        <SvgIcon
+            src='#ic_skip_next_black_24px'
+            title="Forward"
+            width="36px"
+            height="36px"
+            onClick={() => songDispatcher.dispatch(ACTION.FORWARD)}
+        />
     );
 };

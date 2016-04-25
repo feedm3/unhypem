@@ -30,13 +30,13 @@ export default class VolumeButton extends React.Component {
     }
 
     render() {
-        let volumeIcon = '../../../assets/img/ic_volume_up_black_24px.svg#volume-up';
+        let volumeIcon = '#ic_volume_up_black_24px';
         if (this.state.volume === 0) {
-            volumeIcon = '../../../assets/img/ic_volume_off_black_24px.svg#volume-off';
+            volumeIcon = '#ic_volume_off_black_24px';
         } else if (this.state.volume > 0 && this.state.volume < 50) {
-            volumeIcon = '../../../assets/img/ic_volume_down_black_24px.svg#volume-down';
+            volumeIcon = '#ic_volume_down_black_24px';
         } else if (this.state.volume >= 50) {
-            volumeIcon = '../../../assets/img/ic_volume_up_black_24px.svg#volume-up';
+            volumeIcon = '#ic_volume_up_black_24px';
         }
 
         return (

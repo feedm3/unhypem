@@ -16,6 +16,7 @@ export default class SvgIcon extends React.Component {
         }
         return (
             <svg className={iconStyleNames}
+                 style={this.props.style}
                  width={this.props.width}
                  height={this.props.height}
                  onClick={this.props.onClick}
@@ -35,5 +36,6 @@ SvgIcon.propTypes = {
     width: React.PropTypes.string.isRequired,
     height: React.PropTypes.string.isRequired,
     className: React.PropTypes.string,
+    style: React.PropTypes.object,
     onClick: React.PropTypes.func
 };

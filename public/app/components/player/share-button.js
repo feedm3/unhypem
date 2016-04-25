@@ -5,11 +5,15 @@
 'use strict';
 
 import React from 'react';
+import SvgIcon from '../common/svg-icon';
 
 export default () => {
     return (
-        <button type="button" className="icon-btn icon-btn-share no-select">
-            <span className="hide">Share</span>
-        </button>
+        <SvgIcon
+            src='#ic_share_black_24px'
+            title='Share'
+            width='24px'
+            height='24px'
+        />
     );
 };

@@ -40,10 +40,10 @@ class PlayButton extends React.Component {
     }
 
     render() {
-        let playOrPauseIcon = '../../../assets/img/ic_play_circle_filled_black_24px.svg#player-icon';
+        let playOrPauseIcon = '#ic_play_circle_filled_black_24px';
         let playIconClass = 'clr-primary';
         if (this.state.songState === SONG_STATE.PLAYING) {
-            playOrPauseIcon = '../../../assets/img/ic_pause_circle_filled_black_24px.svg#pause-icon';
+            playOrPauseIcon = '#ic_pause_circle_filled_black_24px';
             playIconClass = '';
         }
         return (
@@ -53,7 +53,7 @@ class PlayButton extends React.Component {
                 width='48'
                 height='48'
                 className={playIconClass}
-                onClick={() => { this.handleClick(); }}/>
+                onClick={() => this.handleClick() }/>
         );
     }
 
