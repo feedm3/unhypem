@@ -28,8 +28,6 @@ export default class ShareButton extends React.Component {
 
     render() {
         const soundcloudUrlStyle = this.props.soundcloudUrl ? {display: 'block', paddingBottom: '5px'} : {display: 'none'};
-        console.log(soundcloudUrlStyle);
-
         return (
             <div>
                 <SvgIcon
