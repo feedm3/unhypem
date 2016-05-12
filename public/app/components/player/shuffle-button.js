@@ -6,7 +6,7 @@
 
 import React from 'react';
 import SvgIcon from '../common/svg-icon';
-import Tooltip from './../common/tooltip';
+import SimpleTooltip from '../common/simple-tooltip';
 import ACTION from '../../constants/action';
 import PLAYLIST_STATE from '../../constants/playlist-state';
 import songDispatcher from '../../dispatcher/song-dispatcher';
@@ -41,16 +41,16 @@ export default class ShuffleButton extends React.Component {
         const isActive = this.state.playlistState === PLAYLIST_STATE.SHUFFLE_NEXT_SONG;
         const isActiveStyle = isActive ? {'': ''} : {'opacity': '0.5'};
         return (
-            <Tooltip text='Random next song'>
-                <SvgIcon
-                    id='ic_shuffle_black_24px'
-                    title='Shuffle'
-                    width='24px'
-                    height='24px'
-                    style={isActiveStyle}
-                    onClick={() => this.handleClick()}
-                />
-            </Tooltip>
+                <SimpleTooltip text='Random next song'>
+                    <SvgIcon
+                        id='ic_shuffle_black_24px'
+                        title='Shuffle'
+                        width='24px'
+                        height='24px'
+                        style={isActiveStyle}
+                        onClick={() => this.handleClick()}
+                    />
+                </SimpleTooltip>
         );
     }
 }
