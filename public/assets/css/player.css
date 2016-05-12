@@ -76,6 +76,16 @@
     display: inline;
 }
 
+.tether-tooltip-triangle {
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+    border: solid;
+    border-color: #000 transparent;
+    border-width: 6px 6px 0 6px;
+    margin-right: -6px;
+}
+
 .volume-popup {
     position: absolute;
     bottom: 0;
