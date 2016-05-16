@@ -6,7 +6,7 @@
 
 import React from 'react';
 import SvgIcon from '../common/svg-icon';
-import Tooltip from './../common/tooltip';
+import SimpleTooltip from '../common/simple-tooltip';
 import ACTION from '../../constants/action';
 import songDispatcher from '../../dispatcher/song-dispatcher';
 
@@ -31,7 +31,7 @@ export default class RepeatButton extends React.Component {
         const isActiveStyle = isActive ? {'': ''} : {'opacity': '0.5'};
 
         return (
-            <Tooltip text='Repeat current song'>
+            <SimpleTooltip text='Repeat current song'>
                 <SvgIcon
                     id='ic_repeat_one_black_24px'
                     title='Repeat'
@@ -39,7 +39,7 @@ export default class RepeatButton extends React.Component {
                     height='24px'
                     style={isActiveStyle}
                     onClick={() => this.handleClick() }/>
-            </Tooltip>
+            </SimpleTooltip>
         );
     }
 }
