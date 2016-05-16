@@ -25,12 +25,13 @@ export default class SimpleTooltip extends React.Component {
                     attachment: 'both'
                 }]}
             >
-                <div onClick={() => this.setState({isOpen: !isOpen}) }>{this.props.children}</div>
+                <div onMouseEnter={() => this.setState({isOpen: true}) }
+                     onMouseLeave={() => this.setState({isOpen: false}) }>{this.props.children}</div>
                 {
                     isOpen &&
                     <div>
-                        <div>{this.props.text}</div>
-                        <div className="tether-tooltip-triangle"></div>
+                        <div className='tether-tooltip-content'>{this.props.text}</div>
+                        <div className='tether-tooltip-triangle'></div>
                     </div>
                 }
             </TetherComponent>
