@@ -126,53 +126,6 @@ body {
     margin-right: -6px;
 }
 
-.tooltip-top {
-    position: relative;
-    display: inline;
-}
-
-.tooltip-top:hover:after {
-    position: absolute;
-    display: block;
-    line-height: initial;
-    font-size: 12px;
-    margin-bottom: 6px; /* same size as triangle heights */
-    background: #000;
-    border-radius: 5px;
-    color: #FFF;
-    content: attr(data-text);
-    bottom: 100%;
-    padding: 5px 15px;
-    text-align: center;
-    z-index: 98;
-}
-
-.tooltip-top:hover:before {
-    border: solid;
-    border-color: #000 transparent;
-    border-width: 6px 6px 0 6px;
-    bottom: 100%;
-    content: "";
-    right: 50%;
-    margin-right: -6px;
-    position: absolute;
-    z-index: 99;
-}
-
-.tooltip-top-80:hover:after {
-    width: 80px;
-    margin-left: -30px;
-}
-
-.tooltip-top-160:hover:after {
-    width: 160px;
-    margin-left: -68px;
-}
-
-.tooltip-top-right:hover:after {
-    margin-left: 0;
-}
-
 .svg-icon {
     display: inline;
     vertical-align: middle;
