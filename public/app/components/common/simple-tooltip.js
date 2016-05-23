@@ -20,7 +20,6 @@ export default class SimpleTooltip extends React.Component {
         return (
             <TetherComponent
                 attachment={this.props.attachment}
-                targetAttachement='top center'
                 constraints={[{
                     to: 'window',
                     attachment: 'both'
@@ -42,7 +41,7 @@ export default class SimpleTooltip extends React.Component {
 SimpleTooltip.propTypes = {
     children: React.PropTypes.node.isRequired,
     text: React.PropTypes.string.isRequired,
-    attachment: React.PropTypes.oneOf(['top left', 'top center', 'top right', 'bottom center'])
+    attachment: React.PropTypes.oneOf(['top left', 'top center', 'top right', 'bottom left', 'bottom center', 'bottom right'])
 };
 SimpleTooltip.defaultProps = {
     attachment: 'top center'
