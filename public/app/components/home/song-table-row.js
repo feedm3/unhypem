@@ -10,7 +10,7 @@
 'use strict';
 
 import React from 'react';
-import Tooltip from '../common/tooltip';
+import SimpleTooltip from '../common/simple-tooltip';
 import SvgIcon from '../common/svg-icon';
 
 export default class SongTableRow extends React.Component {
@@ -58,7 +58,11 @@ export default class SongTableRow extends React.Component {
         return (
             <tr className={rowStyle} onClick={ () => { this.props.onClick(); }} title={tooltip}>
                 <td className="vertical-center text-center">
-                    <Tooltip text={`❤ ${song.hypemLovedCount}`} size='s'>{song.position}</Tooltip>
+                    <SimpleTooltip
+                        text={`❤ ${song.hypemLovedCount}`}
+                        attachment='bottom center'>
+                        <span>{song.position}</span>
+                    </SimpleTooltip>
                 </td>
                 <td className="vertical-center hidden-xs">
                     <SvgIcon
