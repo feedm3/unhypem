@@ -13,8 +13,8 @@ import ForwardButton from './forward-button';
 import RepeatButton from './repeat-button';
 import ShuffleButton from './shuffle-button';
 import ShareButton from './share-button';
+import SimpleTooltip from '../common/simple-tooltip';
 import VolumeButton from './volume-button';
-import Tooltip from './../common/tooltip';
 import ACTION from '../../constants/action';
 import KEY_CODE from '../../constants/key-code';
 import songDispatcher from '../../dispatcher/song-dispatcher';
@@ -63,9 +63,12 @@ class PlayerPanel extends React.Component {
                 <div className="container">
                     <div className="player-panel">
                         <div className="player-panel-col player-panel-col-song-position">
-                            <Tooltip text={`${song.artist} - ${song.title}`} direction='right'>
+                            <SimpleTooltip
+                                text={`${song.artist} - ${song.title}`}
+                                attachement='top right'
+                                direction='left'>
                                 <strong>{song.position}</strong>
-                            </Tooltip>
+                            </SimpleTooltip>
                         </div>
                         <div className="player-panel-col-duration">
                             <DurationPanel />
