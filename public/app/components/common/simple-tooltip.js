@@ -17,21 +17,36 @@ export default class SimpleTooltip extends React.Component {
 
     render() {
         const { isOpen } = this.state;
+
+        // construct props conditionally
+        const props = {
+            attachment: this.props.attachment,
+            constraints: [{
+                to: 'window',
+                attachment: 'both'
+            }]
+        };
+        if (this.props.targetAttachment) {
+            props.targetAttachment = this.props.targetAttachment;
+        }
+
+        // construct styles
+        // TODO this is a 'quickfix' and could be done better
+        const triangleStyle = {};
+        if (this.props.targetAttachment === 'bottom left') {
+            triangleStyle.right = 'initial';
+            triangleStyle.left = '10px';
+        }
+
         return (
-            <TetherComponent
-                attachment={this.props.attachment}
-                constraints={[{
-                    to: 'window',
-                    attachment: 'both'
-                }]}
-            >
+            <TetherComponent {...props}>
                 <div onMouseEnter={() => this.setState({isOpen: true}) }
                      onMouseLeave={() => this.setState({isOpen: false}) }>{this.props.children}</div>
                 {
                     isOpen &&
                     <div>
                         <div className='tether-tooltip-content'>{this.props.text}</div>
-                        <div className='tether-tooltip-triangle'></div>
+                        <div className='tether-tooltip-triangle' style={triangleStyle}></div>
                     </div>
                 }
             </TetherComponent>
@@ -41,7 +56,8 @@ export default class SimpleTooltip extends React.Component {
 SimpleTooltip.propTypes = {
     children: React.PropTypes.node.isRequired,
     text: React.PropTypes.string.isRequired,
-    attachment: React.PropTypes.oneOf(['top left', 'top center', 'top right', 'bottom left', 'bottom center', 'bottom right'])
+    attachment: React.PropTypes.oneOf(['top left', 'top center', 'top right', 'bottom left', 'bottom center', 'bottom right']),
+    targetAttachment: React.PropTypes.oneOf(['top left', 'top center', 'top right', 'bottom left', 'bottom center', 'bottom right'])
 };
 SimpleTooltip.defaultProps = {
     attachment: 'top center'
