@@ -65,8 +65,8 @@ class PlayerPanel extends React.Component {
                         <div className="player-panel-col player-panel-col-song-position">
                             <SimpleTooltip
                                 text={`${song.artist} - ${song.title}`}
-                                attachement='top right'
-                                direction='left'>
+                                attachment='top left'
+                                targetAttachment='bottom left'>
                                 <strong>{song.position}</strong>
                             </SimpleTooltip>
                         </div>
