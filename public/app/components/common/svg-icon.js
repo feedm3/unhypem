@@ -24,6 +24,7 @@ export default class SvgIcon extends React.Component {
                  width={this.props.width}
                  height={this.props.height}
                  onClick={this.props.onClick}
+                 onMouseEnter={this.props.onMouseEnter}
                  aria-labelledby="title">
                 <title id="title">{this.props.title}</title>
                 <use width={this.props.width}
@@ -41,5 +42,6 @@ SvgIcon.propTypes = {
     height: React.PropTypes.string.isRequired,
     className: React.PropTypes.string,
     style: React.PropTypes.object,
-    onClick: React.PropTypes.func
+    onClick: React.PropTypes.func,
+    onMouseEnter: React.PropTypes.func
 };

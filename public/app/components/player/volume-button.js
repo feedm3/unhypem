@@ -24,6 +24,10 @@ export default class VolumeButton extends React.Component {
         volumePopup.setState({visible: !isVisisble});
     }
 
+    showVolumePopup() {
+        this.refs.volumePopup.setState({visible: true});
+    }
+
     onVolumeChange(percent) {
         songDispatcher.dispatch(ACTION.CHANGE_VOLUME, percent);
         this.setState({volume: percent});
@@ -46,6 +50,7 @@ export default class VolumeButton extends React.Component {
                     title="Volume"
                     width="24px"
                     height="24px"
+                    onMouseEnter={() => { this.showVolumePopup(); }}
                     onClick={() => { this.toggleVolumePopup(); }}
                 />
                 <VolumePopup
