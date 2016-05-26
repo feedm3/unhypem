@@ -93,19 +93,6 @@
     margin: 5px 0;
 }
 
-.share-popup {
-    display: none;
-    position: absolute;
-    width: 150px;
-    bottom: 0;
-    margin-bottom: 25px;
-    margin-left: -100px;
-    border: 1px solid #000000;
-    background-color: #F6F6FF;
-    line-height: initial;
-    padding: 5px;
-}
-
 .share-popup-link {
     width: 100%;
     display: block;

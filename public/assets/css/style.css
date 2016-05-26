@@ -130,6 +130,16 @@ body {
     margin-right: -6px;
 }
 
+.share-button-popup {
+    padding: 5px;
+    background-color: #FFFFFF;
+    border: 1px solid #000000;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+
+}
+
 .svg-icon {
     display: inline;
     vertical-align: middle;
