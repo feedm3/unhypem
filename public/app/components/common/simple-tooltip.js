@@ -44,7 +44,7 @@ export default class SimpleTooltip extends React.Component {
                      onMouseLeave={() => this.setState({isOpen: false}) }>{this.props.children}</div>
                 {
                     isOpen &&
-                    <div>
+                    <div className='tether-tooltip'>
                         <div className='tether-tooltip-content'>{this.props.text}</div>
                         <div className='tether-tooltip-triangle' style={triangleStyle}></div>
                     </div>

@@ -105,6 +105,10 @@ body {
     text-align: right;
 }
 
+.tether-tooltip {
+    margin-top: -5px;
+}
+
 .tether-tooltip-content {
     color: #ffffff;
     background-color: #000000;
