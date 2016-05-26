@@ -1,4 +1,8 @@
 /**
+ * This component can be used to add a tooltip to an existing component.
+ *
+ * The existing component must be passed as child of the tooltip and the tooltip text itself must be passed as property.
+ *
  * @author Fabian Dietenberger
  */
 
