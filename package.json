@@ -45,7 +45,7 @@
     "request": "~2.69.0",
     "serve-favicon": "~2.3.0",
     "soundmanager2": "~2.97.20150601-a",
-    "superagent": "~1.7.2",
+    "superagent": "~2.0.0",
     "winston": "~2.2.0",
     "winston-loggly": "~1.3.1"
   },
