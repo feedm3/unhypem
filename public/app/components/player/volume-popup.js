@@ -27,15 +27,19 @@ export default class VolumePopup extends React.Component {
     render() {
         if (!this.state.visible) return null;
         return (
-            <div id='volume-popup' className='volume-popup' onMouseLeave={this.props.onMouseLeave}>
-                <input type="range"
-                       min="0"
-                       max="100"
-                       step="1"
-                       defaultValue={this.state.progressPercent}
-                       className="volume-input-range"
-                       orient="vertical"
-                       onChange={(e) => { this.handleInputChange(e); }}/>
+            <div className='volume-popup-wrapper'>
+                <div id='volume-popup' className='volume-popup' onMouseLeave={this.props.onMouseLeave}>
+                    <div className='volume-popup-content'>
+                        <input type="range"
+                               min="0"
+                               max="100"
+                               step="1"
+                               defaultValue={this.state.progressPercent}
+                               className="volume-input-range"
+                               orient="vertical"
+                               onChange={(e) => { this.handleInputChange(e); }}/>
+                    </div>
+                </div>
             </div>
         );
     }

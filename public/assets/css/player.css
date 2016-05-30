@@ -76,12 +76,21 @@
     display: inline;
 }
 
-.volume-popup {
+.volume-popup-wrapper {
     position: absolute;
+    bottom: -10px;
+}
+
+.volume-popup {
+    position: relative;
+    padding-bottom: 40px;
+}
+
+.volume-popup-content {
+    position: relative;
     bottom: 0;
     width: 25px;
     height: 100px;
-    margin-bottom: 25px;
     border: 1px solid #000000;
     background-color: #F6F6FF;
 }
