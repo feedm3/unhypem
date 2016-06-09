@@ -14,9 +14,9 @@ export default () => {
                     <a href="#/" className="navbar-brand">Unhypem</a>
                     <button className="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
                         <span className="sr-only">Toggle navigation</span>
-                        <span className="icon-bar"></span>
-                        <span className="icon-bar"></span>
-                        <span className="icon-bar"></span>
+                        <span className="icon-bar" />
+                        <span className="icon-bar" />
+                        <span className="icon-bar" />
                     </button>
                 </div>
                 <div className="collapse navbar-collapse navbar-right">

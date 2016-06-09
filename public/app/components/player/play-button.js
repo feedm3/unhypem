@@ -8,10 +8,11 @@ import React from 'react';
 import songDispatcher from '../../dispatcher/song-dispatcher';
 import ACTION from '../../constants/action';
 import SONG_STATE from '../../constants/song-state';
+import SvgIcon from '../common/svg-icon';
 
-class PlayButton extends React.Component {
-    constructor() {
-        super();
+export default class PlayButton extends React.Component {
+    constructor(props) {
+        super(props);
         this.state = {
             songState: SONG_STATE.PAUSED
         };
@@ -35,20 +36,24 @@ class PlayButton extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return nextState.songState !== this.state.songState;
+        return this.state.songState !== nextState.songState;
     }
 
     render() {
-        let buttonStyle = 'btn button button-play no-select';
+        let playOrPauseIcon = 'ic_play_circle_filled_black_24px';
+        let playIconClass = 'clr-primary';
         if (this.state.songState === SONG_STATE.PLAYING) {
-            buttonStyle += ' button-pause';
-        } else {
-            buttonStyle += ' button-play';
+            playOrPauseIcon = 'ic_pause_circle_filled_black_24px';
+            playIconClass = '';
         }
         return (
-            <button type="button" onClick={this.handleClick.bind(this)} className={buttonStyle}>
-                <span className="hide">Play</span>
-            </button>
+            <SvgIcon
+                id={playOrPauseIcon}
+                title='Play'
+                width='48'
+                height='48'
+                className={playIconClass}
+                onClick={() => this.handleClick() }/>
         );
     }
 
@@ -56,5 +61,3 @@ class PlayButton extends React.Component {
         songDispatcher.registerOnCurrentSongUpdate('PlayButton', this.handleCurrentSongUpdate.bind(this));
     }
 }
-
-export default PlayButton;

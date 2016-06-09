@@ -5,8 +5,7 @@
 'use strict';
 
 import { SoundManager } from 'soundmanager2/script/soundmanager2-nodebug-jsmin';
-import forEach from 'lodash/forEach';
-import isString from 'lodash/isString';
+import _ from 'lodash';
 import songDispatcher from '../dispatcher/song-dispatcher';
 import ACTION from '../constants/action';
 import SONG_STATE from '../constants/song-state';
@@ -17,6 +16,7 @@ class Player {
         this.currentSongInfo = {};
         this.soundManager = new SoundManager();
         this.smSound = null; // soundManager creates a smSound for every song. this object holds the playing smSound
+        this.repeatCurrentSong = false;
 
         this.soundManager.setup({
             flashVersion: 9,
@@ -35,12 +35,14 @@ class Player {
 
     handleAllSongsUpdate(songsInfo) {
         this.preloadSongs(songsInfo.songs);
+        this.repeatCurrentSong = songsInfo.repeatCurrentSong;
     }
 
     handleCurrentSongUpdate(songInfo) {
         const currentSong = this.currentSongInfo.song;
         const newSong = songInfo.song;
         const newPlayingState = songInfo.state;
+        const actionOnBroken = songInfo.actionOnBroken;
 
         if (!currentSong || (newSong.id !== currentSong.id)) {
             Object.assign(this.currentSongInfo, songInfo);
@@ -48,7 +50,7 @@ class Player {
         }
         switch (newPlayingState) {
             case SONG_STATE.PLAYING:
-                if (!this.smSound) songDispatcher.dispatch(ACTION.FORWARD);
+                if (!this.smSound) songDispatcher.dispatch(actionOnBroken);
                 this.play();
                 break;
             case SONG_STATE.PAUSED:
@@ -62,7 +64,7 @@ class Player {
     }
 
     preloadSongs(songs) {
-        forEach(songs, (song) => {
+        _.forEach(songs, (song) => {
             if (!song.streamUrl) {
                 return;
             }
@@ -84,7 +86,7 @@ class Player {
                         if (!currentSong.duration) {
                             // if the song is not hosted on soundcloud we have to update the duration from the soundmanager
                             currentSong.duration = this.smSound.duration;
-                            songDispatcher.dispatch(ACTION.SELECT_SONG, this.currentSong);
+                            songDispatcher.dispatch(ACTION.SELECT_SONG, currentSong);
                         }
                     }
                 },
@@ -98,12 +100,12 @@ class Player {
                      * little workaround and call the next song when the current ones position is greater than 99.9
                      * percent.
                      */
-                    if (positionInPercent > 99.9) {
-                        songDispatcher.dispatch(ACTION.FORWARD);
+                    if (positionInPercent > 99.5) {
+                        this.onFinish();
                     }
                 },
                 onfinish: () => {
-                    songDispatcher.dispatch(ACTION.FORWARD);
+                    this.onFinish();
                 }
             });
         });
@@ -155,6 +157,14 @@ class Player {
 
     setVolume(percent = 100) {
         this.soundManager.setVolume(percent);
+    }
+
+    onFinish() {
+        if (this.repeatCurrentSong) {
+            songDispatcher.dispatch(ACTION.FORCE_POSITION_IN_PERCENT, 0);
+        } else {
+            songDispatcher.dispatch(ACTION.FORWARD);
+        }
     }
 }
 

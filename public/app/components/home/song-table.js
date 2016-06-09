@@ -7,12 +7,13 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import SongTableRow from './song-table-row';
+import Utils from '../common/utils';
 import songDispatcher from '../../dispatcher/song-dispatcher';
 import ACTION from '../../constants/action';
 
-class SongTable extends React.Component {
-    constructor() {
-        super();
+export default class SongTable extends React.Component {
+    constructor(props) {
+        super(props);
         this.state = {
             currentSong: {}
         };
@@ -50,17 +51,17 @@ class SongTable extends React.Component {
     scrollToRow(row) {
         const rowToSelectDomNode = ReactDom.findDOMNode(row);
 
-        const currentScrollPosition = document.body.scrollTop; // 0 = on top of the body
+        const currentScrollPosition = Utils.getScrollTop(); // 0 = on top of the body
         const currentWindowHeight = window.innerHeight;
         const selectedRowPosition = rowToSelectDomNode.offsetTop; // 0 = on top of the table
         const distanceToBottom = 300;
 
         if (currentScrollPosition + currentWindowHeight < selectedRowPosition + distanceToBottom) {
             // row is slighly above the current visible window
-            document.body.scrollTop = selectedRowPosition + distanceToBottom - currentWindowHeight;
+            Utils.setScrollTop(selectedRowPosition + distanceToBottom - currentWindowHeight);
         } else if (currentScrollPosition > selectedRowPosition) {
             // row is above the current visible window
-            document.body.scrollTop = selectedRowPosition;
+            Utils.setScrollTop(selectedRowPosition);
         }
     }
 
@@ -82,14 +83,13 @@ class SongTable extends React.Component {
 
         return (
             <div>
-                <table className="table table-hover">
+                <table className="table table-hover song-table">
                     <thead>
                     <tr className="white">
                         <th />
                         <th className="hidden-xs"/>
                         <th>Artist</th>
                         <th>Title</th>
-                        <th className="hidden-xs">Love</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -109,5 +109,6 @@ class SongTable extends React.Component {
         songDispatcher.removeOnCurrentSongUpdate('SongTable');
     }
 }
-
-export default SongTable;
+SongTable.propTypes = {
+    songs: React.PropTypes.array.isRequired
+};

@@ -11,9 +11,9 @@ import songDispatcher from '../../dispatcher/song-dispatcher';
 import ACTION from '../../constants/action';
 import moment from 'moment/min/moment.min';
 
-class Home extends React.Component {
-    constructor() {
-        super();
+export default class Home extends React.Component {
+    constructor(props) {
+        super(props);
         this.state = {
             songs: [],
             timestamp: ''
@@ -56,5 +56,3 @@ class Home extends React.Component {
         songDispatcher.removeOnALlSongsUpdate('Home');
     }
 }
-
-export default Home;

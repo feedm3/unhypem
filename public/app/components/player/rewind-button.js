@@ -5,14 +5,18 @@
 'use strict';
 
 import React from 'react';
+import SvgIcon from '../common/svg-icon';
 import songDispatcher from '../../dispatcher/song-dispatcher';
 import ACTION from '../../constants/action';
 
 export default () => {
     return (
-        <button type="button" className="btn button button-rewind no-select"
-                onClick={ () => { songDispatcher.dispatch(ACTION.REWIND); }}>
-            <span className="hidden">Rewind</span>
-        </button>
+        <SvgIcon
+            id='ic_skip_previous_black_24px'
+            title="Rewind"
+            width="36px"
+            height="36px"
+            onClick={() => songDispatcher.dispatch(ACTION.REWIND) }
+        />
     );
 };

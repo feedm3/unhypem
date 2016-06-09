@@ -8,8 +8,8 @@ import React from 'react';
 import songDispatcher from '../../dispatcher/song-dispatcher';
 
 class DurationLabel extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             duration: 0,
             position: 0
@@ -34,7 +34,8 @@ class DurationLabel extends React.Component {
         const duration = secondFormatter(this.state.duration);
         return (
             <div className="duration">
-                <span>{position} / {duration}</span>
+                <div>{position}</div>
+                <div>{duration}</div>
             </div>
         );
     }

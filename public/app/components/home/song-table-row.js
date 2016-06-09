@@ -10,10 +10,12 @@
 'use strict';
 
 import React from 'react';
+import SimpleTooltip from '../common/simple-tooltip';
+import SvgIcon from '../common/svg-icon';
 
-class SongTableRow extends React.Component {
-    constructor() {
-        super();
+export default class SongTableRow extends React.Component {
+    constructor(props) {
+        super(props);
         this.state = {
             isSelected: false,
             usePropsToSelect: true
@@ -28,36 +30,58 @@ class SongTableRow extends React.Component {
     }
 
     render() {
-        const { song, onClick, selected } = this.props;
+        const {song, selected} = this.props;
+        const {isSelected, usePropsToSelect} = this.state;
 
-        let rowStyle = 'warning';
-        if (song.streamUrl) {
-            rowStyle = 'white';
-            if (this.state.isSelected || (this.state.usePropsToSelect && selected)) {
-                rowStyle = 'info';
-            }
+        let rowStyle = 'white';
+        let tooltip = '';
+        if (!song.streamUrl) {
+            rowStyle = 'song-table-row-no-streaming-url';
+            tooltip = 'Song cant be streamed';
         }
 
-        const soundcloudLogoStyle = song.soundcloudUrl ? 'soundcloud-logo' : 'soundcloud-logo no-soundcloud-url';
+        if (song.streamUrl && (isSelected || (usePropsToSelect && selected))) {
+            rowStyle = 'song-table-row-selected';
+        }
+
+        let soundcloudLogoStyle;
+        let soundcloudClickHandler;
+        if (song.soundcloudUrl) {
+            soundcloudClickHandler = (e) => {
+                window.open(song.soundcloudUrl, '_blank', null, null);
+                e.stopPropagation();
+            };
+        } else {
+            soundcloudLogoStyle = 'song-table-cell-no-soundcloud-url';
+        }
 
         return (
-            <tr className={rowStyle} onClick={onClick.bind(this)}>
-                <td className="vertical-center text-center">{song.position}</td>
+            <tr className={rowStyle} onClick={ () => { this.props.onClick(); }} title={tooltip}>
+                <td className="vertical-center text-center">
+                    <SimpleTooltip
+                        text={`❤ ${song.hypemLovedCount}`}
+                        attachment='bottom center'>
+                        <span>{song.position}</span>
+                    </SimpleTooltip>
+                </td>
                 <td className="vertical-center hidden-xs">
-                    <a className={soundcloudLogoStyle} target="_blank" href={song.soundcloudUrl}/>
+                    <SvgIcon
+                        id='ic_soundcloud-black'
+                        title='Soundcloud'
+                        width='32'
+                        height='32'
+                        className={soundcloudLogoStyle}
+                        onClick={soundcloudClickHandler}
+                    />
                 </td>
                 <td className="vertical-center">{song.artist}</td>
                 <td className="vertical-center"><strong>{song.title}</strong></td>
-                <td className="vertical-center hidden-xs">{song.hypemLovedCount}</td>
             </tr>
         );
     }
 }
-
 SongTableRow.propTypes = {
     song: React.PropTypes.object.isRequired,
     onClick: React.PropTypes.func.isRequired,
     selected: React.PropTypes.bool
 };
-
-export default SongTableRow;

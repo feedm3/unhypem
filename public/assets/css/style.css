@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700,300');
 
+/*
+ * We use colors from the lightningdesignsystem https://www.lightningdesignsystem.com/design/color/
+ *
+ * Primary Color: #0070D2
+ *
+ */
+
 body {
     margin: 0;
     font-family: 'Lato', sans-serif !important;
@@ -13,17 +20,8 @@ body {
     margin-bottom: 20px;
 }
 
-.soundcloud-logo {
-    background: url("../img/ic_soundcloud-black.svg");
-    -webkit-background-size: 32px 32px;
-    background-size: 32px 32px;
-    width: 32px;
-    height: 32px;
-    display: block;
-}
-
-.no-soundcloud-url {
-    opacity: 0.2;
+.clr-primary {
+    color: #0070D2;
 }
 
 .navbar-color {
@@ -40,6 +38,35 @@ body {
 
 .table tbody > tr > td.vertical-center {
     vertical-align: middle;
+}
+
+.song-table {
+    color: #000000;
+}
+
+.song-table tbody > tr:hover {
+    color: #000000;
+}
+
+.song-table-cell-no-soundcloud-url {
+    opacity: 0.2;
+}
+
+.song-table-row-selected {
+    color: #0070D2;
+}
+
+.song-table-row-selected:hover {
+    color: #0070D2 !important;
+}
+
+.song-table-row-no-streaming-url {
+    color: #A7B8D1;
+    cursor: not-allowed;
+}
+
+.song-table-row-no-streaming-url:hover {
+    color: #000000;
 }
 
 .no-select {
@@ -77,6 +104,49 @@ body {
 .shortcuts-info-entry > tbody > tr > td:first-child {
     text-align: right;
     padding-right: 5px;
+}
+
+.tether-tooltip {
+    margin-top: -5px;
+}
+
+.tether-tooltip-content {
+    color: #ffffff;
+    background-color: #000000;
+    font-size: 12px;
+    -webkit-border-radius:5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding: 3px 6px;
+    margin-bottom: 6px;
+}
+
+.tether-tooltip-triangle {
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+    border: solid;
+    border-color: #000 transparent;
+    border-width: 6px 6px 0 6px;
+    margin-right: -6px;
+}
+
+.share-button-popup {
+    padding: 5px;
+    background-color: #FFFFFF;
+    border: 1px solid #000000;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.svg-icon {
+    display: inline;
+    vertical-align: middle;
+}
+
+.svg-icon-clickable:hover {
+    cursor: pointer;
 }
 
 kbd {
