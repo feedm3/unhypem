@@ -16,7 +16,6 @@ To run your own instance on your local machine follow these steps:
 [`example.env`](example.env) into it. Replace or create all values to their
 corresponding keys.
 
-    
 3. If you start unhypem the first time you want to run the tests first. This triggers the crawler and pushes the current
 charts into the db.
 
@@ -53,4 +52,9 @@ Consider using the following the execute the tests on file changes
 
 ```
 npm run test-watch
+```
+
+When developing the frontend start a webpack hot-reloading server with
+```
+npm run start-front
 ```
