@@ -22,7 +22,7 @@ export default class ShareButton extends React.Component {
             paddingBottom: '5px'
         } : {display: 'none'};
         return (
-            <div>
+            <div onClick={() => this.setState({popupVisible: !this.state.popupVisible}) }>
                 <TetherComponent
                     attachment='bottom center'
                     offset='15px 0'
@@ -35,12 +35,13 @@ export default class ShareButton extends React.Component {
                         title='Share'
                         width='24px'
                         height='24px'
-                        onClick={() => this.setState({popupVisible: !this.state.popupVisible}) }
+                        onMouseEnter={() => this.setState({popupVisible: true}) }
+                        onMouseLeave={() => this.setState({popupVisible: false}) }
                     />
                     {
                         this.state.popupVisible &&
                         <div>
-                            <div className='share-button-popup'>
+                            <div className='share-button-popup' onMouseLeave={() => this.setState({popupVisible: false}) }>
                                 <a href={this.props.soundcloudUrl}
                                    target='_blank'
                                    style={soundcloudUrlStyle}
