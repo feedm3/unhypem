@@ -24,8 +24,7 @@ plugins.push(new SvgStore(
     {
         name: '[hash].sprite.svg',
         chunk: 'main',
-        prefix: '',
-        svgoOptions: {}
+        prefix: ''
     }
 ));
 
