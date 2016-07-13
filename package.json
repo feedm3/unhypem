@@ -23,7 +23,7 @@
     "url": "https://github.com/feedm3/unhypem/issues"
   },
   "dependencies": {
-    "async": "^1.5.2",
+    "async": "^2.0.0",
     "body-parser": "^1.15.0",
     "bookshelf": "^0.10.0",
     "compression": "^1.6.2",
