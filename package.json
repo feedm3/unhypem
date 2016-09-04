@@ -23,7 +23,7 @@
     "url": "https://github.com/feedm3/unhypem/issues"
   },
   "dependencies": {
-    "async": "^2.0.0",
+    "async": "^2.0.1",
     "body-parser": "^1.15.0",
     "bookshelf": "^0.10.0",
     "compression": "^1.6.2",
@@ -75,6 +75,6 @@
     "webpack-svgstore-plugin": "^2.2.2"
   },
   "engines": {
-    "node": ">=6.2"
+    "node": ">=6.5"
   }
 }
