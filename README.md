@@ -1,8 +1,6 @@
-# Unhypem
+> ### This project is outdated and not be maintained anymore!
 
-[![Heroku](http://heroku-badge.herokuapp.com/?app=unhypem-prod&style=flat)](http://unhypem.com)
-[![Build Status](https://img.shields.io/travis/feedm3/unhypem.svg?branch=feature-react-es6&style=flat-square)](https://travis-ci.org/feedm3/unhypem)
-[![Dependency Status](https://dependencyci.com/github/feedm3/unhypem/badge?style=flat-square)](https://dependencyci.com/github/feedm3/unhypem)
+# Unhypem
 
 Hear the [hypem charts](http://hypem.com/popular) with the waveform from soundcloud to explore great music faster than ever.
 
