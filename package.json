@@ -72,7 +72,7 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.13.3",
     "webpack-dev-server": "^1.14.1",
-    "webpack-svgstore-plugin": "^2.2.2"
+    "webpack-svgstore-plugin": "^3.0.4"
   },
   "engines": {
     "node": ">=6.5"
